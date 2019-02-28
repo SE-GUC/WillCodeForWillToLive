@@ -4,13 +4,14 @@ const port = 3000
 
 /*** project modules ***/
 // example: const router = require('router/api/company')
+const companyRouter = require('./routes/api/company')
 
 /*** global constants ***/
 const app = express()
 
 /*** adding controllers/routers ***/
 // example: app.use('/api/company', company)
-
+app.use('/api/company', companyRouter)
 
 /*** Adding temporary index page ***/
 app.get('/', (req, res)=>{res.send("<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>")})
