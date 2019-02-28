@@ -16,7 +16,7 @@ router.use(bodyParser.json());
 // Creating new data
 router.post('/addCompany', (req, res)=>{
     // Validate input data
-    var newCompany = null;
+    let newCompany = null;
     // Add new data to the list
     dataSource.push(newCompany);
 });
@@ -27,45 +27,43 @@ router.get('/', (req, res)=>{
 });
 
 // Reading entry
-router.get('/:id', (req, res)=>{
-    // Validate the id
-    var id = req.params.id;
-    if(validateId(id)){
+router.get('/:uuid', (req, res)=>{
+    let uuid = req.params.uuid;
+    let company = dataSource.find(x => x.uuid == uuid);
+    // Company not found
+    if(!company){
         return res.sendStatus(400);
     }
-    // Return the company
-    var company = dataSource[id];
     res.send(`${company.name}\n${company.investorName}`);
 });
 
 // Updating
-router.put('/updateCompany/:id', (req, res)=>{
-    // Validate the id
-    var id = req.params.id;
-    if(validateId(id)){
+router.put('/updateCompany/:uuid', (req, res)=>{
+    let uuid = req.params.uuid;
+    let company = dataSource.find(x => x.uuid == uuid);
+    // Company not found
+    if(!company){
         return res.sendStatus(400);
     }
-    // TODO: Validate input data
-    var newCompany = null;
-    // Adding new data to the list
-    dataSource.push(newCompany);
+    for(attr in company){
+        if(req.body[attr]){
+            // TODO: validate single attribute
+            company[attr] = req.body[attr];
+        }
+    }
 });
 
 // Deleting data
-router.delete('/removeCompany/:id', (req, res)=>{
-    // Validate the id
-    var id = req.params.id;
-    if(validateId(id)){
+router.delete('/removeCompany/:uuid', (req, res)=>{
+    let uuid = req.params.uuid;
+    let companyIndex = dataSource.findIndex((x) => {return x.uuid == uuid});
+    // Company not found
+    if(!company){
         return res.sendStatus(400);
     }
     // Delete entry
-    dataSource.slice(id, 1);
+    dataSource.slice(companyIndex, 1);
 });
-
-// id validation function
-function validateId(id){
-    return ((isNaN(id)) || id < 0 || id >= dataSource.length);
-}
 
 //Exporting router
 module.exports = router;
