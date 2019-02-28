@@ -6,7 +6,9 @@ const joi = require("joi");
 const Company = require('../../models/Company');
 
 // Create a list to mimic a data source
-const dataSource = []; // TODO: Add new company instances after completing the company model
+const dataSource = [
+    {uuid: 12},
+]; // TODO: Add new company instances after completing the company model
 
 // Initializing router and adding body-parser function
 const router = express.Router();
@@ -19,6 +21,7 @@ router.post('/addCompany', (req, res)=>{
     let newCompany = null;
     // Add new data to the list
     dataSource.push(newCompany);
+    return res.send("Company added!");
 });
 
 // Show all data
@@ -45,24 +48,28 @@ router.put('/updateCompany/:uuid', (req, res)=>{
     if(!company){
         return res.sendStatus(400);
     }
+    console.log(req.body);
     for(attr in company){
         if(req.body[attr]){
             // TODO: validate single attribute
             company[attr] = req.body[attr];
         }
     }
+    return res.send('Updated company');
 });
 
 // Deleting data
 router.delete('/removeCompany/:uuid', (req, res)=>{
     let uuid = req.params.uuid;
-    let companyIndex = dataSource.findIndex((x) => {return x.uuid == uuid});
+    let companyIndex = null;
+    companyIndex = dataSource.findIndex((x) => {return x.uuid == uuid});
     // Company not found
-    if(!company){
+    if(companyIndex === null){
         return res.sendStatus(400);
     }
     // Delete entry
-    dataSource.slice(companyIndex, 1);
+    dataSource.splice(companyIndex, 1);
+    return res.send('Deleted!');
 });
 
 //Exporting router
