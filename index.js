@@ -1,22 +1,88 @@
-/*** npm modules ***/
-const express = require('express')
-const port = 3000
+const Joi = require('joi');
+const express = require('express');
+const app = express();
 
-/*** project modules ***/
-// example: const router = require('router/api/company')
+app.use(express.json());
 
-/*** global constants ***/
-const app = express()
+const ExternalEntity = [
+    
+]
+app.get('/', (req, res)=> {
+    res.send('Home page');
+});
 
-/*** adding controllers/routers ***/
-// example: app.use('/api/company', company)
+app.get('/api/ExternalEntity', (req, res) => {
+    res.send(ExternalEntity);
+});
+
+app.post('/api/ExternalEntity', (req, res) => {
+    const { error } = validateCourse(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+    
+    const course = {
+        id: ExternalEntity.length + 1,
+        name: req.body.name,
+        emailAddress: req.body.emailAddress,
+        nationality: req.body.nationality,
+        typeofID: req.body.typeofID,
+        mobileNumber: req.body.mobileNumber,
+        faxNumber: req.body.faxNumber,
+        address: req.body.address
+    };
+    ExternalEntity.push(course);
+    res.send(course);
+});
 
 
-/*** Adding temporary index page ***/
-app.get('/', (req, res)=>{res.send("<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>")})
-/*** Custom routing for wrong requests ***/
-app.use((req, res) => {
-    res.status(404).send({err: 'Obi-Wan: You don\'t need to see this page...'})
+app.put('/api/ExternalEntity/:id', (req, res) =>{
+    const course = ExternalEntity.find(c => c.id === parseInt(req.params.id));
+    if(!course) return res.status(404).send('the course was not found');
+    
+    const { error } = validateCourse(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
+        
+
+    course.name = req.body.name;
+    course.emailAddress = req.body.emailAddress;
+    course.nationality = req.body.nationality;
+    course.typeofID = req.body.typeofID
+    course.mobileNumber = req.body.mobileNumber;
+    course.faxNumber = req.body.faxNumber;
+    course.address = req.body.address;
+    res.send(course);
+});
+
+
+app.delete('/api/ExternalEntity/:id', (req, res) => {
+    const course = ExternalEntity.find(c => c.id === parseInt(req.params.id));
+    if(!course) return res.status(404).send('the course was not found');
+
+    const index = ExternalEntity.indexOf(course);
+    ExternalEntity.splice(index, 1);
+
+    res.send(course);
+
 })
-/*** Listening on serverport ***/
-app.listen(port, ()=>console.log(`Server up. Listening on port ${port}`))
+
+function validateCourse(course){
+    const schema = {
+        name: Joi.string().min(3).required(),
+        emailAddress: Joi.string().min(3).required(),
+        nationality: Joi.string().min(3).required(),
+        typeofID: Joi.string().min(3).required(),
+        mobileNumber: Joi.string().min(3).required(),
+        faxNumber: Joi.string().min(3).required(),
+        address: Joi.string().min(3).required()
+    };
+
+    return Joi.validate(course, schema);
+}
+
+app.get('/api/ExternalEntity/:id', (req, res) => {
+  const course = ExternalEntity.find(c => c.id === parseInt(req.params.id));
+  if(!course) return res.status(404).send('the course was not found');
+  res.send(course);
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log (`Listening on port ${port}`));
