@@ -1,6 +1,11 @@
 /*** npm modules ***/
 const express = require('express')
+const mongoose= require('mongoose')
+const bodyParser = require('body-parser');
+
 const port = 3000
+
+
 
 /*** project modules ***/
 // example: const router = require('router/api/company')
@@ -8,8 +13,30 @@ const port = 3000
 /*** global constants ***/
 const app = express()
 
-/*** adding controllers/routers ***/
-// example: app.use('/api/company', company)
+// Connect to database
+const uri = 'mongodb://sumerge-admin:7SbcKdJ4AAzovcvh@sumerge-shard-00-00-w9v07.mongodb.net:27017,sumerge-shard-00-01-w9v07.mongodb.net:27017,sumerge-shard-00-02-w9v07.mongodb.net:27017/sumerge-test?ssl=true&replicaSet=Sumerge-shard-0&authSource=admin&retryWrites=true'
+const urisv = 'mongodb+srv://sumerge-admin:7SbcKdJ4AAzovcvh@sumerge-w9v07.mongodb.net/sumerge-db'
+mongoose.connect(urisv, {dbName: 'sumerge-db', useNewUrlParser: true })
+
+// On Connection
+mongoose.connection.on('connected', () => {
+	console.log('Connected to database')
+})
+
+// On Error
+mongoose.connection.on('error', (err) => {
+	console.log('Database error: ' + err)
+})
+
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+
+
+var lawyerRoutes = require('./routes/lawyer.js')
+app.use('/lawyer', lawyerRoutes)
+
 
 
 /*** Adding temporary index page ***/
