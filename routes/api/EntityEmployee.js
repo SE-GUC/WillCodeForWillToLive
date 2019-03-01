@@ -170,7 +170,7 @@ router.delete('/:id', (req, res) => {
   if(EntityEmployeeIndex === null){
       return res.sendStatus(400);
   }
-  dataSource.splice(EntityEmployeeIndex, 1);
+  EntityEmployees.splice(EntityEmployeeIndex, 1);
   return res.send('Deleted!');
 })
 module.exports = router
