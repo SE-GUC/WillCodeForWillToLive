@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
     mobileNumber,
     faxNumber,
     emailAddress,
-    addresss
+    address
   )
   EntityEmployees.push(newEntityEmployee)
   return res.json({ data: newEntityEmployee })
