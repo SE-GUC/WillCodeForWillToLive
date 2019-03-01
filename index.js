@@ -10,7 +10,7 @@ const app = express()
 
 /*** adding controllers/routers ***/
 // example: app.use('/api/company', company)
-
+app.use('/api/form',formRouter)
 
 /*** Adding temporary index page ***/
 app.get('/', (req, res)=>{res.send("<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>")})
