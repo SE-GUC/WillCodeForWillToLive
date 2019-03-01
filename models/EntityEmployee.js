@@ -1,5 +1,6 @@
 const uuid = require('uuid')
-
+//const mongoose = require('mongoose')
+//const Schema = mongoose.Schema
 class EntityEmployee {
   constructor (firstName, middleName, lastName, DOB, gender, nationality, typeOfId, Id, jobTitle, mobileNumber, faxNumber, emailAddress, address) {
     this.id = uuid.v4()
@@ -31,5 +32,5 @@ class EntityEmployee {
   emailAddress: { type: Number, required: false },
   addresss: { type: String, required: false }
 }); */
-
+//module.exports = mongoose.model('Product', ProductSchema);
 module.exports = EntityEmployee

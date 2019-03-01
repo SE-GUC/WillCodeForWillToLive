@@ -4,12 +4,18 @@ const port = 3000
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
+
+const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
 /** * global constants ***/
+
 const app = express()
+app.use(express.json());
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
+
+app.use('/api/cases',cases);
 app.use('/api/EntityEmployee', entityEmployeeRouter)
 
 /** * Adding temporary index page ***/
