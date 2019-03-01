@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
 
   if (result.error) return res.status(400).send({ error: result.error.details[0].message })
 
-  const newEntityEmployee = {
+  const newEntityEmployee = new EntityEmployee(
     firstName,
     middleName,
     lastName,
@@ -58,9 +58,9 @@ router.post('/', (req, res) => {
     mobileNumber,
     faxNumber,
     emailAddress,
-    address,
-    id: uuid.v4()
-  }
+    addresss
+  )
+  EntityEmployees.push(newEntityEmployee)
   return res.json({ data: newEntityEmployee })
 })
 router.get('/:id', (req, res) => {
@@ -93,20 +93,20 @@ router.put('/:id', (req, res) => {
     const address = req.body.address
 
     const schema = {
-      firstName: Joi.string().min(3).required(),
+      firstName: Joi.string().min(3),
       middleName: Joi.string().min(3),
-      lastName: Joi.string().min(3).required(),
-      DOB: Joi.date().required(),
-      gender: Joi.string().required(),
-      nationality: Joi.string().min(3).required(),
-      typeOfId: Joi.string().required(),
-      Id: Joi.string().required(),
-      jobTitle: Joi.string().min(3).required(),
+      lastName: Joi.string().min(3),
+      DOB: Joi.date(),
+      gender: Joi.string(),
+      nationality: Joi.string().min(3),
+      typeOfId: Joi.string(),
+      Id: Joi.string(),
+      jobTitle: Joi.string().min(3),
       mobileNumber: Joi.number(),
       faxNumber: Joi.number(),
       emailAddress: Joi.string(),
-      address: Joi.string().required()
-    }
+      address: Joi.string()
+        }
 
     const result = Joi.validate(req.body, schema)
 
@@ -155,7 +155,7 @@ router.put('/:id', (req, res) => {
   }
 })
 router.delete('/:id', (req, res) => {
-  const EntityEmployeeId = req.params.id
+  /*const EntityEmployeeId = req.params.id
   const EntityEmployeeInstance = EntityEmployees.find(EntityEmployeeX => EntityEmployeeX.id === EntityEmployeeId)
   if (EntityEmployeeInstance === undefined) {
     res.status(404).send({ err: 'Employee not found' })
@@ -163,6 +163,14 @@ router.delete('/:id', (req, res) => {
     const index = EntityEmployees.indexOf(EntityEmployeeInstance)
     EntityEmployees.splice(index, 1)
     res.json({ data: EntityEmployees })
+  }*/
+  let EntityEmployeeid = req.params.id;
+  let EntityEmployeeIndex = null;
+  EntityEmployeeIndex = EntityEmployees.findIndex((x) => {return x.id === EntityEmployeeid});
+  if(EntityEmployeeIndex === null){
+      return res.sendStatus(400);
   }
+  dataSource.splice(EntityEmployeeIndex, 1);
+  return res.send('Deleted!');
 })
 module.exports = router
