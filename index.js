@@ -15,7 +15,7 @@ const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
 const external_entities=require('./routes/api/external_entities')
 const companyRouter = require('./routes/api/company')
-const Lawyer = require('./routes/api/Lawyer')
+const Lawyer = require('./routes/api/lawyer')
 /** * global constants ***/
 const app = express()
 app.use(express.json());
