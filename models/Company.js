@@ -2,18 +2,19 @@ const joi = require('joi')
 const uuid = require('uuid')
 
 class Company{
-    constructor(form){ // TODO: Complete company attributes
-        this.uuid = uuid.v4();
-        this.form = form;
+    constructor(companyName, establishmentDate, investorName, companyStatus){ // TODO: Complete company attributes
+        this.uuid = uuid.v4()
+        this.companyName = companyName
+        this.establishmentDate = establishmentDate
+        this.investorName = investorName
+        this.companyStatus = companyStatus
     }
 
-    validate(){
-        /*** Validates all data, but not the data in the form object***/
-        var schema = {
-            // TODO: 
-        }
-        var val = joi.validate(schema, this);
-        return val.error;
+   static schema = {
+        companyName : joi.string().min(3).required(),
+        establishmentDate : joi.date().required(),
+        investorName : joi.string().min(3).required(),
+        companyStatus : joi.string().min(3).required()
     }
 }
 
