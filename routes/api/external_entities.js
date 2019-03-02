@@ -4,7 +4,8 @@ const app = express.Router();
 
 
 const ExternalEntity=[
-
+    {id : 1, name: "Mike", emailAddress:"mike123@gmail.com", nationality:"American", typeofID:"double", mobileNumber:"12341235234",faxNumber:"6322346234", address:"Street 17"},
+    {id : 2, name: "Ryan", emailAddress:"ryanRRR@gmail.com", nationality:"Canadian", typeofID:"double", mobileNumber:"62346234643",faxNumber:"1458515345", address:"Street 56"}
 ]
 
 app.get('/', (req, res) => {
@@ -16,7 +17,7 @@ app.post('/', (req, res) => {
     if(error) return res.status(400).send(error.details[0].message);
     
     const course = {
-        id: ExternalEntity.length + 1,
+        id: ExternalEntity[ExternalEntity.length-1].id +1,
         name: req.body.name,
         emailAddress: req.body.emailAddress,
         nationality: req.body.nationality,
