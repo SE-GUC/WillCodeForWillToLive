@@ -4,7 +4,8 @@ const port = 3000
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
-
+const sscForm = require('./routes/api/sscForm')
+const spcForm = require('./routes/api/spcForm')
 const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
 /** * global constants ***/
@@ -15,6 +16,8 @@ app.use(express.json());
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
 
+app.use('/api/sscform',sscForm)
+app.use('/api/spcform',spcForm)
 app.use('/api/cases',cases);
 app.use('/api/EntityEmployee', entityEmployeeRouter)
 
