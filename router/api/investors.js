@@ -65,7 +65,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const InvestorId = req.params.id
   console.log(InvestorId)
-  const InvestorInstance = invArr.find(InvestorX => InvestorX.Id === InvestorId)
+  const InvestorInstance = invArr.find(InvestorX => InvestorX.autoid === InvestorId)
   if (!InvestorInstance) {
     res.status(404).send({ err: 'Investor not found' })
   } else {
@@ -76,7 +76,7 @@ router.get('/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const InvestorId = req.params.id
-  const InvestorInstance = invArr.find(InvestorX => InvestorX.Id === InvestorId)
+  const InvestorInstance = invArr.find(InvestorX => InvestorX.autoid === InvestorId)
   if (InvestorInstance === undefined) {
     res.status(404).send({ err: 'Investor not found' })
   } 
@@ -150,7 +150,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const InvestorId = req.params.id;
-  const InvestorInstance = invArr.find(InvestorX => InvestorX.Id === InvestorId)
+  const InvestorInstance = invArr.find(InvestorX => InvestorX.autoid === InvestorId)
   if(!InvestorInstance){
       return res.sendStatus(400);
   }
