@@ -63,10 +63,10 @@ router.put('/:id', (req,res) => {
         const isDone = req.body.isDone
     
         const schema = {
-            priority: Joi.string().required(),
-            description: Joi.string().required(),
-            created_at: Joi.string().required(),
-            isDone: Joi.boolean().required()
+            priority: Joi.string(),
+            description: Joi.string(),
+            created_at: Joi.string(),
+            isDone: Joi.boolean()
         }
         
         const result = Joi.validate(req.body,schema)
