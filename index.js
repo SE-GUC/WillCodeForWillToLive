@@ -4,12 +4,16 @@ const port = 3000
 
 /*** project modules ***/
 // example: const router = require('router/api/company')
+const reviewers = require('./routes/api/reviewer')
+const tasks = require('./routes/api/task')
 
 /*** global constants ***/
 const app = express()
 
 /*** adding controllers/routers ***/
 // example: app.use('/api/company', company)
+app.use('/api/reviewer', reviewer)
+app.use('/api/tasks', task)
 
 
 /*** Adding temporary index page ***/
