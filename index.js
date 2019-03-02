@@ -4,13 +4,14 @@ const port = 3000
 
 /*** project modules ***/
 // example: const router = require('router/api/company')
-
+const Lawyer = require('./routes/api/Lawyer')
 /*** global constants ***/
 const app = express()
+app.use(express.json())
 
 /*** adding controllers/routers ***/
 // example: app.use('/api/company', company)
-
+app.use('/api/Lawyer',Lawyer)
 
 /*** Adding temporary index page ***/
 app.get('/', (req, res)=>{res.send("<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>")})
