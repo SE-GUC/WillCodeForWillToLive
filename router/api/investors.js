@@ -45,7 +45,6 @@ router.post('/', (req, res) => {
   if (result.error) return res.status(400).send({ error: result.error.details[0].message })
 
   const newInvestor = new Investor(
-    autoid= uuid.v4(),
     name,
     gender,
     nationality,
