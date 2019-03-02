@@ -7,8 +7,8 @@ const Company = require('../../models/Company')
 
 // Create a list to mimic a data source
 const dataSource = [
-    new Company('Company1', new Date().now(), 'Inv1', 'Running'),
-    new Company('Company2', new Date().now(), 'Inv2', 'Dead')
+    new Company('Company1', new Date().toLocaleDateString(), 'Inv1', 'Running'),
+    new Company('Company2', new Date().toLocaleDateString(), 'Inv2', 'Dead')
 ] 
 
 // Initializing router and adding body-parser function
@@ -18,7 +18,7 @@ router.use(bodyParser.json())
 /*** CRUD implementation ***/
 // Creating new data
 router.post('/', (req, res)=>{
-    let schema = Company.schema
+    let schema = Company.getSchema()
     let val = joi.validate(req.body, schema)
     if(val.error){
         return res.sendStatus(400)
@@ -54,7 +54,7 @@ router.put('/:uuid', (req, res)=>{
     if(company === undefined){
         return res.sendStatus(400)
     }
-    let schema = Company.schema
+    let schema = Company.getSchema()
     for(attr in company){
         if(attr in req.body && req.body[attr] != ''){
             let val = joi.validate(req.body[attr], schema[attr])

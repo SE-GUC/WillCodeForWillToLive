@@ -10,11 +10,13 @@ class Company{
         this.companyStatus = companyStatus
     }
 
-   static schema = {
+   static getSchema(){
+       return {
         companyName : joi.string().min(3).required(),
         establishmentDate : joi.date().required(),
         investorName : joi.string().min(3).required(),
         companyStatus : joi.string().min(3).required()
+       }
     }
 }
 
