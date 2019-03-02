@@ -3,6 +3,7 @@ const uuid = require('uuid');
 
 class Investor{
     constructor(name, gender, nationality, typeOfID, Id, capital, DOB, emailAddress, mobileNumber, address, faxNumber){
+    this.autoid = uuid.v4()
     this.name=name
     this.gender= gender
     this.nationality=nationality
