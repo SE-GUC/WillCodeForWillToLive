@@ -1,49 +1,20 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
 
-//Investor schema
-var investorSchema = new Schema({
-    name:{
-        type: String,
-        
-    },
-    gender:{
-        type: String,
-        
-    },
-    nationality:{
-        type: String,
-        
-    },
-    typeOfID:{
-        type: String,
-        
-    },
-    
-    capital:{
-        type: Number,
-        
-    },
-    birthdate:{
-        type: Date,
-        default: Date.now
-    },
-    email:{
-        type:String,
-        unique:true
-    },
-    mobileNumber:{
-        type:Number,
-        default:null
-    },
-    address:{
-        type:String,
-    },
-    faxNumber:{
-        type:Number,
-        default:null
-    },
-    
-});
+const uuid = require('uuid');
 
-module.exports = Investor = mongoose.model('investors', investorSchema)
+class Investor{
+    constructor(name, gender, nationality, typeOfID, Id, capital, DOB, emailAddress, mobileNumber, address, faxNumber){
+    this.name=name
+    this.gender= gender
+    this.nationality=nationality
+    this.typeOfID= typeOfID
+    this.Id=Id
+    this.capital=capital
+    this.DOB=DOB
+    this.emailAddress=emailAddress
+    this.mobileNumber=mobileNumber
+    this.address=address
+    this.faxNumber=faxNumber
+
+    };
+};
+ module.exports =Investor
