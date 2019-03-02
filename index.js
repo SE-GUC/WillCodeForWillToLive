@@ -1,3 +1,4 @@
+
 /** * npm modules ***/
 const express = require('express')
 const port = 3000
@@ -9,6 +10,7 @@ const sscForm = require('./routes/api/sscForm')
 const spcForm = require('./routes/api/spcForm')
 const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
+const external_entities=require('./routes/api/external_entities')
 const companyRouter = require('./routes/api/company')
 /** * global constants ***/
 
@@ -24,6 +26,7 @@ app.use('/api/sscform',sscForm)
 app.use('/api/spcform',spcForm)
 app.use('/api/cases',cases);
 app.use('/api/EntityEmployee', entityEmployeeRouter)
+app.use('/api/ExternalEntity',external_entities)
 
 
 /** * Adding temporary index page ***/
