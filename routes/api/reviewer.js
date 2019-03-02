@@ -3,7 +3,7 @@ const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 
-const Reviewer = require('/Users/User/Desktop/SE/WillCodeForWillToLive/models/Reviewer');
+const Reviewer = require('../../models/Task');
 
 const reviewers = [new Reviewer('Pablo Escobar','1/1/1999','Male','Colombian','UUID','02091998','09021998','abulletinthedark@gmail.com','21 Medillin Street'),
                     new Reviewer('Tata Escobar','4/3/1999','Female','Colombian','UUID','02091998','09021998','faithfulwife@gmail.com','21 Medillin Street')]

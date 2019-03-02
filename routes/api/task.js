@@ -3,7 +3,7 @@ const Joi = require('joi');
 const uuid = require('uuid');
 const router = express.Router();
 
-const Task = require('/Users/User/Desktop/SE/WillCodeForWillToLive/models/Task');
+const Task = require('../../models/Task');
 
 const tasks = [new Task(5, 'Review', '1/1/2019', false),
                 new Task(3 ,'Check', '5/3/2019',false)]
