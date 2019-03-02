@@ -62,7 +62,6 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const lawyerId = req.params.id
-  console.log(lawyerId)
   const lawyerInstance = lawArr.find(lawyerX => lawyerX.autoid === lawyerId)
   if (!lawyerInstance) {
     res.status(404).send({ err: 'Lawyer not found' })
