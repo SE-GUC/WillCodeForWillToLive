@@ -5,6 +5,7 @@ const port = 3000
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
+
 const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
 const investors = require('./router/api/investors')
@@ -14,15 +15,16 @@ const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
 const external_entities=require('./routes/api/external_entities')
 const companyRouter = require('./routes/api/company')
+const Lawyer = require('./routes/api/Lawyer')
 /** * global constants ***/
-
-
 const app = express()
 app.use(express.json());
+
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
 
+app.use('/api/Lawyer',Lawyer)
 app.use('/api/reviewer', reviewers)
 app.use('/api/tasks', tasks)
 app.use('/api/investors', investors)
