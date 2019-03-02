@@ -65,7 +65,7 @@ router.put('/:uuid', (req, res)=>{
     }
     for(attr in company){
         if(attr in req.body){
-            compant[attr] = req.body[attr]
+            company[attr] = req.body[attr]
         }
     }
     return res.send('Updated company')
