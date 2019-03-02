@@ -82,15 +82,15 @@ router.put('/:id', (req, res) => {
         const address = req.body.address;
     
         const schema = {
-            name: Joi.string().required(),
-            birth_date: Joi.string().required(),
-            gender: Joi.string().required(),
-            nationality: Joi.string().required(),
-            type_of_ID: Joi.string().required(),
-            mobile_number: Joi.string().required(),
-            fax_number: Joi.string().required(),
-            email: Joi.string().required(),
-            address: Joi.string().required()
+            name: Joi.string(),
+            birth_date: Joi.string(),
+            gender: Joi.string(),
+            nationality: Joi.string(),
+            type_of_ID: Joi.string(),
+            mobile_number: Joi.string(),
+            fax_number: Joi.string(),
+            email: Joi.string(),
+            address: Joi.string()
         }
     
         const result = Joi.validate(req.body,schema);
