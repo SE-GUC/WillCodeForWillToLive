@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
   const middleName = req.body.middleName
   const lastName = req.body.lastName
   const DOB = req.body.DOB
-  const gender = req.body.geneder
+  const gender = req.body.gender
   const nationality = req.body.nationality
   const typeOfId = req.body.typeOfId
   const Id = req.body.Id
@@ -79,10 +79,10 @@ router.put('/:id', (req, res) => {
     res.status(404).send({ err: 'Employee not found' })
   } else {
     const firstName = req.body.firstName
-    const middleName = req.body.age
+    const middleName = req.body.middleName
     const lastName = req.body.lastName
     const DOB = req.body.DOB
-    const gender = req.body.geneder
+    const gender = req.body.gender
     const nationality = req.body.nationality
     const typeOfId = req.body.typeOfId
     const Id = req.body.Id

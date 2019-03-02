@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const joi = require("joi");
 const uuid = require('uuid');
 // Model imports
-const Form = require('../../../models/form/SpcForm')
+const Form = require('../../models/form/SpcForm')
 
 // global constants
 const router = express.Router()
