@@ -23,8 +23,8 @@ app.use(express.json());
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
 
-app.use('/api/reviewer', reviewer)
-app.use('/api/tasks', task)
+app.use('/api/reviewer', reviewers)
+app.use('/api/tasks', tasks)
 app.use('/api/investors', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/sscform',sscForm)
