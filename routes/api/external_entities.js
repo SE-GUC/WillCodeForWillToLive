@@ -33,26 +33,36 @@ app.post('/', (req, res) => {
 
 app.put('/:id', (req, res) =>{
     const course = ExternalEntity.find(c => c.id === parseInt(req.params.id));
-    if(!course) return res.status(404).send('the course was not found');
-    
-    const { error } = validateCourse(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
-        
-
-    course.name = req.body.name;
-    course.emailAddress = req.body.emailAddress;
-    course.nationality = req.body.nationality;
-    course.typeofID = req.body.typeofID
-    course.mobileNumber = req.body.mobileNumber;
-    course.faxNumber = req.body.faxNumber;
-    course.address = req.body.address;
+    if(!course) return res.status(404).send('the External-Entity was not found');
+            
+    if(req.body.name != null){
+        course.name = req.body.name;
+    }
+    if(req.body.emailAddress != null){
+        course.emailAddress = req.body.emailAddress;
+    }
+    if(req.body.nationality != null){
+        course.nationality = req.body.nationality;
+    }
+    if(req.body.typeofID != null){
+        course.typeofID = req.body.typeofID;
+    }
+    if(req.body.mobileNumber != null){
+        course.mobileNumber = req.body.mobileNumber;
+    }
+    if(req.body.faxNumber != null){
+        course.faxNumber = req.body.faxNumber;
+    }
+    if(req.body.address != null){
+        course.address = req.body.address;
+    }
     res.send(course);
 });
 
 
 app.delete('/:id', (req, res) => {
     const course = ExternalEntity.find(c => c.id === parseInt(req.params.id));
-    if(!course) return res.status(404).send('the course was not found');
+    if(!course) return res.status(404).send('the External-Entity was not found');
 
     const index = ExternalEntity.indexOf(course);
     ExternalEntity.splice(index, 1);
