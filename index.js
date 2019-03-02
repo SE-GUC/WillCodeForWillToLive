@@ -5,6 +5,8 @@ const port = 3000
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
+const reviewers = require('./routes/api/reviewer')
+const tasks = require('./routes/api/task')
 const investors = require('./router/api/investors')
 const sscForm = require('./routes/api/sscForm')
 const spcForm = require('./routes/api/spcForm')
@@ -20,6 +22,9 @@ app.use(express.json());
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
+
+app.use('/api/reviewer', reviewer)
+app.use('/api/tasks', task)
 app.use('/api/investors', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/sscform',sscForm)
@@ -35,5 +40,5 @@ app.get('/', (req, res) => { res.send('<h1>WillCodeToLive</h1>\n<h3>Index Page<h
 app.use((req, res) => {
   res.status(404).send({ err: 'Obi-Wan: You don\'t need to see this page...' })
 })
-/** * Listening on serverport ***/
+/*** Listening on serverport ***/
 app.listen(port, () => console.log(`Server up. Listening on port ${port}`))
