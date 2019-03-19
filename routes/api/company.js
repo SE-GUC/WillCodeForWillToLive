@@ -48,7 +48,7 @@ router.get('/', async (req, res)=>{
 // Reading entry
 router.get('/:id', (req, res)=>{
     mongoose.connect(mongoURL).then(()=>{
-        schema.findOne({'CompanyNameArabic': req.params.id})
+        schema.findOne({'_id': req.params.id})
         .exec()
         .then((company)=>{
             return res.send({data:company})
@@ -66,7 +66,7 @@ router.get('/:id', (req, res)=>{
 router.put('/:id', (req, res)=>{
     mongoose.connect(mongoURL)
     .then(()=>{
-        schema.findOneAndUpdate({'companyNameArabic':req.params.id}, req.body)
+        schema.findOneAndUpdate({'_id':req.params.id}, req.body)
         .exec()
         .then(()=>{
             return res.redirect('/api/company/')
