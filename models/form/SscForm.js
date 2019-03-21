@@ -90,6 +90,14 @@ const FormSchema = new Schema({
         type: Boolean,
         required: true
     },
+    ReviewedComment: {
+        type: String,
+        required: false
+    },
+    ReviewedDate: {
+        type: Date,
+        required: false
+    },
     Status: {
         type: Boolean,
         required: true
