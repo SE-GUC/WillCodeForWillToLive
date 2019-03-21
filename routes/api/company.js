@@ -11,7 +11,6 @@ router.use(bodyParser.urlencoded({ extended: false }))
 
 const mongoURL = config.mongoURI
 mongoose.set('useCreateIndex', true)
-mongoose.set('useNewUrlParser', true)
 
 /*** CRUD implementation ***/
 router.post('/', (req, res)=>{
@@ -19,7 +18,6 @@ router.post('/', (req, res)=>{
         schema.insertMany([req.body]).then(()=>{
             return res.redirect('/api/company/')
         }).catch((error)=>{
-            console.log('Here')
             mongoose.disconnect()
             return res.send(error)
         })
@@ -84,7 +82,7 @@ router.put('/:id', (req, res)=>{
 router.delete('/:id', (req, res)=>{
     mongoose.connect(mongoURL)
     .then(()=>{
-        schema.deleteOne({'companyNameArabic':req.params.id})
+        schema.deleteOne({'_id':req.params.id})
         .exec()
         .then(()=>{
             return res.redirect('/api/company')

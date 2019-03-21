@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CompanySchema = new Schema({
-    compnayNameEnglish: {
+    companyNameEnglish: {
         type: String,
         required: false
     },
@@ -11,7 +11,7 @@ const CompanySchema = new Schema({
         required: true,
         unique: true
     },
-    estabslishmentDate: {
+    establishmentDate: {
         type: Date,
         required: true
     },
