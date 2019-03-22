@@ -4,6 +4,8 @@
 This is an implementation of the Sumerge project for the Software Engineering course 'CSEN601'
 
 -----
+
+## Important: Entity Employee is the System Admin!
 ## Contribution
 - Clone the repo.
 - Check out to your branch ```git checkout <branchname>```.
@@ -19,4 +21,4 @@ This is an implementation of the Sumerge project for the Software Engineering co
 - To run the server use the command ```npm run dev``` and it will use nodemon to restart the server each time you save
 
 ----
- **Hint**: You can create a folder called private tests where ever in the project to try anything without affecting the repository (*Check [gitignore file](https://github.com/SE-GUC/WillCodeForWillToLive/blob/master/.gitignore)*).
+ **Hint**: You can create a folder called private tests where ever in the project to try anything without affecting the repository (*Check [.gitignore](https://github.com/SE-GUC/WillCodeForWillToLive/blob/master/.gitignore) file*).
