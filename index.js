@@ -14,7 +14,7 @@ const sscForm = require('./routes/api/sscForm')
 const spcForm = require('./routes/api/spcForm')
 const cases = require('./routes/api/cases');
 const entityEmployeeRouter = require('./routes/api/EntityEmployee')
-const external_entities=require('./routes/api/external_entities')
+const externalEntitys = require('./routes/api/externalEntitys')
 const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
 /** * global constants ***/
@@ -41,7 +41,7 @@ app.use('/api/sscform',sscForm)
 app.use('/api/spcform',spcForm)
 app.use('/api/cases',cases);
 app.use('/api/EntityEmployee', entityEmployeeRouter)
-app.use('/api/ExternalEntity',external_entities)
+app.use('/api/externalEntitys', externalEntitys)
 
 
 /** * Adding temporary index page ***/
