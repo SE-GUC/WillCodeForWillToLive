@@ -1,17 +1,23 @@
 /*** npm modules ***/
 const express = require('express')
 const port = 3000
+const mongoose = require('mongoose')
 
 /*** project modules ***/
 // example: const router = require('router/api/company')
-const Lawyer = require('./routes/api/Lawyer')
+const lawyer = require('./routes/api/lawyer')
 /*** global constants ***/
 const app = express()
 app.use(express.json())
 
 /*** adding controllers/routers ***/
 // example: app.use('/api/company', company)
-app.use('/api/Lawyer',Lawyer)
+app.use('/api/Lawyer',lawyer)
+
+
+/** * Connectiong to db ***/
+const db = require('./config/keys.js').mongoURI
+mongoose.connect(db).then(() => console.log('Connected to MongoDB')).catch(err => console.log(err))
 
 /*** Adding temporary index page ***/
 app.get('/', (req, res)=>{res.send("<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>")})
