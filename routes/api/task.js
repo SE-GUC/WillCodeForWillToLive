@@ -79,7 +79,7 @@ router.put('/:id',async (req,res) => {
         if(!task) return res.status(404).send({error: 'Task not found'})
         const isValidated = validator.createValidation(req.body)
         if(isValidated.error) res.status(404).send({error: isValidated.error.details[0].message})
-        const updatedTask = await Task.updateOne(req.body)
+        const updatedTask = await Task.findByIdAndUpdate(id, req.body)
         res.json({msg: 'Task has been updated', data: updatedTask})
     }
     catch(error){
