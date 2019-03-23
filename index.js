@@ -9,7 +9,7 @@ const port = 3000
 
 const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
-const investors = require('./routes/api/investors')
+const investors = require('./routes/api/investor')
 const sscForm = require('./routes/api/sscForm')
 const spcForm = require('./routes/api/spcForm')
 const cases = require('./routes/api/cases');
@@ -35,7 +35,7 @@ mongoose
 app.use('/api/Lawyer',Lawyer)
 app.use('/api/reviewer', reviewers)
 app.use('/api/tasks', tasks)
-app.use('/api/investors', investors)
+app.use('/api/investor', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/sscform',sscForm)
 app.use('/api/spcform',spcForm)
