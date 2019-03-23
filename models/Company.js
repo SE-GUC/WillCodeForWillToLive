@@ -1,23 +1,30 @@
-const joi = require('joi')
-const uuid = require('uuid')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-class Company{
-    constructor(companyName, establishmentDate, investorName, companyStatus){ // TODO: Complete company attributes
-        this.uuid = uuid.v4()
-        this.companyName = companyName
-        this.establishmentDate = establishmentDate
-        this.investorName = investorName
-        this.companyStatus = companyStatus
+const CompanySchema = new Schema({
+    companyNameEnglish: {
+        type: String,
+        required: false
+    },
+    companyNameArabic: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    establishmentDate: {
+        type: Date,
+        required: true
+    },
+    investorName: {
+        type: String,
+        required: true
+    },
+    companyStatus: {
+        type: String,
+        required: true
     }
+})
 
-   static getSchema(){
-       return {
-        companyName : joi.string().min(3).required(),
-        establishmentDate : joi.date().required(),
-        investorName : joi.string().min(3).required(),
-        companyStatus : joi.string().min(3).required()
-       }
-    }
-}
+const Company = mongoose.model('Company', CompanySchema)
 
-module.exports = Company;
+module.exports = Company
