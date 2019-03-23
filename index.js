@@ -43,8 +43,6 @@ app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)
 app.use('/api/ExternalEntity', external_entities)
 
-
-
 /** * Adding temporary index page ***/
 app.get('/', (req, res) => { res.send('<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>') })
 /** * Custom routing for wrong requests ***/
