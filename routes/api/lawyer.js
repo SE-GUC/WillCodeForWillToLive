@@ -6,7 +6,7 @@ const router = express.Router();
 const validator = require('../../validations/lawyerValidation');
 
 // Models
-const Lawyer = require('../../models/Lawyer');
+const Lawyer = require('../../models/lawyer');
 
 router.get('/', async (req,res) => {
     const lawyers = await Lawyer.find()
