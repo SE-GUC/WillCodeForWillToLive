@@ -1,7 +1,8 @@
 
 /** * npm modules ***/
 const express = require('express')
-const port = 3000
+const port =  3000
+const mongoose = require('mongoose')
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
@@ -18,6 +19,14 @@ const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
 /** * global constants ***/
 const app = express()
+
+const db = require('./config/keys').mongoURI
+
+mongoose
+        .connect(db)
+        .then(() => console.log('Connected to Database'))
+        .catch(err => console.log(err))
+
 app.use(express.json());
 
 
@@ -26,7 +35,7 @@ app.use(express.json());
 
 app.use('/api/Lawyer',Lawyer)
 app.use('/api/reviewer', reviewers)
-app.use('/api/tasks', tasks)
+app.use('/api/task', tasks)/
 app.use('/api/investors', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/sscform',sscForm)
