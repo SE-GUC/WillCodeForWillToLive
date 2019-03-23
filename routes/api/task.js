@@ -44,7 +44,7 @@ router.get('/:id', async (req,res) => {
     if(!task) return res.status(404).send({msg: 'Could not find task with that id'})
     res.json({data: task})}
     catch(error){
-        res.json({error:'khara'})
+        res.json({error:'Error occurred'})
     }
 })
 
