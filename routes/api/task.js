@@ -7,20 +7,47 @@ const mongoose = require('mongoose');
 const Task = require('../../models/Task');
 const validator = require('../../validations/taskValidations')
 
+const sortByID = (a,b) => {
+    return a.id - b.id
+
+}
+
+const sortByCreatedAt = (a,b) => {
+    return a.created_at - b.created_at
+}
+
+
 //const tasks = [new Task(5, 'Review', '1/1/2019', false),
   //              new Task(3 ,'Check', '5/3/2019',false)]
 
 router.get('/', async (req, res) => {
-    const task = await Task.find()
-    res.json({data: task})
+   try{ const task = await Task.find()
+    res.json({data: task})}
+    catch(error){
+        res.json({error: 'Could not return the list' })
+    }
 })
 
+router.get('/sortbyID', async (req,res) => {
+    try{
+        const task = await Task.find()
+        // let tasks = task[0]
+        task.sort(sortByID)
+    }
+    catch(error){
+        console.log({error: 'Error has occurred'})
+    }
+ })
 router.get('/:id', async (req,res) => {
-    const id = req.params.id
-    const task = await Task.findOne(id)
+    try{const id = req.params.id
+    const task = await Task.findById(id)
     if(!task) return res.status(404).send({msg: 'Could not find task with that id'})
-    res.json({data: task})
+    res.json({data: task})}
+    catch(error){
+        res.json({error:'khara'})
+    }
 })
+
 
 router.post('/', async (req, res) => {
     try{
@@ -48,7 +75,7 @@ router.post('/', async (req, res) => {
 router.put('/:id',async (req,res) => {
     try{
         const id = req.params.id
-        const task = await Task.findOne(id)
+        const task = await Task.findById(id)
         if(!task) return res.status(404).send({error: 'Task not found'})
         const isValidated = validator.createValidation(req.body)
         if(isValidated.error) res.status(404).send({error: isValidated.error.details[0].message})

@@ -35,7 +35,7 @@ app.use(express.json());
 
 app.use('/api/Lawyer',Lawyer)
 app.use('/api/reviewer', reviewers)
-app.use('/api/task', tasks)/
+app.use('/api/tasks', tasks)/
 app.use('/api/investors', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/sscform',sscForm)
