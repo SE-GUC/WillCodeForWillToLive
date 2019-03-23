@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Investor = require("../../models/Investor");
-const validator = require("../../validations/investorValidations");
+const validator = require("../../validations/investorValidation");
 //create Investor profile
 router.post("/", async (req, res) => {
   try {
