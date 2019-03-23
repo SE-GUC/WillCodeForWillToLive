@@ -20,7 +20,7 @@ const Lawyer = require('./routes/api/lawyer')
 /** * global constants ***/
 const app = express()
 
-const db = require('./config/keys').mongoURI
+const db = require('./config/keys.js').mongoURI
 
 mongoose
         .connect(db)
@@ -31,16 +31,16 @@ app.use(express.json());
 
 
 //new
-const db = require('./config/keys.js').mongoURI
-mongoose
-    .connect(db)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.log(err))
+// const db = require('./config/keys.js').mongoURI
+// mongoose
+//     .connect(db)
+//     .then(() => console.log('Connected to MongoDB'))
+//     .catch(err => console.log(err))
 
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
-app.use('/api/Lawyer',Lawyer)
+//app.use('/api/Lawyer',Lawyer)
 
 //
 // /** * Connectiong to db ***/
