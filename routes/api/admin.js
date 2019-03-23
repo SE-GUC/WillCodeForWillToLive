@@ -1,16 +1,25 @@
 const express = require('express')
-const Joi = require('joi')
-const uuid = require('uuid')
+// const Joi = require('joi')
+// const uuid = require('uuid')
 const router = express.Router()
+// const mongoose = require('mongoose')
 
-const EntityEmployee = require('../../models/EntityEmployee')
-const EntityEmployees = [
+const Admin = require('../../models/admin')
+const validator = require('../../validations/adminValidations')
+/* const EntityEmployees = [
   new EntityEmployee('Amr', 'Ahmed', 'ElNahas', new Date(1998, 6, 7), 'male', 'Egyptian', 'Passport', 6969696969, 'lawyer', 8675309, 213432532, 'amrtea.edu@gmail.com', 'Cairo'),
   new EntityEmployee('Marven', 'Waitforit', 'Eriksen', new Date(2012, 5, 14), 'male', 'American', 'Passport', 73621823, 'Reviewer', 50005000, 74283446, 'MarvinEriksen@gmail.com', 'US'),
   new EntityEmployee('Ron', 'redacted', 'Swanson', new Date(1978, 8, 2), 'male', 'American', 'Passport', 7438903803, 'lawyer', 8675309, 2314839220, 'redacted@gmail.com', 'Pawnee')
-]
-router.get('/', (req, res) => res.json({ data: EntityEmployees }))
-router.post('/', (req, res) => {
+] */
+// router.get('/', (req, res) => res.json({ data: EntityEmployees }))
+router.get('/', async (req, res) => {
+  Admin.find().then((admins) => {
+    res.send({ admins })
+  }, (err) => {
+    res.status(400).send(err)
+  })
+})
+/* router.post('/', (req, res) => {
   const firstName = req.body.firstName
   const middleName = req.body.middleName
   const lastName = req.body.lastName
@@ -62,8 +71,19 @@ router.post('/', (req, res) => {
   )
   EntityEmployees.push(newEntityEmployee)
   return res.json({ data: newEntityEmployee })
+}) */
+router.post('/', async (req, res) => {
+  try {
+    const isValidated = validator.createValidation(req.body)
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    Admin.create(req.body).then((newAdmin) => {
+      res.json({ message: 'Admin was created successfully', data: newAdmin })
+    }, (err) => { res.status(400).send(err) })
+  } catch (error) {
+    res.status(400).send({ error: 'Error' })
+  }
 })
-router.get('/:id', (req, res) => {
+/* router.get('/:id', (req, res) => {
   const EntityEmployeeId = req.params.id
   const EntityEmployeeInstance = EntityEmployees.find(EntityEmployeeX => EntityEmployeeX.id === EntityEmployeeId)
   if (EntityEmployeeInstance === undefined) {
@@ -71,8 +91,39 @@ router.get('/:id', (req, res) => {
   } else {
     res.send({ EntityEmployeeInstance })
   }
+}) */
+router.get('/:id', async (req, res) => {
+  try {
+    const adminId = req.params.id
+    const adminInstance = await Admin.findById(adminId)
+    if (!adminInstance) {
+      res.status(400).send({ error: 'not found' })
+    } else {
+      res.json({ data: adminInstance })
+    }
+  } catch (error) {
+    res.status(400).send({ error: 'error' })
+  }
 })
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
+  try {
+    const adminId = req.params.id
+    const adminInstance = await Admin.findById(adminId)
+    if (!adminInstance) {
+      res.status(404).send({ error: 'not found' })
+    }
+    const isValidated = validator.updateValidation(req.body)
+    if (isValidated.error) {
+      res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    await Admin.findByIdAndUpdate(adminId, req.body)
+    res.json({ message: 'updated successfuly' })
+  } catch (error) {
+    res.status(400).send({ error: 'error' })
+  }
+})
+
+/* router.put('/:id', (req, res) => {
   const EntityEmployeeId = req.params.id
   const EntityEmployeeInstance = EntityEmployees.find(EntityEmployeeX => EntityEmployeeX.id === EntityEmployeeId)
   if (EntityEmployeeInstance === undefined) {
@@ -106,7 +157,7 @@ router.put('/:id', (req, res) => {
       faxNumber: Joi.number(),
       emailAddress: Joi.string(),
       address: Joi.string()
-        }
+    }
 
     const result = Joi.validate(req.body, schema)
 
@@ -153,9 +204,18 @@ router.put('/:id', (req, res) => {
     }
     res.json({ data: EntityEmployees })
   }
+}) */
+router.delete('/:id', async (req, res) => {
+  try {
+    const adminId = req.params.id
+    await Admin.findByIdAndRemove(adminId)
+    res.json({ message: 'Deleted successfully' })
+  } catch (error) {
+    res.status(404).send({ error: 'error' })
+  }
 })
-router.delete('/:id', (req, res) => {
-  /*const EntityEmployeeId = req.params.id
+// router.delete('/:id', (req, res) => {
+/* const EntityEmployeeId = req.params.id
   const EntityEmployeeInstance = EntityEmployees.find(EntityEmployeeX => EntityEmployeeX.id === EntityEmployeeId)
   if (EntityEmployeeInstance === undefined) {
     res.status(404).send({ err: 'Employee not found' })
@@ -163,14 +223,14 @@ router.delete('/:id', (req, res) => {
     const index = EntityEmployees.indexOf(EntityEmployeeInstance)
     EntityEmployees.splice(index, 1)
     res.json({ data: EntityEmployees })
-  }*/
-  let EntityEmployeeid = req.params.id;
-  let EntityEmployeeIndex = null;
-  EntityEmployeeIndex = EntityEmployees.findIndex((x) => {return x.id === EntityEmployeeid});
-  if(EntityEmployeeIndex === null){
-      return res.sendStatus(400);
+  } */
+/* let EntityEmployeeid = req.params.id
+  let EntityEmployeeIndex = null
+  EntityEmployeeIndex = EntityEmployees.findIndex((x) => { return x.id === EntityEmployeeid })
+  if (EntityEmployeeIndex === null) {
+    return res.sendStatus(400)
   }
-  EntityEmployees.splice(EntityEmployeeIndex, 1);
-  return res.send('Deleted!');
-})
+  EntityEmployees.splice(EntityEmployeeIndex, 1)
+  return res.send('Deleted!')
+}) */
 module.exports = router

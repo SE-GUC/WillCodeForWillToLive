@@ -1,4 +1,7 @@
 node_modules/*
 package-lock.json
-**private tests/*
+*/private tests/*
+private tests/*
 config/keys.js
+config/masterkeys.js
+**private tests/*
