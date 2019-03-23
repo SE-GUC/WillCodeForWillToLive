@@ -3,12 +3,16 @@ const Schema = mongoose.Schema
 
 
 const SscFormSchema = new Schema({
+<<<<<<< HEAD
     id: {
         type: Number,
         required: true,
         unique: true
 
     },
+=======
+
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
     CompanyName: {
         type: String,
         required: true,
@@ -16,7 +20,11 @@ const SscFormSchema = new Schema({
 
     },
     CompanyNationality: {
+<<<<<<< HEAD
         type: [String],
+=======
+        type: String,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         required: true,
         unique: true
 
@@ -26,12 +34,20 @@ const SscFormSchema = new Schema({
         required: false
     },
     Currency: {
+<<<<<<< HEAD
         type: [String],
+=======
+        type: String,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         required: true
     },
     Capital: {
         type: Number,
+<<<<<<< HEAD
         min:50000
+=======
+        min:50000,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
     },
     CreatedAt: {
         type: Date,
@@ -39,6 +55,7 @@ const SscFormSchema = new Schema({
         default:Date.now
     },
     RegulatedLaw: {
+<<<<<<< HEAD
         type: [String],
         required: true
     },
@@ -84,6 +101,25 @@ const SscFormSchema = new Schema({
     },
     boardOfDirectorsHomeAddress: {
         type: [String],
+=======
+        type: String,
+        required: true
+    },
+    FormOfLegalCompany: {
+        type: String,
+        required: true
+    },
+    Governorate: {
+        type: String,
+        required: true
+    },
+    City: {
+        type: String,
+        required: true
+    },
+    Address: {
+        type: String,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         required: true
     },
     Reviewed: {
@@ -112,6 +148,7 @@ const SscFormSchema = new Schema({
     },
 
     InvestorName: {
+<<<<<<< HEAD
         type: [String],
         required: true
     },
@@ -125,10 +162,26 @@ const SscFormSchema = new Schema({
     },
     InvestorId: {
         type: [Number],
+=======
+        type: String,
+        required: true
+    },
+    InvestorGender: {
+        type: String,
+        required: true
+    },
+    InvestorNationality: {
+        type: String,
+        required: true
+    },
+    InvestorId: {
+        type: Number,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         required: true,
         unique: true
     },
     InvestorBirthdate: {
+<<<<<<< HEAD
         type: [Date],
         required: true
     },
@@ -146,6 +199,25 @@ const SscFormSchema = new Schema({
     },
     InvestorHomeAddress: {
         type: [String],
+=======
+        type: Date,
+        required: true
+    },
+    InvestorTelephone: {
+        type: Number,
+        required: true
+    },
+    InvestorFax: {
+     type: String,
+     required: true
+    },
+    InvestorEmail: {
+        type: String,
+        required: true
+    },
+    InvestorHomeAddress: {
+        type: String,
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         required: true
     },
 })

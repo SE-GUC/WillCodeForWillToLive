@@ -3,11 +3,18 @@ const Joi = require('joi')
 module.exports = {
   createValidation: request => {
     const createSchema = {
+<<<<<<< HEAD
       id: Joi.number().required(),
       CompanyName: Joi.string().required(),
       CompanyNationality: Joi.string().required(),
       CompanyName_English: Joi.string(),
       Currency: Joi.string().required(),
+=======
+      CompanyName: Joi.string().required(),
+      CompanyNationality: Joi.string().required(),
+      CompanyName_English: Joi.string(),
+      Currency: Joi.number().required(),
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
       Capital: Joi.number().required(),
       CreatedAt: Joi.date().required(),
       RegulatedLaw: Joi.string().required(),
@@ -18,7 +25,11 @@ module.exports = {
       Reviewed: Joi.boolean().required(),
       ReviewedComment: Joi.string(),
       ReviewedDate: Joi.date(),
+<<<<<<< HEAD
       Status: Joi.boolean().required(),
+=======
+      Status: Joi.string().required(),
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
       Fax: Joi.string().required(),
       LawyerName: Joi.string().required(),
       InvestorName: Joi.string().required(),
@@ -36,7 +47,10 @@ module.exports = {
   },
   updateValidation: request => {
     const updateSchema = {
+<<<<<<< HEAD
         id: Joi.number(),
+=======
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         CompanyName: Joi.string(),
         CompanyNationality: Joi.string(),
         CompanyName_English: Joi.string(),

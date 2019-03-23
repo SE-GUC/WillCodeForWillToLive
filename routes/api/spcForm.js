@@ -8,7 +8,6 @@ const SpcForm = require('../../models/SpcForm');
 const validator = require('../../validations/SpcFormValidation');
 const config = require('../../config/keys')
 
-
 router.get('/', async (req,res) => {
     const SpcForms = await SpcForm.find()
     res.json({data: SpcForms})
@@ -26,13 +25,16 @@ router.post('/', async (req,res) => {
     res.status(404).send({error: 'Error, something is off'});
    }  
 })
+
 router.get('/calculateFees/:id',async (req,res) =>{
     try{
         const SpcFormId = req.params.id
         const SpcFormElement = await SpcForm.findById(SpcFormId)
         if(!SpcFormElement){
             res.status(404).send({error: 'can not be Found'});
-        }else{
+        }
+        else{
+
             var law = SpcFormElement.RegulatedLaw
             var capital = SpcFormElement.Capital
             console.log(law[0])
@@ -61,8 +63,7 @@ router.get('/calculateFees/:id',async (req,res) =>{
                 res.json({data: fees})
             }
         }
-    }
-    catch(error){
+    }catch(error){
         res.status(404).send({error: 'Error, something is off'});
     }
 })
@@ -72,14 +73,17 @@ router.get('/:id', async (req, res)=>{
         const SpcFormElement = await SpcForm.findById(SpcFormId)
         if(!SpcFormElement){
             res.status(404).send({error: 'can not be Found'});
-        }else{
+        }
+
             res.json({data: SpcFormElement})
         }
-    }
-    catch(error){
+    
+    
+       catch(error){
         res.status(404).send({error: 'Error, something is off'});
     }
 })
+
 /*
 router.put('/:id', async (req,res) => {
     try {
@@ -113,6 +117,39 @@ router.put('/:id', async (req,res) => {
         res.status(404).send({error: 'Error, something is off'});
     }
 })
+
+/*
+router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const SpcForm = await SpcForm.findOne({id})
+     if(!SpcForm) return res.status(404).send({error: 'SpcForm not found'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedSpcForm = await SpcForm.updateOne(req.body)
+     res.json({msg: 'SpcForm updated successfully'})
+    }
+    catch(error) {
+        console.log(error)
+    }  
+ })*/
+ router.put('/:id', async (req, res) => {
+    try{
+        const SpcFormId = req.params.id
+        const SpcFormElement = await SpcForm.findById(SpcFormId)
+        if(!SpcFormElement){
+            res.status(404).send({error: 'SpcForm not found'});
+        }
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedSpcForm = await SpcForm.findByIdAndUpdate(SpcFormId,req.body)
+        res.json({msg: 'update done'})}
+        catch(error){
+            res.status(404).send({error: 'Error, something is off'});
+        }
+    })
 router.delete('/:id', async (req,res) => {
     try{
         const SpcFormId = req.params.id
@@ -123,4 +160,16 @@ router.delete('/:id', async (req,res) => {
         res.status(404).send({error: 'Error, something is off'});
     }
 })
+
+// router.delete('/:id', async (req,res) => {
+//     try{
+//         const SpcFormId = req.params.id
+//         const deletedSpcForm = await SpcForm.findByIdAndRemove(SpcFormId)
+//         res.json({msg: 'Done'})
+//     }
+//     catch(error){
+//         res.status(404).send({error: 'Error, something is off'});
+//     }
+// })
+
  module.exports = router

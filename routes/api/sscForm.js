@@ -26,6 +26,7 @@ router.post('/', async (req,res) => {
     res.status(404).send({error: 'Error, something is off'});
    }  
 })
+
 router.get('/calculateFees/:id',async (req,res) =>{
     try{
         const SscFormId = req.params.id
@@ -61,11 +62,11 @@ router.get('/calculateFees/:id',async (req,res) =>{
                 res.json({data: fees})
             }
         }
-    }
-    catch(error){
-        res.status(404).send({error: 'Error, something is off'});
-    }
-})
+      }  
+      catch(error){
+                res.status(404).send({error: 'Error, something is off'});
+        }
+    })
 router.get('/:id', async (req, res)=>{
     try{
         const SscFormId = req.params.id

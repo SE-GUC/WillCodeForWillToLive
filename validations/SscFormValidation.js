@@ -3,7 +3,10 @@ const Joi = require('joi')
 module.exports = {
   createValidation: request => {
     const createSchema = {
+<<<<<<< HEAD
       id: Joi.number().required(),
+=======
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
       CompanyName: Joi.string().required(),
       CompanyNationality: Joi.string().required(),
       CompanyName_English: Joi.string(),
@@ -15,6 +18,7 @@ module.exports = {
       Governorate: Joi.string().required(),
       City: Joi.string().required(),
       Address: Joi.string().required(),
+<<<<<<< HEAD
       boardOfDirectorsName: Joi.string().required(),
       boardOfDirectorsId: Joi.number().required(),
       boardOfDirectorsGender: Joi.string().required(),
@@ -26,6 +30,12 @@ module.exports = {
       ReviewedComment: Joi.string(),
       ReviewedDate: Joi.date(),
       Status: Joi.boolean().required(),
+=======
+      Reviewed: Joi.boolean().required(),
+      ReviewedComment: Joi.string(),
+      ReviewedDate: Joi.date(),
+      Status: Joi.string().required(),
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
       Fax: Joi.string().required(),
       LawyerName: Joi.string().required(),
       InvestorName: Joi.string().required(),
@@ -43,18 +53,26 @@ module.exports = {
   },
   updateValidation: request => {
     const updateSchema = {
+<<<<<<< HEAD
         id: Joi.number(),
+=======
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         CompanyName: Joi.string(),
         CompanyNationality: Joi.string(),
         CompanyName_English: Joi.string(),
         RegulatedLaw: Joi.string(),
+<<<<<<< HEAD
         Currency: Joi.number(),
+=======
+        Currency: Joi.string(),
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         Capital: Joi.number().min(50000),
         CreatedAt: Joi.date(),
         FormOfLegalCompany: Joi.string(),
         Governorate: Joi.string(),
         City: Joi.string(),
         Address: Joi.string(),
+<<<<<<< HEAD
         boardOfDirectorsName: Joi.string(),
         boardOfDirectorsId: Joi.number(),
         boardOfDirectorsGender: Joi.string(),
@@ -63,6 +81,9 @@ module.exports = {
         boardOfDirectorsPosition: Joi.string(),
         boardOfDirectorsHomeAddress: Joi.string(),
         Reviewed: Joi.boolean(),
+=======
+         Reviewed: Joi.boolean(),
+>>>>>>> 8ee1e595024723d4faa0916b71b2767888e329fe
         ReviewedComment: Joi.string(),
         ReviewedDate: Joi.date(),
         Status: Joi.string(),

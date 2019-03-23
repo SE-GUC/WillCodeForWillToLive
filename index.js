@@ -37,12 +37,11 @@ app.use('/api/reviewer', reviewers)
 app.use('/api/tasks', tasks)
 app.use('/api/investors', investors)
 app.use('/api/company', companyRouter)
-app.use('/api/Sscform',SscForm)
-app.use('/api/Spcform',SpcForm)
-app.use('/api/cases',cases);
-app.use('/api/EntityEmployee', entityEmployeeRouter)
-app.use('/api/ExternalEntity',external_entities)
-
+app.use('/api/sscform', sscForm)
+app.use('/api/spcform', spcForm)
+app.use('/api/cases', cases)
+app.use('/api/admin', adminRouter)
+app.use('/api/ExternalEntity', external_entities)
 
 /** * Adding temporary index page ***/
 app.get('/', (req, res) => { res.send('<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>') })
