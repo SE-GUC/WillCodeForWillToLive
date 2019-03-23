@@ -26,6 +26,44 @@ router.post('/', async (req,res) => {
     res.status(404).send({error: 'Error, something is off'});
    }  
 })
+
+router.get('/calculateFees/:id',async (req,res) =>{
+    try{
+        const SscFormId = req.params.id
+        const SscFormElement = await SscForm.findById(SscFormId)
+        if(!SscFormElement){
+            res.status(404).send({error: 'can not be Found'});
+        }else{
+            var law = SscFormElement.RegulatedLaw
+            var capital = SscFormElement.Capital
+            if(law==="Law159"){
+                let gavi = 1/1000 * capital
+                if(gavi <100){
+                    gavi = 100
+                }
+                if(gavi>1000){
+                    gavi = 1000
+                }
+                let notary = 0.25/100 * capital
+                if(notary <10){
+                    notary = 10
+                }
+                if(notary>1000){
+                    notary = 1000
+                }
+                let Commercial = 56
+                let fees = Commercial + gavi + notary
+                res.json({data: fees})
+            }else{
+                let fees = 610
+                res.json({data: fees})
+            }
+        }
+      }  
+      catch(error){
+                res.status(404).send({error: 'Error, something is off'});
+        }
+    })
 router.get('/:id', async (req, res)=>{
     try{
         const SscFormId = req.params.id

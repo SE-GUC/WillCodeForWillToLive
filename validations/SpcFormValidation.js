@@ -3,10 +3,11 @@ const Joi = require('joi')
 module.exports = {
   createValidation: request => {
     const createSchema = {
+      id: Joi.number().required(),
       CompanyName: Joi.string().required(),
       CompanyNationality: Joi.string().required(),
       CompanyName_English: Joi.string(),
-      Currency: Joi.number().required(),
+      Currency: Joi.string().required(),
       Capital: Joi.number().required(),
       CreatedAt: Joi.date().required(),
       RegulatedLaw: Joi.string().required(),
@@ -17,7 +18,7 @@ module.exports = {
       Reviewed: Joi.boolean().required(),
       ReviewedComment: Joi.string(),
       ReviewedDate: Joi.date(),
-      Status: Joi.string().required(),
+      Status: Joi.boolean().required(),
       Fax: Joi.string().required(),
       LawyerName: Joi.string().required(),
       InvestorName: Joi.string().required(),
@@ -35,6 +36,7 @@ module.exports = {
   },
   updateValidation: request => {
     const updateSchema = {
+        id: Joi.number(),
         CompanyName: Joi.string(),
         CompanyNationality: Joi.string(),
         CompanyName_English: Joi.string(),
