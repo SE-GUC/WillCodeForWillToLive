@@ -1,21 +1,22 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+require("mongoose-type-email");
+//Investor schema
+var investorSchema = new Schema({
+  email: { type: mongoose.SchemaTypes.Email, unique: true },
+  password: String,
+  typeOfID: String,
+  name: String,
+  nationality: String,
+  capital: Number,
+  birthdate: Date,
+  mobileNumber: Number,
+  address: String,
+  faxNumber: Number,
+  gender: {
+    type: String,
+    enum: ["Male", "Female"]
+  }
+});
 
-const uuid = require('uuid');
-
-class Investor{
-    constructor(name, gender, nationality, typeOfID, Id, capital, DOB, emailAddress, mobileNumber, address, faxNumber){
-    this.autoid = uuid.v4()
-    this.name=name
-    this.gender= gender
-    this.nationality=nationality
-    this.typeOfID= typeOfID
-    this.Id=Id
-    this.capital=capital
-    this.DOB=DOB
-    this.emailAddress=emailAddress
-    this.mobileNumber=mobileNumber
-    this.address=address
-    this.faxNumber=faxNumber
-
-    };
-};
- module.exports =Investor
+module.exports = Investor = mongoose.model("investors", investorSchema);
