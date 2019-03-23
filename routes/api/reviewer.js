@@ -17,7 +17,7 @@ router.get('/', async (req,res) => {
 
 router.get('/:id', async (req,res) => {
     const id = req.params.id
-    const reviewer = await Reviewer.findOne(id)
+    const reviewer = await Reviewer.findById(id)
     if(!reviewer) return res.status(404).send({msg: 'Cannot find Reviewer with specific id'})
     res.json({data: reviewer})
 })
@@ -48,8 +48,10 @@ router.put('/:id', async (req,res) => {
     try{
         const id = req.params.id
         const reviewer = await Reviewer.findById(id)
-        if(!reviewer) return res.status(404).send({error: isValidated.error.details[0].message})
-        const updatedReviewer = await Reviewer.updateById(req.body)
+        const isValidated = validator.updateValidation(req.body)
+        if(!reviewer)  res.status(404).send({ error: 'Reviewer not found' })
+        if(isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const updatedReviewer = await Reviewer.findByIdAndUpdate(req.body)
         res.json({msg:'Reviewer updated successfully', data: updatedReviewer})
     }
     catch(error){
