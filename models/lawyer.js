@@ -7,7 +7,6 @@ var lawyerSchema = new mongoose.Schema({
     gender: String,
     nationality: String,
     type_Of_ID: String,
-    identification: Number,
     mobile_number: String,
     fax_number: Number,
     email_address: String,
