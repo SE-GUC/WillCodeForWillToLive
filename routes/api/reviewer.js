@@ -51,7 +51,7 @@ router.put('/:id', async (req,res) => {
         const isValidated = validator.updateValidation(req.body)
         if(!reviewer)  res.status(404).send({ error: 'Reviewer not found' })
         if(isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-        const updatedReviewer = await Reviewer.findByIdAndUpdate(req.body)
+        const updatedReviewer = await Reviewer.findByIdAndUpdate(id, req.body)
         res.json({msg:'Reviewer updated successfully', data: updatedReviewer})
     }
     catch(error){
