@@ -1,19 +1,17 @@
-const uuid = require('uuid')
+const mongoose = require('mongoose')
 
-class Lawyer{
-    constructor(name, gender, nationality, typeOfID, Id, capital, DOB, emailAddress, mobileNumber, address, faxNumber){
-    this.autoid = uuid.v4()
-    this.name=name
-    this.gender= gender
-    this.nationality=nationality
-    this.typeOfID= typeOfID
-    this.Id=Id
-    this.DOB=DOB
-    this.emailAddress=emailAddress
-    this.mobileNumber=mobileNumber
-    this.address=address
-    this.faxNumber=faxNumber
+//define Lawyer model
+var lawyerSchema = new mongoose.Schema({
+    name: String,
+    birth_date: Number,
+    gender: String,
+    nationality: String,
+    type_Of_ID: String,
+    mobile_number: String,
+    fax_number: Number,
+    email_address: String,
+    username: String,
+    password: String,
+});
 
-    };
-};
- module.exports = Lawyer
+var Lawyer = module.exports = mongoose.model('Lawyer', lawyerSchema);
