@@ -1,87 +1,99 @@
-// Reuired npm modules
-const express = require("express")
-const bodyParser = require("body-parser")
-const joi = require("joi")
-// Required model modules
-const Company = require('../../models/Company')
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
-// Create a list to mimic a data source
-const dataSource = [
-    new Company('Company1', new Date().toLocaleDateString(), 'Inv1', 'Running'),
-    new Company('Company2', new Date().toLocaleDateString(), 'Inv2', 'Dead')
-] 
+const schema = require('../../models/Company')
+const config = require('../../config/keys')
 
-// Initializing router and adding body-parser function
 const router = express.Router()
 router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({ extended: false }))
+
+const mongoURL = config.mongoURI
+mongoose.set('useCreateIndex', true)
 
 /*** CRUD implementation ***/
-// Creating new data
 router.post('/', (req, res)=>{
-    let schema = Company.getSchema()
-    let val = joi.validate(req.body, schema)
-    if(val.error){
-        return res.sendStatus(400)
-    }
-    let newCompany = new Company(req.body.companyName,
-        req.body.establishmentDate, req.body.investorName, req.body.companyStatus)
-    // Add new data to the list
-    dataSource.push(newCompany)
-    return res.send("Company added!")
+    mongoose.connect(mongoURL, {useNewParser: true}).then(()=>{
+        schema.insertMany([req.body]).then(()=>{
+            return res.redirect('/api/company/')
+        }).catch((error)=>{
+            mongoose.disconnect()
+            return res.send(error)
+        })
+    }).catch((error)=>{
+        console.log('There')
+        mongoose.disconnect()
+        return res.send(error)
+    })
 })
 
 // Show all data
-router.get('/', (req, res)=>{
-    res.send(dataSource)
+router.get('/', async (req, res)=>{
+    mongoose.connect(mongoURL).then(()=>{
+        schema.find({}).then((companies)=>{
+            return res.send({data: companies})
+        }).catch((error)=>{
+            mongoose.disconnect()
+            return res.send(`Error: ${error}.`)
+        })
+    }).catch((error)=>{
+        mongoose.disconnect()
+        return res.send(`Error: ${error}.`)
+    })
 })
 
 // Reading entry
-router.get('/:uuid', (req, res)=>{
-    let uuid = req.params.uuid
-    let company = dataSource.find(x => x.uuid == uuid)
-    // Company not found
-    if(!company){
-        return res.sendStatus(400)
-    }
-    res.send(`${company.companyName}\n${company.investorName}`)
+router.get('/:id', (req, res)=>{
+    mongoose.connect(mongoURL).then(()=>{
+        schema.findOne({'_id': req.params.id})
+        .exec()
+        .then((company)=>{
+            return res.send({data:company})
+        }).catch((error)=>{
+            mongoose.disconnect()
+            return res.send(`Error: ${error}.`)
+        })
+    }).catch((error)=>{
+        mongoose.disconnect()
+        return res.send(`Error: ${error}.`)
+    })
 })
 
 // Updating
-router.put('/:uuid', (req, res)=>{
-    let uuid = req.params.uuid
-    let company = dataSource.find(x => x.uuid == uuid)
-    // Company not found
-    if(company === undefined){
-        return res.sendStatus(400)
-    }
-    let schema = Company.getSchema()
-    for(attr in company){
-        if(attr in req.body && req.body[attr] != ''){
-            let val = joi.validate(req.body[attr], schema[attr])
-            if(val.error){
-                return res.sendStatus(400)
-            }
-        }
-    }
-    for(attr in company){
-        if(attr in req.body){
-            company[attr] = req.body[attr]
-        }
-    }
-    return res.send('Updated company')
+router.put('/:id', (req, res)=>{
+    mongoose.connect(mongoURL)
+    .then(()=>{
+        schema.findOneAndUpdate({'_id':req.params.id}, req.body)
+        .exec()
+        .then(()=>{
+            return res.redirect('/api/company/')
+        }).catch((error)=>{
+            mongoose.disconnect()
+            return res.send(`Error: ${error}.`)
+        })
+    }).catch((error)=>{
+        mongoose.disconnect()
+        return res.send(`Error: ${error}.`)
+    })
 })
 
 // Deleting data
-router.delete('/:uuid', (req, res)=>{
-    let uuid = req.params.uuid
-    companyIndex = dataSource.findIndex((x) => {return x.uuid == uuid})
-    // Company not found
-    if(companyIndex === -1){
-        return res.sendStatus(400)
-    }
-    // Delete entry
-    dataSource.splice(companyIndex, 1)
-    return res.send('Deleted')
+router.delete('/:id', (req, res)=>{
+    mongoose.connect(mongoURL)
+    .then(()=>{
+        schema.deleteOne({'_id':req.params.id})
+        .exec()
+        .then(()=>{
+            return res.redirect('/api/company')
+        }).catch((error)=>{
+            mongoose.disconnect()
+            return res.send(`Error: ${error}.`)
+        })
+    }).catch((error)=>{
+        mongoose.disconnect()
+        return res.send(`Error: ${error}.`)
+    })
 })
 
 //Exporting router
