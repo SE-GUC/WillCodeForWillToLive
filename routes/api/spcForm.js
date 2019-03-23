@@ -1,13 +1,17 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const router = express.Router();
 const mongoose = require('mongoose')
+
 
 const SpcForm = require('../../models/SpcForm');
 const validator = require('../../validations/SpcFormValidation');
+const config = require('../../config/keys')
+
 
 router.get('/', async (req,res) => {
-    const SpcForm = await SpcForm.find()
-    res.json({data: SpcForm})
+    const SpcForms = await SpcForm.find()
+    res.json({data: SpcForms})
 })
 
 // Create a SpcForm

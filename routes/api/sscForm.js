@@ -1,13 +1,17 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const router = express.Router();
 const mongoose = require('mongoose')
 
-const schema = require('../../models/SscForm')
+
+const SscForm = require('../../models/SscForm')
+const validator = require('../../validations/SscFormValidation')
 const config = require('../../config/keys')
 
+
 router.get('/', async (req,res) => {
-    const SscForm = await SscForm.find()
-    res.json({data: SscForm})
+    const SscForms = await SscForm.find()
+    res.json({data: SscForms})
 })
 
 // Create a SscForm
