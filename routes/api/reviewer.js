@@ -25,7 +25,7 @@ router.get('/:id', async (req,res) => {
 router.post('/', async (req,res) => {
     try{
         const isValidated = validator.createValidation(req.body)
-        if(isValidated.error) return res.status(404).send({error: isValidated.error.detals[0].message})
+        if(isValidated.error) return res.status(404).send({error: isValidated.error.details[0].message})
         const newReviewer = await Reviewer.create(req.body)
         res.json({msg: 'Reviewer created succcessfully', data: newReviewer})
     }
