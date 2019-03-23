@@ -1,67 +1,86 @@
-// npm imports
-const express = require("express");
-const bodyParser = require("body-parser");
-const joi = require("joi");
-const uuid = require('uuid');
-// Model imports
-const Form = require('../../models/form/SpcForm')
+const express = require('express')
+const bodyParser = require('body-parser')
+const router = express.Router();
+const mongoose = require('mongoose')
 
-// global constants
-const router = express.Router()
-const data = []
 
-//CRUD
-router.post('/', (req, res) => {
-    schema = Form.getSchema()
-    valid = joi.validate(req.body, schema)
-    if(valid.error){
-        return res.status(400).send({ error: valid.error.details[0].message })
-    }
-    let bod = req.body
-    let regLaw = bod.regulatingLaw
-    let cLForm = bod.companyLegalForm
-    let cName = bod.companyName
-    let hqInfo = bod.hqInfo
-    let investorInfo = bod.investorInfo
-    let newForm = new Form(regLaw, cLForm, cName, hqInfo, investorInfo)
-    data.push(newForm)
-    return res.send(newForm)
+const SpcForm = require('../../models/SpcForm');
+const validator = require('../../validations/SpcFormValidation');
+const config = require('../../config/keys')
+
+
+router.get('/', async (req,res) => {
+    const SpcForms = await SpcForm.find()
+    res.json({data: SpcForms})
 })
 
-router.get('/', (req, res)=>{
-    return res.send(data)
+// Create a SpcForm
+router.post('/', async (req,res) => {
+   try {
+    const isValidated = validator.createValidation(req.body)
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    const newSpcForm = await SpcForm.create(req.body)
+    res.json({msg:'SpcForm was created successfully', data: newSpcForm})
+   }
+   catch(error) {
+    res.status(404).send({error: 'Error, something is off'});
+   }  
 })
-
-router.get('/:id', (req, res) => {
-    let FormElement = data.find(FormX => FormX.id === req.params.id)
-    if(FormElement === undefined){
-        return res.status(404).send({err: 'Form  Not found'})
+router.get('/:id', async (req, res)=>{
+    try{
+        const SpcFormId = req.params.id
+        const SpcFormElement = await SpcForm.findById(SpcFormId)
+        if(!SpcFormElement){
+            res.status(404).send({error: 'can not be Found'});
+        }else{
+            res.json({data: SpcFormElement})
+        }
     }
-    return res.send(FormElement)
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
 })
-
-router.put('/:id', (req, res) => {
-    let formElementIndex = data.findIndex(formX => formX.id === req.params.id)
-    if(formElementIndex === -1){
-        return res.status(404).send({err: 'Form  Not found'})
+/*
+router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const SpcForm = await SpcForm.findOne({id})
+     if(!SpcForm) return res.status(404).send({error: 'SpcForm not found'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedSpcForm = await SpcForm.updateOne(req.body)
+     res.json({msg: 'SpcForm updated successfully'})
     }
-    const schema = Form.getSchema()
-    valid = joi.validate(req.body, schema)
-    if(valid.error){
-        return res.status(400).send({ error: valid.error.details[0].message })
+    catch(error) {
+        console.log(error)
+    }  
+ })*/
+ router.put('/:id', async (req, res) => {
+    try{
+        const SpcFormId = req.params.id
+        const SpcFormElement = await SpcForm.findById(SpcFormId)
+        if(!SpcFormElement){
+            res.status(404).send({error: 'SpcForm not found'});
+        }
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedSpcForm = await SpcForm.findByIdAndUpdate(SpcFormId,req.body)
+        res.json({msg: 'update done'})
     }
-    data[formElementIndex] = req.body
-    return res.send(req.body)
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
 })
-
-router.delete('/:id', (req, res) => {
-    let formElementIndex = data.findIndex((form) => {form.id === req.params.id})
-    if(FormElementIndex === -1){
-        return res.status(404).send({err: 'Form  Not found'})
+router.delete('/:id', async (req,res) => {
+    try{
+        const SpcFormId = req.params.id
+        const deletedSpcForm = await SpcForm.findByIdAndRemove(SpcFormId)
+        res.json({msg: 'Done'})
     }
-    let form = data[formElementIndex]
-    data.splice(formElementIndex, 1)
-    return res.send(form)
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
 })
-
-module.exports = router
+ module.exports = router
