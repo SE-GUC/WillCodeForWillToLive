@@ -47,9 +47,9 @@ router.post('/', async (req,res) => {
 router.put('/:id', async (req,res) => {
     try{
         const id = req.params.id
-        const reviewer = await Reviewer.findOne(id)
+        const reviewer = await Reviewer.findById(id)
         if(!reviewer) return res.status(404).send({error: isValidated.error.details[0].message})
-        const updatedReviewer = await Reviewer.updateOne(req.body)
+        const updatedReviewer = await Reviewer.updateById(req.body)
         res.json({msg:'Reviewer updated successfully', data: updatedReviewer})
     }
     catch(error){
