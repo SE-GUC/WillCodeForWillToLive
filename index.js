@@ -9,7 +9,7 @@ const port = 3000
 
 const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
-const investors = require('./router/api/investors')
+const investors = require('./routes/api/investors')
 const sscForm = require('./routes/api/sscForm')
 const spcForm = require('./routes/api/spcForm')
 const cases = require('./routes/api/cases');
