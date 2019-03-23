@@ -1,6 +1,6 @@
-const uuid = require('uuid');
+//const uuid = require('uuid');
 
-class Reviewer{
+/* class Reviewer{
     constructor(name, birth_date, gender, nationality, type_of_ID, mobile_number, fax_number, email, address){
     this.ID = uuid.v4();
     this.name = name;
@@ -14,6 +14,68 @@ class Reviewer{
     this.email = email;
     this.address = address;
     }
-}
+}*/
 
-module.exports = Reviewer
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+const ReviewerSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
+
+    password: {
+        type: String,
+        required: true
+    },
+
+    name: {
+        type: String,
+        required: true
+    },
+
+    birth_date: {
+        type: String,
+        required: true
+    },
+
+    gender: {
+        type: String,
+        required: true
+    },
+    
+    nationallity: {
+        type: String,
+        required: true
+    },
+
+    type_of_ID: {
+        type: String,
+        required: true
+    },
+
+    mobile_number: {
+        type: String,
+        required: true
+    },
+
+    fax_number: {
+        type: String,
+        required: true
+    },
+
+    email: {
+        type: String,
+        required: true
+    },
+
+    address: {
+        type: String,
+        required: true
+    }
+
+})
+
+//module.exports = Reviewer
+module.exports = Reviewer = mongoose.model('reviewer', ReviewerSchema)

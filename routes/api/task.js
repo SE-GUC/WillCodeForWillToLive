@@ -1,45 +1,67 @@
 const express = require('express');
 const Joi = require('joi');
-const uuid = require('uuid');
+//const uuid = require('uuid');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 const Task = require('../../models/Task');
+const validator = require('../../validations/taskValidations')
 
-const tasks = [new Task(5, 'Review', '1/1/2019', false),
-                new Task(3 ,'Check', '5/3/2019',false)]
+const sortByID = (a,b) => {
+    return a.id - b.id
 
-router.get('/', (req, res) => res.json({data: Task}))
+}
 
-router.post('/', (req, res) => {
-    const priority = req.body.priority
-    const description = req.body.description
-    const created_at = req.body.created_at
-    const isDone = req.body.isDone
+const sortByCreatedAt = (a,b) => {
+    return a.created_at - b.created_at
+}
 
-    const schema = {
-        priority: Joi.string().required(),
-        description: Joi.string().required(),
-        created_at: Joi.string().required(),
-        isDone: Joi.boolean().required()
+
+//const tasks = [new Task(5, 'Review', '1/1/2019', false),
+  //              new Task(3 ,'Check', '5/3/2019',false)]
+
+router.get('/', async (req, res) => {
+   try{ const task = await Task.find()
+    res.json({data: task})}
+    catch(error){
+        res.json({error: 'Could not return the list' })
     }
-
-    const result = Joi.validate(req.body,schema)
-
-    if(result.error) return res.status(400).send({error: result.error.details[0].message})
-
-    const newTask = {
-        id: uuid.v4(),
-        priority,
-        description,
-        created_at,
-        isDone
-    }
-
-    tasks.push(newTask)
-    return res.json({data: newTask})
 })
 
-router.get('/:id', (req,res) => {
+router.get('/sortbyID', async (req,res) => {
+    try{
+        const task = await Task.find()
+        // let tasks = task[0]
+        task.sort(sortByID)
+    }
+    catch(error){
+        console.log({error: 'Error has occurred'})
+    }
+ })
+router.get('/:id', async (req,res) => {
+    try{const id = req.params.id
+    const task = await Task.findById(id)
+    if(!task) return res.status(404).send({msg: 'Could not find task with that id'})
+    res.json({data: task})}
+    catch(error){
+        res.json({error:'Error occurred'})
+    }
+})
+
+
+router.post('/', async (req, res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if(isValidated.error) res.status(404).send({error: isValidated.error.details[0].message})
+        const newTask = await Task.create(req.body)
+        res.json({msg: 'Task created successfully', data: newTask})
+    }
+    catch(error){
+        console.log(error)
+    }
+})
+
+/*router.get('/:id', (req,res) => {
     const taskId = req.params.id
     const taskElement = tasks.find(taskX => taskX.id === taskId)
     if(taskElement === undefined){
@@ -48,61 +70,32 @@ router.get('/:id', (req,res) => {
     else{
         res.send({taskElement})
     }
-})
+})*/
 
-router.put('/:id', (req,res) => {
-    const taskId = req.params.id
-    const taskElement = tasks.find(taskX => taskX.id === taskId)
-    if(taskElement === undefined){
-        res.status(404).send({err: 'Not found'})
+router.put('/:id',async (req,res) => {
+    try{
+        const id = req.params.id
+        const task = await Task.findById(id)
+        if(!task) return res.status(404).send({error: 'Task not found'})
+        const isValidated = validator.updateValidation(req.body)
+        if(isValidated.error) res.status(404).send({error: isValidated.error.details[0].message})
+        const updatedTask = await Task.findByIdAndUpdate(id, req.body)
+        res.json({msg: 'Task has been updated', data: updatedTask})
     }
-    else{
-        const priority = req.body.priority
-        const description = req.body.description
-        const created_at = req.body.created_at
-        const isDone = req.body.isDone
-    
-        const schema = {
-            priority: Joi.string(),
-            description: Joi.string(),
-            created_at: Joi.string(),
-            isDone: Joi.boolean()
-        }
-        
-        const result = Joi.validate(req.body,schema)
-
-        if(result.error) return res.status(400).send({error: result.error.details[0].message})
-    
-        if(priority){
-            taskElement.priority = priority
-        }
-
-        if(description){
-            taskElement.description = description
-        }
-
-        if(created_at){
-            taskElement.created_at = created_at
-        }
-
-        if(isDone){
-            taskElement.isDone = isDone
-        }
-
-        res.json({data: tasks})
+    catch(error){
+        console.log(error)
     }
 })
 
-router.delete('/:id', (req,res) => {
-    const taskId = req.params.id
-    const taskElement = tasks.find(taskX => taskX.id === taskId)
-    if(taskElement === undefined){
-        res.status(404).send({err: 'Not found'})
+router.delete('/:id', async (req,res) => {
+    try{
+    const id = req.params.id
+    const deletedTask = await Task.findByIdAndRemove(id)
+    res.json({msg: 'Task has been deleted successfully', data: deletedTask})
     }
-    else{
-        const index = tasks.indexOf(tasks)
-        tasks.splice(index,1)
-        res.json({data: tasks})
+    catch(error){
+        console.log(error)
     }
 })
+
 module.exports = router;
