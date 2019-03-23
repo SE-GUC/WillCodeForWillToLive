@@ -23,14 +23,21 @@ app.use(express.json());
 //app.use(express.urlencoded({extended: false}))//new
 
 //new
-const db = require('./config/keys').mongoURI 
-mongoose 
+const db = require('./config/keys.js').mongoURI
+mongoose
     .connect(db)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err))
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
+app.use('/api/Lawyer',Lawyer)
+
+//
+// /** * Connectiong to db ***/
+// //const db = require('./config/keys.js').mongoURI
+// mongoose.connect(db).then(() => console.log('Connected to MongoDB')).catch(err => console.log(err))
+
 
 app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
@@ -51,5 +58,3 @@ app.use((req, res) => {
 })
 /** * Listening on serverport ***/
 app.listen(port, () => console.log(`Server up. Listening on port ${port}`))
-
-
