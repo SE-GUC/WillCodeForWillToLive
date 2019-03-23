@@ -1,6 +1,7 @@
 
 /** * npm modules ***/
 const express = require('express')
+const mongoose = require('mongoose') //new
 const port = 3000
 const mongoose = require('mongoose')
 
@@ -19,7 +20,15 @@ const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
 /** * global constants ***/
 const app = express()
-app.use(express.json())
+app.use(express.json());
+//app.use(express.urlencoded({extended: false}))//new
+
+//new
+const db = require('./config/keys').mongoURI 
+mongoose 
+    .connect(db)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.log(err))
 
 /** * adding controllers/routers ***/
 // example: app.use('/api/company', company)
@@ -47,3 +56,5 @@ app.use((req, res) => {
 })
 /** * Listening on serverport ***/
 app.listen(port, () => console.log(`Server up. Listening on port ${port}`))
+
+
