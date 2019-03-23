@@ -1,0 +1,85 @@
+const Joi = require('joi')
+
+module.exports = {
+  createValidation: request => {
+    const createSchema = {
+      id: Joi.number().required(),
+      CompanyName: Joi.string().required(),
+      CompanyNationality: Joi.string().required(),
+      CompanyName_English: Joi.string(),
+      RegulatedLaw: Joi.string().required(),
+      Currency: Joi.string().required(),
+      Capital: Joi.number().min(50000).required(),
+      CreatedAt: Joi.date().required(),
+      FormOfLegalCompany: Joi.string().required(),
+      Governorate: Joi.string().required(),
+      City: Joi.string().required(),
+      Address: Joi.string().required(),
+      boardOfDirectorsName: Joi.string().required(),
+      boardOfDirectorsId: Joi.number().required(),
+      boardOfDirectorsGender: Joi.string().required(),
+      boardOfDirectorsNationality: Joi.string().required(),
+      boardOfDirectorsBirthDate: Joi.date().required(),
+      boardOfDirectorsPosition: Joi.string().required(),
+      boardOfDirectorsHomeAddress: Joi.string().required(),
+      Reviewed: Joi.boolean().required(),
+      ReviewedComment: Joi.string(),
+      ReviewedDate: Joi.date(),
+      Status: Joi.boolean().required(),
+      Fax: Joi.string().required(),
+      LawyerName: Joi.string().required(),
+      InvestorName: Joi.string().required(),
+      InvestorGender: Joi.string().required(),
+      InvestorNationality: Joi.string().required(),
+      InvestorId: Joi.number().required(),
+      InvestorBirthdate: Joi.date().required(),
+      InvestorTelephone: Joi.number().required(),
+      InvestorFax: Joi.string().required(),
+      InvestorEmail: Joi.string().required(),
+      InvestorHomeAddress: Joi.string().required(),
+    }
+
+    return Joi.validate(request, createSchema)
+  },
+  updateValidation: request => {
+    const updateSchema = {
+        id: Joi.number(),
+        CompanyName: Joi.string(),
+        CompanyNationality: Joi.string(),
+        CompanyName_English: Joi.string(),
+        RegulatedLaw: Joi.string(),
+        Currency: Joi.number(),
+        Capital: Joi.number().min(50000),
+        CreatedAt: Joi.date(),
+        FormOfLegalCompany: Joi.string(),
+        Governorate: Joi.string(),
+        City: Joi.string(),
+        Address: Joi.string(),
+        boardOfDirectorsName: Joi.string(),
+        boardOfDirectorsId: Joi.number(),
+        boardOfDirectorsGender: Joi.string(),
+        boardOfDirectorsNationality: Joi.string(),
+        boardOfDirectorsBirthDate: Joi.date(),
+        boardOfDirectorsPosition: Joi.string(),
+        boardOfDirectorsHomeAddress: Joi.string(),
+        Reviewed: Joi.boolean(),
+        ReviewedComment: Joi.string(),
+        ReviewedDate: Joi.date(),
+        Status: Joi.string(),
+        Fax: Joi.string(),
+      LawyerName: Joi.string(),
+      InvestorName: Joi.string(),
+      InvestorGender: Joi.string(),
+      InvestorNationality: Joi.string(),
+      InvestorId: Joi.number(),
+      InvestorBirthdate: Joi.date(),
+      InvestorTelephone: Joi.number(),
+      InvestorFax: Joi.string(),
+      InvestorEmail: Joi.string(),
+      InvestorHomeAddress: Joi.string(),
+
+    }
+
+    return Joi.validate(request, updateSchema)
+  }
+}

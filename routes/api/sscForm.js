@@ -1,61 +1,126 @@
-// npm imports
-const express = require("express");
-const bodyParser = require("body-parser");
-const joi = require("joi");
-const uuid = require('uuid');
-// Model imports
-const Form = require('../../models/form/SscForm')
+const express = require('express')
+const bodyParser = require('body-parser')
+const router = express.Router();
+const mongoose = require('mongoose')
 
-// global constants
-const router = express.Router()
-const data = []
 
-//CRUD
-router.post('/', (req, res) => {
-    schema = Form.getSchema()
-    valid = joi.validate(req.body, schema)
-    if(valid.error){
-        return res.status(400).send({ error: valid.error.details[0].message })
-    }
-    let newForm = new Form(req.body)
-    data.push(newForm)
-    return res.send(newForm)
+const SscForm = require('../../models/SscForm')
+const validator = require('../../validations/SscFormValidation')
+const config = require('../../config/keys')
+
+
+router.get('/', async (req,res) => {
+    const SscForms = await SscForm.find()
+    res.json({data: SscForms})
 })
 
-router.get('/', (req, res)=>{
-    return res.send(data)
+// Create a SscForm
+router.post('/', async (req,res) => {
+   try {
+    const isValidated = validator.createValidation(req.body)
+    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+    const newSscForm = await SscForm.create(req.body)
+    res.json({msg:'SscForm was created successfully', data: newSscForm})
+   }
+   catch(error) {
+    res.status(404).send({error: 'Error, something is off'});
+   }  
 })
-
-router.get('/:id', (req, res) => {
-    let FormElement = data.find(FormX => FormX.id === req.params.id)
-    if(FormElement === undefined){
-        return res.status(404).send({err: 'Form  Not found'})
+router.get('/calculateFees/:id',async (req,res) =>{
+    try{
+        const SscFormId = req.params.id
+        const SscFormElement = await SscForm.findById(SscFormId)
+        if(!SscFormElement){
+            res.status(404).send({error: 'can not be Found'});
+        }else{
+            var law = SscFormElement.RegulatedLaw
+            var capital = SscFormElement.Capital
+            console.log(law[0])
+            if(law[0]==="Law159"){
+                console.log("159")
+                let gavi = 1/1000 * capital
+                if(gavi <100){
+                    gavi = 100
+                }
+                if(gavi>1000){
+                    gavi = 1000
+                }
+                let notary = 0.25/100 * capital
+                if(notary <10){
+                    notary = 10
+                }
+                if(notary>1000){
+                    notary = 1000
+                }
+                let Commercial = 56
+                let fees = Commercial + gavi + notary
+                res.json({data: fees})
+            }else{
+                console.log("73")
+                let fees = 610
+                res.json({data: fees})
+            }
+        }
     }
-    return res.send(FormElement)
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
 })
-
-router.put('/:id', (req, res) => {
-    let formElementIndex = data.findIndex(formX => formX.id === req.params.id)
-    if(formElementIndex === -1){
-        return res.status(404).send({err: 'Form  Not found'})
+router.get('/:id', async (req, res)=>{
+    try{
+        const SscFormId = req.params.id
+        const SscFormElement = await SscForm.findById(SscFormId)
+        if(!SscFormElement){
+            res.status(404).send({error: 'can not be Found'});
+        }else{
+            res.json({data: SscFormElement})
+        }
     }
-    const schema = Form.getSchema()
-    valid = joi.validate(req.body, schema)
-    if(valid.error){
-        return res.status(400).send({ error: valid.error.details[0].message })
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
     }
-    data[formElementIndex] = req.body
-    return res.send(req.body)
 })
-
-router.delete('/:id', (req, res) => {
-    let formElementIndex = data.findIndex((form) => {form.id === req.params.id})
-    if(FormElementIndex === -1){
-        return res.status(404).send({err: 'Form  Not found'})
+/*
+router.put('/:id', async (req,res) => {
+    try {
+     const id = req.params.id
+     const SscForm = await SscForm.findOne({id})
+     if(!SscForm) return res.status(404).send({error: 'SscForm not found'})
+     const isValidated = validator.updateValidation(req.body)
+     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+     const updatedSscForm = await SscForm.updateOne(req.body)
+     res.json({msg: 'SscForm updated successfully'})
     }
-    let form = data[formElementIndex]
-    data.splice(formElementIndex, 1)
-    return res.send(form)
+    catch(error) {
+        console.log(error)
+    }  
+ })*/
+ router.put('/:id', async (req, res) => {
+    try{
+        const SscFormId = req.params.id
+        const SscFormElement = await SscForm.findById(SscFormId)
+        if(!SscFormElement){
+            res.status(404).send({error: 'SscForm not found'});
+        }
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedSscForm = await SscForm.findByIdAndUpdate(SscFormId,req.body)
+        res.json({msg: 'update done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
 })
-
-module.exports = router
+router.delete('/:id', async (req,res) => {
+    try{
+        const SscFormId = req.params.id
+        const deletedSscForm = await SscForm.findByIdAndRemove(SscFormId)
+        res.json({msg: 'Done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error, something is off'});
+    }
+})
+ module.exports = router
