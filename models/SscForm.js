@@ -3,12 +3,7 @@ const Schema = mongoose.Schema
 
 
 const SscFormSchema = new Schema({
-    id: {
-        type: Number,
-        required: true,
-        unique: true
 
-    },
     CompanyName: {
         type: String,
         required: true,
@@ -16,7 +11,7 @@ const SscFormSchema = new Schema({
 
     },
     CompanyNationality: {
-        type: [String],
+        type: String,
         required: true,
         unique: true
 
@@ -26,12 +21,12 @@ const SscFormSchema = new Schema({
         required: false
     },
     Currency: {
-        type: [String],
+        type: String,
         required: true
     },
     Capital: {
         type: Number,
-        min:50000
+        min:50000,
     },
     CreatedAt: {
         type: Date,
@@ -39,51 +34,23 @@ const SscFormSchema = new Schema({
         default:Date.now
     },
     RegulatedLaw: {
-        type: [String],
+        type: String,
         required: true
     },
     FormOfLegalCompany: {
-        type: [String],
+        type: String,
         required: true
     },
     Governorate: {
-        type: [String],
+        type: String,
         required: true
     },
     City: {
-        type: [String],
+        type: String,
         required: true
     },
     Address: {
-        type: [String],
-        required: true
-    },
-    boardOfDirectorsName: {
-        type: [String],
-        required: true
-    },
-    boardOfDirectorsId: {
-        type: [Number],
-        required: true
-    },
-    boardOfDirectorsGender: {
-        type: [String],
-        required: true
-    },
-    boardOfDirectorsNationality: {
-        type: [String],
-        required: true
-    },
-    boardOfDirectorsBirthDate: {
-        type: [Date],
-        required: true
-    },
-    boardOfDirectorsPosition: {
-        type: [String],
-        required: true
-    },
-    boardOfDirectorsHomeAddress: {
-        type: [String],
+        type: String,
         required: true
     },
     Reviewed: {
@@ -112,40 +79,40 @@ const SscFormSchema = new Schema({
     },
 
     InvestorName: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorGender: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorNationality: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorId: {
-        type: [Number],
+        type: Number,
         required: true,
         unique: true
     },
     InvestorBirthdate: {
-        type: [Date],
+        type: Date,
         required: true
     },
     InvestorTelephone: {
-        type: [Number],
+        type: Number,
         required: true
     },
     InvestorFax: {
-     type: [String],
+     type: String,
      required: true
     },
     InvestorEmail: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorHomeAddress: {
-        type: [String],
+        type: String,
         required: true
     },
 })

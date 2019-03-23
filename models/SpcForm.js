@@ -2,12 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const SpcFormSchema = new Schema({
-    id: {
-        type: Number,
-        required: true,
-        unique: true
 
-    },
     CompanyName: {
         type: String,
         required: true,
@@ -15,7 +10,7 @@ const SpcFormSchema = new Schema({
 
     },
     CompanyNationality: {
-        type: [String],
+        type: String,
         required: true,
         unique: true
 
@@ -25,7 +20,7 @@ const SpcFormSchema = new Schema({
         required: false
     },
     Currency: {
-        type: [String],
+        type: String,
         required: true
     },
     Capital: {
@@ -38,23 +33,23 @@ const SpcFormSchema = new Schema({
         default:Date.now
     },
     RegulatedLaw: {
-        type: [String],
+        type: String,
         required: true
     },
     FormOfLegalCompany: {
-        type: [String],
+        type: String,
         required: true
     },
     Governorate: {
-        type: [String],
+        type: String,
         required: true
     },
     City: {
-        type: [String],
+        type: String,
         required: true
     },
     Address: {
-        type: [String],
+        type: String,
         required: true
     },
     Reviewed: {
@@ -83,40 +78,40 @@ const SpcFormSchema = new Schema({
     },
 
     InvestorName: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorGender: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorNationality: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorId: {
-        type: [Number],
+        type: Number,
         required: true,
         unique: true
     },
     InvestorBirthdate: {
-        type: [Date],
+        type: Date,
         required: true
     },
     InvestorTelephone: {
-        type: [Number],
+        type: Number,
         required: true
     },
     InvestorFax: {
-     type: [String],
+     type: String,
      required: true
     },
     InvestorEmail: {
-        type: [String],
+        type: String,
         required: true
     },
     InvestorHomeAddress: {
-        type: [String],
+        type: String,
         required: true
     },
   

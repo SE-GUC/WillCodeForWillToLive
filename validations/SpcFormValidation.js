@@ -3,7 +3,6 @@ const Joi = require('joi')
 module.exports = {
   createValidation: request => {
     const createSchema = {
-      id: Joi.number().required(),
       CompanyName: Joi.string().required(),
       CompanyNationality: Joi.string().required(),
       CompanyName_English: Joi.string(),
@@ -36,7 +35,6 @@ module.exports = {
   },
   updateValidation: request => {
     const updateSchema = {
-        id: Joi.number(),
         CompanyName: Joi.string(),
         CompanyNationality: Joi.string(),
         CompanyName_English: Joi.string(),
