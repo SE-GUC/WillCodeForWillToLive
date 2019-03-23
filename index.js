@@ -2,8 +2,7 @@
 /** * npm modules ***/
 const express = require('express')
 const mongoose = require('mongoose') //new
-const port = 3000
-const mongoose = require('mongoose')
+const port = process.env.PORT || 3000
 
 /** * project modules ***/
 // example: const router = require('router/api/company')
@@ -44,9 +43,7 @@ app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)
 app.use('/api/ExternalEntity', external_entities)
 
-/** * Connectiong to db ***/
-const db = require('./config/keys').mongoURI
-mongoose.connect(db).then(() => console.log('Connected to MongoDB')).catch(err => console.log(err))
+
 
 /** * Adding temporary index page ***/
 app.get('/', (req, res) => { res.send('<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>') })
