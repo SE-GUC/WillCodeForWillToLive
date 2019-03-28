@@ -15,6 +15,16 @@ router.get('/', async (req,res) => {
     res.json({data: reviewer})
 })
 
+//search using /api/reviewer/getCases/
+router.get('/getCases', async (req, res)=>{
+    res.redirect('../../cases/')
+})
+
+router.get('/getCases/:reviewer', async (req, res)=>{
+    const reviewer = req.params.reviewer
+    res.redirect('../../cases/reviewerCases/' + reviewer)
+})
+
 router.get('/:id', async (req,res) => {
     const id = req.params.id
     const reviewer = await Reviewer.findById(id)
