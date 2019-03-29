@@ -6,6 +6,7 @@ const router = express.Router()
 
 const Admin = require('../../models/admin')
 const validator = require('../../validations/adminValidations')
+const Case = require('../../models/Case')
 /* const EntityEmployees = [
   new EntityEmployee('Amr', 'Ahmed', 'ElNahas', new Date(1998, 6, 7), 'male', 'Egyptian', 'Passport', 6969696969, 'lawyer', 8675309, 213432532, 'amrtea.edu@gmail.com', 'Cairo'),
   new EntityEmployee('Marven', 'Waitforit', 'Eriksen', new Date(2012, 5, 14), 'male', 'American', 'Passport', 73621823, 'Reviewer', 50005000, 74283446, 'MarvinEriksen@gmail.com', 'US'),
@@ -239,4 +240,50 @@ router.delete('/:id', async (req, res) => {
   EntityEmployees.splice(EntityEmployeeIndex, 1)
   return res.send('Deleted!')
 }) */
+router.put('/assigncaseslawyer/:id/', async (req, res)=>{
+  try{
+    const caseId = req.params.id
+    //console.log("here 1")
+    const caseElement = await Case.findById(caseId)
+    //console.log("here 2")
+    if(!caseElement){
+        res.status(404).send({error: 'We can not find what you are looking for'});
+    }
+    //console.log("here 3")
+    const isValidated = validator.assignlawyerValidation(req.body)
+    if (isValidated.error) {
+        res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    await Case.findByIdAndUpdate(caseId,req.body)
+    //console.log("here 5")
+    res.json({msg: 'Assigned'})
+}
+catch(error){
+    res.status(400).send({error: 'Something went wrong here'});
+}
+})
+router.put('/assigncasesreviewer/:id', async (req, res)=>{
+  try{
+    const caseId = req.params.id
+    const caseElement = await Case.findById(caseId)
+    if(!caseElement){
+        res.status(404).send({error: 'We can not find what you are looking for'});
+    }
+    const isValidated = validator.assignreviewerValidation(req.body)
+    if (isValidated.error) {
+        res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    const updatedCase = await Case.findByIdAndUpdate(caseId,req.body)
+    res.json({msg: 'update done'})
+  }
+  catch(error){
+      res.status(404).send({error: 'Something went wrong'});
+  }
+})
+router.post('/createlawyer', async (req, res)=>{
+  res.redirect(307,'./../Lawyer')
+})
+router.post('/createreviewer', async (req, res)=>{
+  res.redirect(307,'./../reviewer')
+})
 module.exports = router
