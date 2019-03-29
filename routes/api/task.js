@@ -7,14 +7,14 @@ const mongoose = require('mongoose');
 const Task = require('../../models/Task');
 const validator = require('../../validations/taskValidations')
 
-const sortByID = (a,b) => {
-    return a.id - b.id
+// const sortByID = (a,b) => {
+//     return a.id - b.id
 
-}
+// }
 
-const sortByCreatedAt = (a,b) => {
-    return a.created_at - b.created_at
-}
+// const sortByCreatedAt = (a,b) => {
+//     return a.created_at - b.created_at
+// }
 
 
 //const tasks = [new Task(5, 'Review', '1/1/2019', false),
@@ -28,16 +28,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/sortbyID', async (req,res) => {
-    try{
-        const task = await Task.find()
-        // let tasks = task[0]
-        task.sort(sortByID)
-    }
-    catch(error){
-        console.log({error: 'Error has occurred'})
-    }
- })
 router.get('/:id', async (req,res) => {
     try{const id = req.params.id
     const task = await Task.findById(id)
