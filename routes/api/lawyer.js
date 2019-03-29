@@ -13,6 +13,16 @@ router.get('/', async (req,res) => {
     res.json({data: lawyers})
 })
 
+//search using /api/lawyer/getCases/
+router.get('/getCases', async (req, res)=>{
+    res.redirect('../../cases/')
+})
+
+router.get('/getCases/:lawyer', async (req, res)=>{
+    const lawyer = req.params.lawyer
+    res.redirect('../../cases/lawyerCases/' + lawyer)
+})
+
 router.get('/:id', async (req, res)=>{
     try{
         const lawyer = await Lawyer.findById(req.params.id)
