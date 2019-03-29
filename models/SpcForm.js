@@ -114,7 +114,7 @@ const SpcFormSchema = new Schema({
         type: String,
         required: true
     },
-  
+
 })
 
 module.exports = SpcForm = mongoose.model('SpcForm', SpcFormSchema)
