@@ -132,6 +132,18 @@ class ReviewerTest extends AbstractTests {
             expect(Object.keys(jsonResponse)).toEqual(['data'])
         },100000)
     }
+
+    getRequestToGetCasesForAReviewer () {
+
+        test(`Fetching all the cases for that reviewer,\t[=> GET\t\t${this.base_url}/getCases/:id\t`, async () => {
+            const response = await nfetch(`${this.base_url}/getCases/${this.sharedState.id}`,{
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json'} 
+            })
+            const jsonResponse = await response.json()
+            expect(Object.keys(jsonResponse)).toEqual(['data'])
+        },100000)
+    }
     getRequestIndependently () {
 
         test(`Fetching the data of that random reviewer,\t[=> GET\t\t${this.base_url}/:id\t`, async () => {
