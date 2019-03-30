@@ -1,6 +1,6 @@
 const functions = require('./fn')
 
-/*test('Reviewer should be created', () => {
+test('Reviewer should be created', () => {
     expect(functions.createReviewer({
         "username": "AmrElsafy",
         "password": "password",
@@ -14,4 +14,4 @@ const functions = require('./fn')
         "email": "balabizo@balabizo.com",
         "address": "Baker Street"
     })).toEqual('Reviewer created successfully')
-})*/
+})

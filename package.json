@@ -1,10 +1,10 @@
 {
   "name": "willcodeforwilltolive",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is an implementation of the Sumerge project for the Software Engineering course 'CSEN601'",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
@@ -29,5 +29,9 @@
     "nodemon": "^1.18.10",
     "standard": "^12.0.1",
     "uuid": "^3.3.2"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {}
 }
