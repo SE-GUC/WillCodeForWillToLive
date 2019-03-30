@@ -181,11 +181,11 @@ class ReviewerTest extends AbstractTests {
                 method: 'PUT',
                 body: JSON.stringify(requestBody),
                 headers: { 'Content-Type': 'application/json' }
-            },100000)
+            })
             const jsonResponse = await response.json()
             expect(Object.keys(jsonResponse)).toEqual(['error'])
 
-        })
+        },100000)
     }
 
     putRequestIndependently () {
