@@ -92,6 +92,12 @@ router.post('/', async (req, res) => {
     res.send({ EntityEmployeeInstance })
   }
 }) */
+
+//search using /api/admin/getCases/
+router.get('/getCases', async (req, res)=>{
+  res.redirect('../../cases/')
+})
+
 router.get('/:id', async (req, res) => {
   try {
     const adminId = req.params.id

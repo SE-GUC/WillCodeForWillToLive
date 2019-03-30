@@ -16,6 +16,7 @@ router.get('/', async (req,res) => {
     res.json({data: reviewer})
 })
 
+
 router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
     try{
@@ -37,6 +38,16 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }
+})
+
+//search using /api/reviewer/getCases/
+router.get('/getCases', async (req, res)=>{
+    res.redirect('../../cases/')
+})
+
+router.get('/getCases/:reviewer', async (req, res)=>{
+    const reviewer = req.params.reviewer
+    res.redirect('../../cases/reviewerCases/' + reviewer)
 })
 
 
