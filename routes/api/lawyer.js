@@ -30,7 +30,7 @@ router.get('/:id', async (req, res)=>{
 router.put("/task/:username/:taskID", async (req, res) => {
     try {
         Task.findByIdAndUpdate(req.params.taskID, {
-            username: req.params.assignee
+            username: req.body.assignee
         }, {
             new: true
         }, function (err, task) {
