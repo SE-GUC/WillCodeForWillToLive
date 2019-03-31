@@ -2,29 +2,56 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CompanySchema = new Schema({
-    companyNameEnglish: {
+    CompanyName: {
         type: String,
-        required: false
     },
-    companyNameArabic: {
+    CompanyType: {
         type: String,
-        required: true,
-        unique: true
     },
-    establishmentDate: {
+    EstablishmentDate: {
         type: Date,
         required: true
-    },
-    investorName: {
+    },  
+    InvestorName: {
         type: String,
         required: true
     },
-    companyStatus: {
+    CapitalCurrency: {
         type: String,
         required: true
-    }
+    },
+    Capital: {
+        type: Number,
+        required: true
+    },
+    RegulatingLaw: {
+        type: String,
+        required: true
+    },
+    CompanyLegalForm: {
+        type: String,
+        required: true
+    },
+    hqInfo: {
+        Governorate: {
+            type: String,
+            required: true
+        },
+        City: {
+            type: String,
+            required: true
+        },
+        Address: {
+            type: String,
+            required: true
+        },
+        Telephone: {
+            type: String
+        },
+        Fax: {
+            type: String
+        }
+    },
 })
 
 const Company = mongoose.model('Company', CompanySchema)
-
-module.exports = Company

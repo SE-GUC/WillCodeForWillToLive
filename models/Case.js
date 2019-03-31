@@ -1,20 +1,7 @@
-//const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-// class Case {
-//     constructor(status,investor,reviewer,lawyer,company_name){
-//         this.id = uuid.v4();
-//         this.status = status;
-//         this.investor = investor;
-//         this.reviewer = reviewer;
-//         this.lawyer = lawyer;
-//         this.company_name = company_name;
-//     }
-// };
-
 const caseSchema = new Schema({
-    //_id: mongoose.Schema.Types.ObjectId,
     status:{
         type: String,
         required: true
@@ -34,6 +21,31 @@ const caseSchema = new Schema({
     company_name:{
         type: String,
         required: true
+    },
+    reviewed_by_lawyer: {
+        type: Boolean,
+        required: true
+    },
+    review_comment_by_lawyer: {
+        type: String,
+        required: false
+    },
+    review_date_by_lawyer: {
+        type: Date,
+        required: false
+    },
+    reviewed_by_reviewer: {
+        type: Boolean,
+        required: true
+    },
+    review_comment_by_reviewer: {
+        type: String,
+        required: false
+    },
+    review_date_by_reviewer: {
+        type: Date,
+        required: false
     }
+   
 })
 module.exports = Case = mongoose.model('Case',caseSchema)

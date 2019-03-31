@@ -1,10 +1,10 @@
 {
   "name": "willcodeforwilltolive",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is an implementation of the Sumerge project for the Software Engineering course 'CSEN601'",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "concurrently \"node index.js\" \"jest --detectOpenHandles test.js\"",
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
@@ -20,14 +20,24 @@
   },
   "homepage": "https://github.com/SE-GUC/willcodeforwilltolive#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "jest": "^24.5.0",
+    "jest-cli": "^24.5.0",
     "joi": "^14.3.1",
+    "mocha": "^6.0.2",
     "mongoose": "^5.4.19",
     "mongoose-type-email": "^1.0.10",
+    "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
     "standard": "^12.0.1",
     "uuid": "^3.3.2"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {}
 }
