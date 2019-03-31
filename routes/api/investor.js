@@ -24,6 +24,17 @@ router.get("/", async (req, res) => {
   const investors = await Investor.find();
   res.json({ data: investors });
 });
+
+//search using /api/investor/getCases/
+router.get('/getCases', async (req, res)=>{
+  res.redirect('../../cases/')
+})
+
+router.get('/getCases/:investor', async (req, res)=>{
+  const investor = req.params.investor
+  res.redirect('../../cases/investorCases/' + investor)
+})
+
 //View Investor profile by id
 router.get("/:id", async (req, res) => {
   try {
@@ -73,4 +84,18 @@ router.delete("/:id", async (req, res) => {
     res.json({ msg: error.message });
   }
 });
+router.post('/createsscform', async (req, res)=>{
+  res.redirect(307,'./../sscform')
+})
+router.post('/createspcform', async (req, res)=>{
+  res.redirect(307,'./../spcform')
+})
+router.put('/updatesscform/:id', async (req, res)=>{
+  const formid=req.params.id
+  res.redirect(307,'./../sscform/'+formid)
+})
+router.put('/updatespcform/:id', async (req, res)=>{
+  const formid=req.params.id
+  res.redirect(307,'./../spcform/'+formid)
+})
 module.exports = router;
