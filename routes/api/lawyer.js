@@ -37,6 +37,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
         console.log({error: 'Error in sort Task has occurred'})
     }
   })
+
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
     res.redirect('../../cases/')
@@ -189,6 +190,20 @@ router.delete('/:id', async (req,res) => {
     catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+})
+router.post('/createsscform', async (req, res)=>{
+    res.redirect(307,'./../sscform')
+})
+router.post('/createspcform', async (req, res)=>{
+    res.redirect(307,'./../spcform')
+})
+router.put('/updatesscform/:id', async (req, res)=>{
+    const formid=req.params.id
+    res.redirect(307,'./../sscform/'+formid)
+})
+router.put('/updatespcform/:id', async (req, res)=>{
+    const formid=req.params.id
+    res.redirect(307,'./../spcform/'+formid)
 })
 
 module.exports = router;
