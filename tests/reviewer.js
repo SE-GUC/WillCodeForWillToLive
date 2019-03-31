@@ -32,8 +32,6 @@ class ReviewerTest extends AbstractTests {
                     this.putRequestWrongParamaters()
                     this.putRequestIndependently()
                     this.deleteRequestIndependently()
-                    this.getTaskSortedByID()
-                    this.getTaskSortedByCreationDate()
                 })
                 resolve()
             })
@@ -146,28 +144,7 @@ class ReviewerTest extends AbstractTests {
         },100000)
     }
 
-    getTaskSortedByID(){
-        test(`Getting the tasks sorted by ID,\t[=> GET\t\t${this.base_url}/sortTaskByID\t`, async () => {
-            const response = await nfetch(`${this.base_url}/sortTaskByID`,{
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json'} 
-            })
-            const jsonResponse = await response.json()
-            expect(Object.keys(jsonResponse)).toEqual(['data'])
-        },100000)
-    }
-
-    getTaskSortedByCreationDate(){
-        test(`Getting the tasks sorted by ID,\t[=> GET\t\t${this.base_url}/sortTaskByCreationDate\t`, async () => {
-            const response = await nfetch(`${this.base_url}/sortTaskByCreationDate`,{
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json'} 
-            })
-            const jsonResponse = await response.json()
-            expect(Object.keys(jsonResponse)).toEqual(['data'])
-        },100000)
-    }
-
+    
     getRequestIndependently () {
 
         test(`Fetching the data of that random reviewer,\t[=> GET\t\t${this.base_url}/:id\t`, async () => {
