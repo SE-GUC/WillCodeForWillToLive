@@ -27,10 +27,10 @@ router.get('/:id', async (req, res)=>{
     }
 })
 //as a lawyer, assign task to investor
-router.put("/task/:investorID/:taskID", async (req, res) => {
+router.put("/task/:username/:taskID", async (req, res) => {
     try {
         Task.findByIdAndUpdate(req.params.taskID, {
-            investorID: req.params.investorID
+            username: req.params.assignee
         }, {
             new: true
         }, function (err, task) {

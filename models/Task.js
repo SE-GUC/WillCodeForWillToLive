@@ -33,14 +33,11 @@ const TaskSchema = new Schema({
         type: Boolean,
         required: true
     },
-    lawyerID: {
-        type: Schema.ObjectId,
-        ref: 'lawyer'
-    },
-    investorID: {
-        type: Schema.ObjectId,
-        ref: 'investor'
+    assignee: {
+        type: String,
+        required: true
     }
+
 })
 
 //module.exports = Task

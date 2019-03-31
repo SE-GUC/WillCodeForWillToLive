@@ -72,10 +72,10 @@ router.delete('/:id', async (req, res) => {
 })
 
 //as a reviewer, assign task to lawyer
-router.put("/task/:lawyerID/:taskID", async (req, res) => {
+router.put("/task/:username/:taskID", async (req, res) => {
     try {
         Task.findByIdAndUpdate(req.params.taskID, {
-            lawyerID: req.params.lawyerID
+            username: req.body.assignee
         }, {
             new: true
         }, function (err, task) {
