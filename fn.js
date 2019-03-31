@@ -24,5 +24,11 @@ const functions = {
         const getCompanies = await axios.get(`http://localhost:3000/api/investor/company${id}`)
         return getCompanies
     },
+    
+    getCases: async(investor) => {
+        const getCases = await axios.get(`http://localhost:3000/api/investor/company${investor}`)
+        return getCases
+    }
+
 
 }

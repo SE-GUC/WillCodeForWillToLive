@@ -32,6 +32,14 @@ const TaskSchema = new Schema({
     isDone: {
         type: Boolean,
         required: true
+    },
+    lawyerID: {
+        type: Schema.ObjectId,
+        ref: 'lawyer'
+    },
+    investorID: {
+        type: Schema.ObjectId,
+        ref: 'investor'
     }
 })
 

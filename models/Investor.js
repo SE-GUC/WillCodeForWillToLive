@@ -10,7 +10,7 @@ var investorSchema = new Schema({
   name: String,
   nationality: String,
   capital: Number,
-  birthdate: Date,
+  DOB: Date,
   mobileNumber: Number,
   address: String,
   faxNumber: Number,

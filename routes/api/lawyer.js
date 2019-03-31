@@ -26,7 +26,31 @@ router.get('/:id', async (req, res)=>{
         res.status(404).send({error: 'Something went wrong'});
     }
 })
-
+//as a lawyer, assign task to investor
+router.put("/task/:investorID/:taskID", async (req, res) => {
+    try {
+        Task.findByIdAndUpdate(req.params.taskID, {
+            investorID: req.params.investorID
+        }, {
+            new: true
+        }, function (err, task) {
+            if (!err)
+                res.json({
+                    msg: "Your task has been assigned to the investor successfully",
+                    data: task
+                });
+            else
+                res.json({
+                    msg: err.message
+                });
+        });
+    } catch (error) {
+        res.json({
+            msg: error.message
+        });
+    }
+});
+module.exports = router;
 
 
 
