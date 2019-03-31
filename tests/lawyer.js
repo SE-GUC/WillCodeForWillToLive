@@ -87,6 +87,7 @@ class LawyerTest extends AbstractTests {
                 headers: { 'Content-Type': 'application/json' }
               })
               const jsonResponse = await response.json()
+              console.log(jsonResponse)
               expect(Object.keys(jsonResponse)).toEqual(['data'])
 
               const lawyerElement = await Lawyer.findById(jsonResponse.data._id).exec()

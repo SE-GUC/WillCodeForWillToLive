@@ -19,7 +19,7 @@ class CaseTest extends AbstractTests {
     runIndependently(){
         try{
             return new Promise((resolve, reject) => {
-                describe('Making sure independent reviewer routes work',() =>{
+                describe('Making sure independent cases routes work',() =>{
                     this.postRequestWithMissingParameters()
                     this.postRequestIndependently()
                     this.getRequestIndependently()
