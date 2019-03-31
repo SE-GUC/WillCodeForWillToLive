@@ -64,7 +64,7 @@ schema.statics = {
     getSingleton: async function getSingleton() {
         const model = await this.findOne()
         if(model === null) {
-            return await new Model().save()
+            return await this.create({})
         } else {
             return model
         }
