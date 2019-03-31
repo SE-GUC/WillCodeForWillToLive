@@ -1,97 +1,52 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const router = require('express').Router()
+const mongoose = require('mongoose')
+const validator = require('../../validations/SpcForm')
+const Form = require('../../models/SpcForm')
 
-
-const SpcFormSchema = new Schema({
-    regulatingLaw: {
-        type: String,
-        required: true
-    },
-    companyLegalForm: {
-        type: String,
-        required: true
-    },
-    companyName: {
-        arabic: {
-            type: String,
-            required: true
-        },
-        english: {
-            type: String
+router.post('/', (req, res) => {
+    validator.validateCreate(req.body, (err, body) => {
+        if(err) {
+            res.status(404).send({error: err})
+        } else if(body === null) {
+            res.status(404).send('Error')
+        } else {
+            Form.create(body, (err, newForm) => {
+                if(err) {
+                    res.status(404).send({error: err})
+                }
+                res.send({data: newForm})
+            })
         }
-    },
-    hqInfo: {
-        governorate: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        address: {
-            type: String,
-            required: true
-        },
-        telephone: {
-            type: String
-        },
-        fax: {
-            type: String
-        }
-    },
-    CreatedAt: {
-        type: Date,
-        required: true,
-        default:Date.now
-    },
-    investorInfo: {
-        capitalCurrency: {
-            type: String,
-            required: true
-        },
-        capital: {
-            type: Number,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        investorType: {
-            type: String,
-            required: true
-        },
-        gender: {
-            type: String
-        },
-        nationality: {
-            type: String,
-            required: true
-        },
-        idType: {
-            type: String
-        },
-        idNumber: {
-            type: String
-        },
-        birthDate: {
-            type: Date
-        },
-        address: {
-            type: String,
-            required: true
-        },
-        telephone: {
-            type: String
-        },
-        fax: {
-            type: String
-        },
-        email: {
-            type: String
-        }
-    },
+    })
+})
+router.get('/', (req, res) => {
+    Form.find()
+    .then(Forms => res.json(Forms))
+    .catch(err => res.status(404).json({error: err}))
 })
 
-module.exports = SpcForm = mongoose.model('SpcForm', SpcFormSchema)
+router.get('/:id', (req, res) => {
+    Form.find({'_id': id})
+    .then(Form => res.json(Form))
+    .catch(err => res.status(404).json({error: err}))
+})
+router.delete('/:id', (req, res) => {
+    Form.findOneAndDelete({'_id': id})
+    .then((_) => res.redirect('/'))
+    .catch(err => res.status(404).send({error: err}))
+})
+
+router.put('/', (req, res) => {
+    validator.validateUpdate(req.body, (err, body) => {
+        if(err) {
+            res.status(404).send({error: err})
+        } else if(body === null) {
+            res.status(404).send('Error')
+        } else {
+            Form.findOneAndUpdate(
+                { $set: body }
+            ).then(newForm => res.json(newForm))
+        }
+    })
+})
+module.exports = router
