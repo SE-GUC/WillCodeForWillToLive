@@ -43,5 +43,11 @@ module.exports = {
     }
 
     return Joi.validate(request, updateSchema)
+  },
+  assigncasesadminValidation: request => {
+    const assignadminSchema = {
+      admin: Joi.string().required()
+    }
+    return Joi.validate(request, assignadminSchema)
   }
 }

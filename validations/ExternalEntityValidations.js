@@ -9,7 +9,9 @@ module.exports = {
             typeofID: Joi.string().required(),
             mobileNumber: Joi.number().required(),
             faxNumber: Joi.number().required(),
-            address: Joi.string().required()
+            address: Joi.string().required(),
+            username: Joi.string().required(),
+            password: Joi.string().required()
         }
 
         return Joi.validate(request, createSchema)
@@ -23,7 +25,9 @@ module.exports = {
             typeofID: Joi.string(),
             mobileNumber: Joi.number(),
             faxNumber: Joi.string(),
-            address: Joi.string()
+            address: Joi.string(),
+            username: Joi.string(),
+            password: Joi.string()
         }
 
         return Joi.validate(request, updateSchema)

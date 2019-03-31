@@ -19,6 +19,8 @@ router.get('/', async (req, res) => {
     res.status(400).send(err)
   })
 })
+
+
 /* router.post('/', (req, res) => {
   const firstName = req.body.firstName
   const middleName = req.body.middleName
@@ -92,6 +94,12 @@ router.post('/', async (req, res) => {
     res.send({ EntityEmployeeInstance })
   }
 }) */
+
+router.get('/getCompanys', async (req, res)=>{
+  res.redirect('../../company/')
+})
+
+
 router.get('/:id', async (req, res) => {
   try {
     const adminId = req.params.id
@@ -120,6 +128,24 @@ router.put('/:id', async (req, res) => {
     res.json({ message: 'updated successfuly' })
   } catch (error) {
     res.status(400).send({ error: 'error' })
+  }
+})
+
+router.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {
+  try {
+    const caseId = req.params.id
+    const caseElement = await Case.findById(caseId)
+    if (!caseElement) {
+      res.status(404).send({ error: 'We can not find what you are looking for' })
+    }
+    const isValidated = validator.assigncasesadminValidation(req.body)
+    if (isValidated.error) {
+      res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    await Case.findByIdAndUpdate(caseId, req.body)
+    res.json({ msg: 'Assigned' })
+  } catch (error) {
+    res.status(400).send({ error: 'Something went wrong' })
   }
 })
 

@@ -15,6 +15,7 @@ router.get('/', async (req,res) => {
     res.json({data: reviewer})
 })
 
+
 router.get('/:id', async (req,res) => {
     const id = req.params.id
     const reviewer = await Reviewer.findById(id)
@@ -58,6 +59,24 @@ router.put('/:id', async (req,res) => {
         console.log(error)
     }
 })
+
+router.put('/assigncasestomyselfthereviewer/:id/', async (req, res) => {
+    try {
+      const caseId = req.params.id
+      const caseElement = await Case.findById(caseId)
+      if (!caseElement) {
+        res.status(404).send({ error: 'We can not find what you are looking for' })
+      }
+      const isValidated = validator.assigncasesreviewerValidation(req.body)
+      if (isValidated.error) {
+        res.status(400).send({ error: isValidated.error.details[0].message })
+      }
+      await Case.findByIdAndUpdate(caseId, req.body)
+      res.json({ msg: 'Assigned' })
+    } catch (error) {
+      res.status(400).send({ error: 'Something went wrong' })
+    }
+  })
 
 
 router.delete('/:id', async (req, res) => {

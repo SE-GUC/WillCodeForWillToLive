@@ -13,6 +13,7 @@ router.get('/', async (req,res) => {
     res.json({data: lawyers})
 })
 
+
 router.get('/:id', async (req, res)=>{
     try{
         const lawyer = await Lawyer.findById(req.params.id)
@@ -26,8 +27,6 @@ router.get('/:id', async (req, res)=>{
         res.status(404).send({error: 'Something went wrong'});
     }
 })
-
-
 
 
 router.post('/', async (req,res) => {
@@ -60,6 +59,23 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
+  try {
+    const caseId = req.params.id
+    const caseElement = await Case.findById(caseId)
+    if (!caseElement) {
+      res.status(404).send({ error: 'We can not find what you are looking for' })
+    }
+    const isValidated = validator.assigncaseslawyerValidation(req.body)
+    if (isValidated.error) {
+      res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    await Case.findByIdAndUpdate(caseId, req.body)
+    res.json({ msg: 'Assigned' })
+  } catch (error) {
+    res.status(400).send({ error: 'Something went wrong' })
+  }
+})
 
 router.delete('/:id', async (req,res) => {
     try{
