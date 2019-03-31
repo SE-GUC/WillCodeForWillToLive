@@ -228,7 +228,6 @@ class ReviewerTest extends AbstractTests {
               },100000)
               const jsonResponse = await response.json()
               expect(Object.keys(jsonResponse)).not.toEqual(['error'])
-v
               const reviewer = await Reviewer.findOne({_id: this.sharedState.id}).exec()
               expect(reviewer).toEqual(null)
         })
