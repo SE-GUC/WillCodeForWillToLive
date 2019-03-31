@@ -4,7 +4,6 @@ const validator = require('../../validations/SpcFormValidation')
 const Form = require('../../models/SpcForm')
 
 const SpcForm = require('../../models/SpcForm');
-const validator = require('../../validations/SpcFormValidation');
 const config = require('../../config/keys')
 
 router.get('/', async (req,res) => {
