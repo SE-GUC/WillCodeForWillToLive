@@ -36,6 +36,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }
+  })
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
     res.redirect('../../cases/')
@@ -61,28 +62,28 @@ router.get('/:id', async (req, res)=>{
 })
 
 
-// router.post('/api/spcForm', async (req,res) => {
-//     try{
-//         const isValidated = validator.createValidation(req.body)
-//         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-//         const newLawyer = await Lawyer.create(req.body)
-//         res.json({ data: newLawyer})
-//     }catch(error){
-//         res.status(404).send({error: 'Something went wrong'});
-//     }
-// })
+router.post('/api/spcForm', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newLawyer = await Lawyer.create(req.body)
+        res.json({ data: newLawyer})
+    }catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
 
 
-// router.post('/api/sscForm', async (req,res) => {
-//     try{
-//         const isValidated = validator.createValidation(req.body)
-//         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-//         const newLawyer = await Lawyer.create(req.body)
-//         res.json({ data: newLawyer})
-//     }catch(error){
-//         res.status(404).send({error: 'Something went wrong'});
-//     }
-// })
+router.post('/api/sscForm', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newLawyer = await Lawyer.create(req.body)
+        res.json({ data: newLawyer})
+    }catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
 
 
 
