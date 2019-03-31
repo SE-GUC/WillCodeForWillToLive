@@ -38,8 +38,6 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     }
 
 })
-
-  })
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
     res.redirect('../../cases/')
