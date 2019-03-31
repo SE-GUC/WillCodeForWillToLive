@@ -6,7 +6,7 @@ var lawyerSchema = new mongoose.Schema({
     birth_date: Number,
     gender: String,
     nationality: String,
-    type_Of_ID: String,
+    typeOfID: String,
     mobile_number: String,
     fax_number: Number,
     email_address: String,
