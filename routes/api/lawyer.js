@@ -105,16 +105,16 @@ router.delete('/:id', async (req,res) => {
         res.status(404).send({error: 'Something went wrong'});
     }
 })
-router.post('/createsscform', async (req, res)=>{
+/*router.post('/createsscform', async (req, res)=>{
     res.redirect(307,'./../sscform')
-})
+})*/
 router.post('/createspcform', async (req, res)=>{
     res.redirect(307,'./../spcform')
 })
-router.put('/updatescform/:id', async (req, res)=>{
+/*router.put('/updatesscform/:id', async (req, res)=>{
     const formid=req.params.id
     res.redirect(307,'./../sscform/'+formid)
-})
+})*/
 router.put('/updatespcform/:id', async (req, res)=>{
     const formid=req.params.id
     res.redirect(307,'./../spcform/'+formid)
