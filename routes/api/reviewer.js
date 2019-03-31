@@ -3,6 +3,7 @@ const Joi = require('joi');
 //const uuid = require('uuid');
 const router = express.Router();
 const mongoose = require('mongoose')
+const functions = require('../../fn')
 
 const Reviewer = require('../../models/Reviewer');
 const validator = require('../../validations/reviewerValidations')
@@ -16,12 +17,49 @@ router.get('/', async (req,res) => {
 })
 
 
+
+router.get('/sortTaskByID', async (req,res) => {
+    console.log('Entered sortID')
+    try{
+        const tasks = await functions.sortTaskById()
+        console.log({data: tasks})
+        res.json({data: tasks})
+    }
+    catch(error){
+        console.log({error: 'Error in sort Task has occurred'})
+    }
+ })
+
+router.get('/sortTaskByCreationDate', async (req,res) => {
+    try{
+        const tasks = await functions.sortTaskByCreationDate()
+        console.log({data: tasks})
+        res.json({data: tasks})
+    }
+    catch(error){
+        console.log({error: 'Error in sort Task has occurred'})
+    }
+})
+
+//search using /api/reviewer/getCases/
+router.get('/getCases', async (req, res)=>{
+    res.redirect('../../cases/')
+})
+
+router.get('/getCases/:reviewer', async (req, res)=>{
+    const reviewer = req.params.reviewer
+    res.redirect('../../cases/reviewerCases/' + reviewer)
+})
+
+
 router.get('/:id', async (req,res) => {
     const id = req.params.id
     const reviewer = await Reviewer.findById(id)
     if(!reviewer) return res.status(404).send({msg: 'Cannot find Reviewer with specific id'})
     res.json({data: reviewer})
 })
+
+
 
 router.post('/', async (req,res) => {
     try{

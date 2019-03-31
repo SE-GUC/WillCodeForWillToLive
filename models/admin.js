@@ -1,4 +1,4 @@
-//const uuid = require('uuid')
+// const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 /* class admin {
@@ -22,23 +22,18 @@ const Schema = mongoose.Schema
   };
 } */
 let adminSchema = new Schema({
-  username: { type: String, required: true, max: 100 },
+  username: { type: String, required: true, max: 100, unique: true },
   password: { type: String, required: true, max: 100 },
   firstName: { type: String, required: true, max: 100 },
   middleName: { type: String, required: false, max: 100 },
   lastName: { type: String, required: true, max: 100 },
-  DOB: { type: Date, required: true },
+  DOB: { type: String, required: true },
   gender: { type: String, required: true },
   nationality: { type: String, required: true },
-  typeOfID: { type: String, required: true },
-  ID: { type: String, required: true },
-  jobTitle: { type: String, required: true },
   mobileNumber: { type: Number, required: true },
   faxNumber: { type: Number, required: false },
   emailAddress: { type: String, required: false },
   address: { type: String, required: false }
 })
-module.exports = Admin = mongoose.model('Admin',adminSchema)
-    
-
+module.exports = Admin = mongoose.model('Admin', adminSchema)
 // module.exports = admin
