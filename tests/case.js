@@ -2,7 +2,7 @@ const nfetch = require('node-fetch')
 const AbstractTests = require('./AbstractTests')
 const Case = require('../models/Case')
 
-class ReviewerTest extends AbstractTests {
+class CaseTest extends AbstractTests {
     constructor (PORT, ROUTE) {
         super(PORT, ROUTE)
         this.sharedState = {
@@ -186,7 +186,7 @@ class ReviewerTest extends AbstractTests {
     }
 
     deleteRequestIndependently () {
-        test(`Deleting that random reviewer,\t\t\t[=> DELETE\t${this.base_url}/:id\t`, async () => {
+        test(`Deleting that random case,\t\t\t[=> DELETE\t${this.base_url}/:id\t`, async () => {
             const response = await nfetch(`${this.base_url}/${this.sharedState.id}`, {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' }
@@ -199,4 +199,4 @@ class ReviewerTest extends AbstractTests {
         })
     }
 }
-module.exports = ReviewerTest
+module.exports = CaseTest
