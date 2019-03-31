@@ -2,7 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const router = express.Router();
 const mongoose = require('mongoose')
-
+//new 
+const nfetch = require('node-fetch')
 
 const SscForm = require('../../models/SscForm')
 const validator = require('../../validations/SscFormValidation')
@@ -20,6 +21,26 @@ router.post('/', async (req,res) => {
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     const newSscForm = await SscForm.create(req.body)
+    //new
+    const investor = req.body.InvestorName
+    const lawyer = req.body.LawyerName
+    const company = req.body.CompanyName
+    const requestBody = {
+        status: 'pending',
+        investor: investor,
+        reviewer: '-',
+        lawyer: lawyer,
+        company_name: company,
+        reviewed_by_lawyer: false,
+        reviewed_by_reviewer: false
+    }
+    const response = await nfetch(`http://localhost:3000/api/cases/`,{
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    const jsonResponse = await response.json()
+    console.log(jsonResponse)
     res.json({msg:'SscForm was created successfully', data: newSscForm})
    }
    catch(error) {
