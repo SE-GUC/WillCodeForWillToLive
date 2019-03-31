@@ -108,7 +108,6 @@ class ReviewerTest extends AbstractTests {
               this.sharedState.fax_number = reviewer.fax_number
               this.sharedState.email = reviewer.email
               this.sharedState.address = reviewer.address 
-
         },100000)
     }
 
@@ -252,10 +251,11 @@ class ReviewerTest extends AbstractTests {
               },100000)
               const jsonResponse = await response.json()
               expect(Object.keys(jsonResponse)).not.toEqual(['error'])
-
+v
               const reviewer = await Reviewer.findOne({_id: this.sharedState.id}).exec()
               expect(reviewer).toEqual(null)
         })
     }
 }
 module.exports = ReviewerTest 
+
