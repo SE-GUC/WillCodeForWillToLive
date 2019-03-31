@@ -84,4 +84,18 @@ router.delete("/:id", async (req, res) => {
     res.json({ msg: error.message });
   }
 });
+router.post('/createsscform', async (req, res)=>{
+  res.redirect(307,'./../sscform')
+})
+router.post('/createspcform', async (req, res)=>{
+  res.redirect(307,'./../spcform')
+})
+router.put('/updatesscform/:id', async (req, res)=>{
+  const formid=req.params.id
+  res.redirect(307,'./../sscform/'+formid)
+})
+router.put('/updatespcform/:id', async (req, res)=>{
+  const formid=req.params.id
+  res.redirect(307,'./../spcform/'+formid)
+})
 module.exports = router;
