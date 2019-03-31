@@ -7,7 +7,13 @@ module.exports = {
             investor: Joi.string().required(),
             lawyer: Joi.string().required(),
             reviewer: Joi.string().required(),
-            company_name: Joi.string().required()
+            company_name: Joi.string().required(),
+            reviewed_by_lawyer: Joi.boolean().required(),
+            review_comment_by_lawyer: Joi.string(),
+            review_date_by_lawyer: Joi.string(),
+            reviewed_by_reviewer: Joi.boolean().required(),
+            review_comment_by_reviewer: Joi.string(),
+            review_date_by_reviewer: Joi.string()         
         }
         return Joi.validate(request, createSchema)
     },
@@ -17,7 +23,13 @@ module.exports = {
             investor: Joi.string(),
             lawyer: Joi.string(),
             reviewer: Joi.string(),
-            company_name: Joi.string()
+            company_name: Joi.string(),
+            reviewed_by_lawyer: Joi.boolean(),
+            review_comment_by_lawyer: Joi.string(),
+            review_date_by_lawyer: Joi.string(),
+            reviewed_by_reviewer: Joi.boolean(),
+            review_comment_by_reviewer: Joi.string(),
+            review_date_by_reviewer: Joi.string()  
         }
         return Joi.validate(request, updateSchema)
     }

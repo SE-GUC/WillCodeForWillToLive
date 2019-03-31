@@ -33,6 +33,12 @@ const TaskSchema = new Schema({
         type: Boolean,
         required: true
     },
+
+
+    dueDate: {
+        type: Date,
+        required: true
+    },
     assignee: {
         type: String,
         required: true
