@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const validator = require('../../validations/SpcForm')
+const validator = require('../../validations/SpcFormValidation')
 const Form = require('../../models/SpcForm')
 
 router.post('/', async (req, res) => {
