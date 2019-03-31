@@ -24,6 +24,17 @@ router.get("/", async (req, res) => {
   const investors = await Investor.find();
   res.json({ data: investors });
 });
+
+//search using /api/investor/getCases/
+router.get('/getCases', async (req, res)=>{
+  res.redirect('../../cases/')
+})
+
+router.get('/getCases/:investor', async (req, res)=>{
+  const investor = req.params.investor
+  res.redirect('../../cases/investorCases/' + investor)
+})
+
 //View Investor profile by id
 router.get("/:id", async (req, res) => {
   try {
