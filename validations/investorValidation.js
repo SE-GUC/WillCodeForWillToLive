@@ -3,6 +3,7 @@ module.exports = {
   createValidation: request => {
     const createSchema = {
       email: Joi.string().required(),
+      username: Joi.string().required(),
       password: Joi.string().required(),
       typeOfID: Joi.string().required(),
       name: Joi.string().required(),
@@ -19,6 +20,7 @@ module.exports = {
   updateValidation: request => {
     const updateSchema = {
       email: Joi.string(),
+      username: Joi.string().required(),
       password: Joi.string(),
       typeOfID: Joi.string(),
       name: Joi.string(),
