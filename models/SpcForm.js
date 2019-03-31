@@ -40,11 +40,6 @@ const SpcFormSchema = new Schema({
             type: String
         }
     },
-    CreatedAt: {
-        type: Date,
-        required: true,
-        default:Date.now
-    },
     investorInfo: {
         capitalCurrency: {
             type: String,
@@ -92,6 +87,11 @@ const SpcFormSchema = new Schema({
             type: String
         }
     },
+    createdAt: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    }
 })
 
 module.exports = SpcForm = mongoose.model('SpcForm', SpcFormSchema)

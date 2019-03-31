@@ -1,35 +1,34 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const SpcFormSchema = new Schema({
-    
-    regulatingLaws: [{
-        type: String,
+const schema = new Schema({
+    regulatingLaw: {
+        type: [String],
         required: true,
-        default: ['Law159', 'Law72']
-    }],
-    companyLegalForm: [{
-        type: String,
+        default: ['Law72']
+    },
+    companyLegalForm: {
+        type: [String],
         required: true,
         default: ['SSC', 'SPC']
-    }],
-    governorates: {
+    },
+    governorate: {
         type: [{
             name: {
                 type: String,
                 required: true,
             },
-            cities: [{
+            city: [{
                 type: String,
                 required: true
             }],
         }],
         default: [{
             name: 'Cairo',
-            cities: ['October', 'Zayed', 'Tagamo3']
+            city: ['October', 'Zayed', 'Tagamou\'']
         }, {
             name: 'Alexandria',
-            cities: ['Abo Queer', 'Montazah']
+            city: ['Abo Queer', 'Montazah']
         }]
     },
     capitalCurrency: {
@@ -43,6 +42,10 @@ const SpcFormSchema = new Schema({
         type: Number,
         default: 50000
     },
+    investoryNationality: {
+        type: [String],
+        default: ['Egyptian', 'Other']
+    },
     investorType: {
         type: [String],
         default: ['person']
@@ -51,23 +54,22 @@ const SpcFormSchema = new Schema({
         type: [String],
         default: ['nationalID']
     },
-    
+    position: {
+        type: [String],
+        default: ['CEO', 'COO']
+    }
 })
 
 schema.statics = {
-    getSingleton: function getSingleton(cb) {
-        this.findOne()
-            .exec(function (error, model) {
-                if (error) {
-                    cb(error, null)
-                } else if (model === null) {
-                    cb(error, new UserConfig())
-                } else {
-                    cb(error, model)
-                }
-            })
+    getSingleton: async function getSingleton() {
+        const model = await this.findOne()
+        if(model === null) {
+            return await new Model().save()
+        } else {
+            return model
+        }
     }
 }
 
-const Model = mongoose.model('SpcFormProperties', schema)
+const Model = mongoose.model('SpccProps', schema)
 module.exports = Model
