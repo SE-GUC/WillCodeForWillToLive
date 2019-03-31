@@ -241,7 +241,7 @@ router.delete('/:id', async (req, res) => {
   EntityEmployees.splice(EntityEmployeeIndex, 1)
   return res.send('Deleted!')
 }) */
-router.put('/assigncaseslawyer/:id/', async (req, res) => {
+/*router.put('/assigncaseslawyer/:id/', async (req, res) => {
   try {
     const caseId = req.params.id
     const caseElement = await Case.findById(caseId)
@@ -291,7 +291,7 @@ router.put('/assigntasks/:id/', async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: 'Something went wrong' })
   }
-})
+})*/
 router.post('/createlawyer', async (req, res) => {
   res.redirect(307, './../Lawyer')
 })
