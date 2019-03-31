@@ -20,7 +20,7 @@ module.exports = {
   updateValidation: request => {
     const updateSchema = {
       email: Joi.string(),
-      username: Joi.string().required(),
+      username: Joi.string(),
       password: Joi.string(),
       typeOfID: Joi.string(),
       name: Joi.string(),
