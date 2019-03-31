@@ -40,9 +40,9 @@ const functions = {
             Tasks[ind] = temp
         }
         return Tasks
-    },
+    }
 
-   createReviewer : async (req) => {
+   /*createReviewer : async (req) => {
         try{
         console.log({data: req})
         const validator = require('./validations/reviewerValidations')
@@ -56,6 +56,6 @@ const functions = {
         catch(error){
             return 'Error in reviewer creation'
         }
-    }
+    }*/
 }
 module.exports = functions
