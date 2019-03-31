@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 require("mongoose-type-email");
 //Investor schema
 var investorSchema = new Schema({
-  email: { type: mongoose.SchemaTypes.Email, unique: true },
+  email: { type: mongoose.SchemaTypes.Email },
+  username: { type: String, required: true, unique: true },
   password: String,
   typeOfID: String,
   name: String,
