@@ -36,7 +36,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }})
-    
+
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
     res.redirect('../../cases/')
