@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Investor = require("../../models/Investor");
+const Company = require("../../models/Company");
 const validator = require("../../validations/investorValidation");
 //create Investor profile
 router.post("/", async (req, res) => {
@@ -24,17 +25,6 @@ router.get("/", async (req, res) => {
   const investors = await Investor.find();
   res.json({ data: investors });
 });
-
-//search using /api/investor/getCases/
-router.get('/getCases', async (req, res)=>{
-  res.redirect('../../cases/')
-})
-
-router.get('/getCases/:investor', async (req, res)=>{
-  const investor = req.params.investor
-  res.redirect('../../cases/investorCases/' + investor)
-})
-
 //View Investor profile by id
 router.get("/:id", async (req, res) => {
   try {
@@ -82,6 +72,34 @@ router.delete("/:id", async (req, res) => {
     });
   } catch (error) {
     res.json({ msg: error.message });
+  }
+});
+//Get all companies having same investor username
+router.get("/comapny/:id", async (req, res) => {
+  try {
+    Investor.findById(req.params.id, function (err, investor) {
+      if (!err) {
+        Company.find({
+          investorName: investor.username
+          },
+          function (err, companies) {
+            if (!err)
+              res.json({
+                msg: "Here are your companies",
+                data: companies
+              });
+            else res.json({
+              msg: err.message
+            });
+          });
+      } else res.json({
+        msg: err.message
+      });
+    });
+  } catch (error) {
+    res.json({
+      msg: error.message
+    });
   }
 });
 module.exports = router;
