@@ -32,7 +32,18 @@ const TaskSchema = new Schema({
     isDone: {
         type: Boolean,
         required: true
+    },
+
+    dueDate: {
+        type: String,
+        required: true
+    },
+
+    assignee: {
+        type: String,
+        required: true
     }
+
 })
 
 //module.exports = Task
