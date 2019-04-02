@@ -1,12 +1,12 @@
-
 /** * npm modules ***/
+const dotenv = require('dotenv')
+dotenv.config() // Setting env variables
 const express = require('express')
-const mongoose = require('mongoose') //new
-const port = process.env.PORT || 3000
+const mongoose = require('mongoose')
+const port = process.env.PORT || 3002
 
 /** * project modules ***/
-// example: const router = require('router/api/company')
-
+const SpcFormProps = require('./models/SpcFormProperties')
 const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
 const investors = require('./routes/api/investor')
@@ -17,40 +17,24 @@ const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
 const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
+
 /** * global constants ***/
 const app = express()
+const db = process.env.mongoURI
 
-const db = require('./config/keys.js').mongoURI
-
-mongoose
-        .connect(db)
-        .then(() => console.log('Connected to Database'))
-        .catch(err => console.log(err))
+mongoose.connect(db)
+  .then(() => {
+    console.log('Connected to Database')
+    SpcFormProps.getSingleton()
+    .then (() => console.log('created spc meta default'))
+  })
+  .catch(err => console.log(err))
 
 app.use(express.json());
 
-
-//new
-// const db = require('./config/keys.js').mongoURI
-// mongoose
-//     .connect(db)
-//     .then(() => console.log('Connected to MongoDB'))
-//     .catch(err => console.log(err))
-
-
-/** * adding controllers/routers ***/
-// example: app.use('/api/company', company)
-//app.use('/api/Lawyer',Lawyer)
-
-//
-// /** * Connectiong to db ***/
-// //const db = require('./config/keys.js').mongoURI
-// mongoose.connect(db).then(() => console.log('Connected to MongoDB')).catch(err => console.log(err))
-
-
+// Adding routes
 app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
-
 app.use('/api/tasks', tasks)
 app.use('/api/investor', investors)
 app.use('/api/company', companyRouter)

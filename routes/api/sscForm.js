@@ -6,7 +6,6 @@ const nfetch = require('node-fetch')
 
 const SscForm = require('../../models/SscForm')
 const validator = require('../../validations/SscFormValidation')
-const config = require('../../config/keys')
 
 
 router.get('/', async (req,res) => {
