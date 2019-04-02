@@ -28,7 +28,9 @@ router.post('/', async (req,res) => {
         investor: investor,
         reviewer: '-',
         lawyer: lawyer,
-        company_name: company
+        company_name: company,
+        reviewed_by_lawyer: false,
+        reviewed_by_reviewer: false
     }
     const response = await nfetch(`http://localhost:3000/api/cases/`,{
         method: 'POST',

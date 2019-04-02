@@ -71,6 +71,80 @@ router.post('/', async (req,res) => {
     }
 });
 
+
+//UPDATE SPcFORM STATUS
+
+router.put('/spcForm/:id',async (req,res) =>{
+  try{
+      const form = await SpcForm.findById(req.params.id)
+      if(!form){
+          res.status(404).send({error: 'We can not find what you are looking for'});
+      }
+      //const isValidated = validator.updateValidation(req.body)
+      //if (isValidated.error) {
+        //  res.status(400).send({ error: isValidated.error.details[0].message })
+      //}
+      if(req.body.Status){
+        const updatedForm = await SpcForm.findByIdAndUpdate(req.params.id,req.body)
+        res.json({msg: 'Status updated'})
+      }else{
+        res.status(404).send({error: 'Status is missing'})
+      }
+  }
+  catch(error){
+      res.status(404).send({error: 'Something went wrong'});
+}
+
+})
+
+//UPDATE SscFORM STATUS
+
+router.put('/sscForm/:id',async (req,res) =>{
+  try{
+      const form = await SscForm.findById(req.params.id)
+      if(!form){
+          res.status(404).send({error: 'We can not find what you are looking for'});
+      }
+      //const isValidated = validator.updateValidation(req.body)
+      //if (isValidated.error) {
+        //  res.status(400).send({ error: isValidated.error.details[0].message })
+      //}
+      if(req.body.Status){
+        const updatedForm = await SscForm.findByIdAndUpdate(req.params.id,req.body)
+        res.json({msg: 'Status updated'})
+      }else{
+        res.status(404).send({error: 'Status is missing'})
+      }
+  }
+  catch(error){
+      res.status(404).send({error: 'Something went wrong'});
+}
+
+})
+
+
+router.put('/cases/:id', async (req,res) => {
+    try{
+        const id = req.params.id
+        const reviewer = await Reviewer.findById(id)
+        const isValidated = validator.updateValidation(req.body)
+        if(!reviewer)  res.status(404).send({ error: 'Reviewer not found' })
+        if(isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const updatedReviewer = await Reviewer.findByIdAndUpdate(id, req.body)
+        res.json({msg:'Reviewer updated successfully', data: updatedReviewer})
+    }
+    catch(error){
+        console.log(error)
+    }
+})
+
+
+router.get('/cases', async (req,res) => {
+    const reviewer = await Reviewer.find()
+    res.json({data: reviewer})
+})
+
+
 /*router.get('/:id', (req, res) => {
     const reviewrId = req.params.id
     const reviewerElement = reviewers.find( reviewerX => reviewerX.id = reviewrId)
@@ -78,7 +152,7 @@ router.post('/', async (req,res) => {
         res.status(404).send({err: 'Not Found'})}
     else{
         res.send({reviewerElement})
-    }    
+    }
 });*/
 
 router.put('/:id', async (req,res) => {
@@ -98,7 +172,7 @@ router.put('/:id', async (req,res) => {
 
 
 router.delete('/:id', async (req, res) => {
-  try{  
+  try{
   const id = req.params.id
   const deletedReviewer = await Reviewer.findByIdAndRemove(id)
   res.json({msg: 'Reviewer deleted successfully', data: deletedReviewer})

@@ -71,7 +71,6 @@ module.exports = {
         })
         return Joi.validate(schema)
     },
-
     validateUpdate: async function (body, cb) {
         const props = await FormProperties.getSingleton()
         const schema = Joi.object({
