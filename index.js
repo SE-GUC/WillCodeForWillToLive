@@ -22,7 +22,7 @@ const Lawyer = require('./routes/api/lawyer')
 const app = express()
 const db = process.env.mongoURI
 
-mongoose.connect(db)
+mongoose.connect(db, {useNewUrlParser: true})
   .then(() => {
     console.log('Connected to Database')
     SpcFormProps.getSingleton()
