@@ -1,99 +1,79 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
+const router = require('express').Router()
+const Model = require('../../models/Company')
+const validator = require('../../validations/CompanyValidation')
 
-const schema = require('../../models/Company')
-const config = require('../../config/keys')
-
-const router = express.Router()
-router.use(bodyParser.json())
-router.use(bodyParser.urlencoded({ extended: false }))
-
-const mongoURL = config.mongoURI
-mongoose.set('useCreateIndex', true)
-
-/*** CRUD implementation ***/
-router.post('/', (req, res)=>{
-    mongoose.connect(mongoURL, {useNewParser: true}).then(()=>{
-        schema.insertMany([req.body]).then(()=>{
-            return res.redirect('/api/company/')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(error)
-        })
-    }).catch((error)=>{
-        console.log('There')
-        mongoose.disconnect()
-        return res.send(error)
-    })
+/** * CRUD implementation ***/
+// Create new record
+router.post('/', async (req, res)=>{
+    try{
+        const valid = await validator.createValidation(req.body)
+        if(valid.error) {
+            res.status(400).json({error: valid.error})
+        } else {
+            const newModel = await Model.create(req.body)
+            res.json(newModel)
+        }
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
+    
 })
 
-// Show all data
+// Show all records
 router.get('/', async (req, res)=>{
-    mongoose.connect(mongoURL).then(()=>{
-        schema.find({}).then((companies)=>{
-            return res.send({data: companies})
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+    try{
+        const models = await Model.find()
+        res.json(models)
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
 })
 
-// Reading entry
+// Showing a record
 router.get('/:id', (req, res)=>{
-    mongoose.connect(mongoURL).then(()=>{
-        schema.findOne({'_id': req.params.id})
-        .exec()
-        .then((company)=>{
-            return res.send({data:company})
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+    try {
+        const data = await Model.findById(req.params.id)
+        if(data === null) {
+            res.status(404).json({error: 'Resource not found'})
+        } else {
+            res.json(data)
+        }
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
 })
 
-// Updating
+// Update a record
 router.put('/:id', (req, res)=>{
-    mongoose.connect(mongoURL)
-    .then(()=>{
-        schema.findOneAndUpdate({'_id':req.params.id}, req.body)
-        .exec()
-        .then(()=>{
-            return res.redirect('/api/company/')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+    try{
+        const valid = await validator.updateValidation(req.body)
+        if(valid.error) {
+            res.status(400).json({error: valid.error})
+        } else {
+            const data = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+            if(data === null) {
+                res.status(404).json({error: 'Resource not found'})
+            } else {
+                res.json(data)
+            }
+        }
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
 })
 
-// Deleting data
+// Delete a record
 router.delete('/:id', (req, res)=>{
-    mongoose.connect(mongoURL)
-    .then(()=>{
-        schema.deleteOne({'_id':req.params.id})
-        .exec()
-        .then(()=>{
-            return res.redirect('/api/company')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+    try {
+        const data = await Model.findByIdAndDelete(req.params.id)
+        if(data === null) {
+            res.status(404).json({error: 'Resource not found'})
+        } else {
+            res.json(data)
+        }
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
 })
 
 //Exporting router
