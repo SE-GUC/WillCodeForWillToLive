@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const mongoose = require('mongoose')
 const UserConfig = require('../../models/SpcFormProperties')
 const validator = require('../../validations/SpcFormPropertiesValidation')
 

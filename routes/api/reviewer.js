@@ -2,7 +2,6 @@ const express = require('express');
 const Joi = require('joi');
 //const uuid = require('uuid');
 const router = express.Router();
-const mongoose = require('mongoose')
 const functions = require('../../fn')
 
 const Reviewer = require('../../models/Reviewer');

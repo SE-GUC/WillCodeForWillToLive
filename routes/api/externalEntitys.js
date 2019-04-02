@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
 
 const ExternalEntity = require('../../models/ExternalEntity')
 const validator = require('../../validations/ExternalEntityValidations')
