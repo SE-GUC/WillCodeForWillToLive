@@ -30,7 +30,7 @@ router.get('/', async (req, res)=>{
 })
 
 // Showing a record
-router.get('/:id', (req, res)=>{
+router.get('/:id', async (req, res)=>{
     try {
         const data = await Model.findById(req.params.id)
         if(data === null) {
@@ -44,7 +44,7 @@ router.get('/:id', (req, res)=>{
 })
 
 // Update a record
-router.put('/:id', (req, res)=>{
+router.put('/:id', async (req, res)=>{
     try{
         const valid = await validator.updateValidation(req.body)
         if(valid.error) {
@@ -63,7 +63,7 @@ router.put('/:id', (req, res)=>{
 })
 
 // Delete a record
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', async (req, res)=>{
     try {
         const data = await Model.findByIdAndDelete(req.params.id)
         if(data === null) {
