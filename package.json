@@ -8,6 +8,11 @@
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "tests/*"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SE-GUC/willcodeforwilltolive.git"

@@ -5,7 +5,7 @@ const schema = new Schema({
     regulatingLaw: {
         type: [String],
         required: true,
-        default: ['Law72']
+        default: ['Law159', 'Law72']
     },
     companyLegalForm: {
         type: [String],
@@ -64,12 +64,12 @@ schema.statics = {
     getSingleton: async function getSingleton() {
         const model = await this.findOne()
         if(model === null) {
-            return await Model.create()
+            return await this.create({})
         } else {
             return model
         }
     }
 }
 
-const Model = mongoose.model('SpccProps', schema)
+const Model = mongoose.model('sscProps', schema)
 module.exports = Model
