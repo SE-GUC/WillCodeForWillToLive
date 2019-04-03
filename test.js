@@ -5,7 +5,6 @@ const ReviewerTest = require("./tests/reviewer")
 const casesTest = require('./tests/case')
 const lawyerTest = require('./tests/lawyer')
 const TasksTest = require("./tests/task")
-const investorTest = require('./tests/Investor')
 const externalEntityTest = require('./tests/externalEntity')
 
 mongoose.connect(db).then(() => console.log('Connected to Database')).catch(err => console.log(err))
