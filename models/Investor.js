@@ -15,8 +15,7 @@ var investorSchema = new Schema({
   address: String,
   faxNumber: Number,
   gender: {
-    type: String,
-    enum: ["Male", "Female"]
+    type: String
   }
 });
 

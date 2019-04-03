@@ -8,12 +8,12 @@ module.exports = {
       typeOfID: Joi.string().required(),
       name: Joi.string().required(),
       nationality: Joi.string().required(),
-      capital: Joi.number().required(),
-      DOB: Joi.date().required(),
+      capital: Joi.number(),
+      DOB: Joi.date(),
       mobileNumber: Joi.number().required(),
       address: Joi.string().required(),
       faxNumber: Joi.number().required(),
-      gender: Joi.string().required()
+      gender: Joi.string()
     };
     return Joi.validate(request, createSchema);
   },
