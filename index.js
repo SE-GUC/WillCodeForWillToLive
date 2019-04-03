@@ -11,6 +11,7 @@ const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
 const investors = require('./routes/api/investor')
 const sscForm = require('./routes/api/sscForm')
+const sscFormProps = require('./routes/api/sscFormProperties')
 const spcForm = require('./routes/api/spcForm')
 const externalEntitys = require('./routes/api/externalEntitys')
 const cases = require('./routes/api/cases')
@@ -23,7 +24,7 @@ const app = express()
 const db = require('./config/keys.js').mongoURI
 
 mongoose
-        .connect(db)
+        .connect(db, {useNewUrlParser: true})
         .then(() => console.log('Connected to Database'))
         .catch(err => console.log(err))
 
@@ -51,11 +52,12 @@ app.use(express.json());
 app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
 
-app.use('/api/tasks', tasks)
+app.use('/api/task', tasks)
 app.use('/api/investor', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/externalEntitys', externalEntitys)
 app.use('/api/sscform', sscForm)
+app.use('/api/sscformProps', sscFormProps)
 app.use('/api/spcform', spcForm)
 app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)

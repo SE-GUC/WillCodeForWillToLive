@@ -36,7 +36,7 @@ const TaskSchema = new Schema({
 
 
     dueDate: {
-        type: Date,
+        type: String,
         required: true
     },
     assignee: {

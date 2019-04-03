@@ -106,7 +106,6 @@ class ReviewerTest extends AbstractTests {
               this.sharedState.fax_number = reviewer.fax_number
               this.sharedState.email = reviewer.email
               this.sharedState.address = reviewer.address 
-              
         },100000)
     }
 
@@ -144,6 +143,8 @@ class ReviewerTest extends AbstractTests {
             expect(Object.keys(jsonResponse)).toEqual(['data'])
         },100000)
     }
+
+    
     getRequestIndependently () {
 
         test(`Fetching the data of that random reviewer,\t[=> GET\t\t${this.base_url}/:id\t`, async () => {
@@ -227,10 +228,10 @@ class ReviewerTest extends AbstractTests {
               },100000)
               const jsonResponse = await response.json()
               expect(Object.keys(jsonResponse)).not.toEqual(['error'])
-              
               const reviewer = await Reviewer.findOne({_id: this.sharedState.id}).exec()
               expect(reviewer).toEqual(null)
         })
     }
 }
-module.exports = ReviewerTest
+module.exports = ReviewerTest 
+
