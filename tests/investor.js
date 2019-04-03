@@ -6,6 +6,7 @@ class investorTest extends AbstractTests {
     constructor (PORT, ROUTE) {
         super(PORT, ROUTE)
         this.sharedState = {
+            id: null, 
             email: null,
             username: null,
             password: null,
@@ -49,7 +50,7 @@ class investorTest extends AbstractTests {
           email: 'whatever@gsgduy.v',
           //username: null,
           password: '3456udgus',
-          TypeOfId: 'id',
+          typeOfID: 'id',
           name: 'hadile',
           nationality: 'French',
           capital: 134562,
@@ -99,15 +100,15 @@ class investorTest extends AbstractTests {
     postRequestIndependently() {
         const requestBody = {
             email: 'whatever@gsgduy.v',
-            //username: null,
+            username: "hadilee",
             password: '3456udgus',
-            TypeOfId: 'id',
+            typeOfID: 'id',
             name: 'hadile',
             nationality: 'French',
             capital: 134562,
             //DOB: 10-11-1997,
             mobileNumber: 35627,
-            Address: 'gsjsy6',
+            address: 'gsjsy6',
             faxNumber: 16527,
             gender: 'Female'
         }
@@ -120,10 +121,11 @@ class investorTest extends AbstractTests {
               })
               const jsonResponse = await response.json()
               console.log(jsonResponse)
-              expect(Object.keys(jsonResponse)).toEqual(['error'])
+              expect(Object.keys(jsonResponse)).not.toEqual(['error'])
 
-              const investorElement = await Investor.findById(jsonResponse.data.id).exec()
+              const investorElement = await Investor.findById(jsonResponse.data._id).exec()
               expect(investorElement).toMatchObject(requestBody)
+              this.sharedState.id = investorElement._id
               this.sharedState.email = investorElement.email
               this.sharedState.username = investorElement.username
               this.sharedState.password = investorElement.password
@@ -133,9 +135,8 @@ class investorTest extends AbstractTests {
               this.sharedState.DOB = investorElement.DOB
               this.sharedState.mobileNumber = investorElement.mobileNumber
               this.sharedState.gender = investorElement.gender
-              //this.sharedState.id = investorElement.id
               this.sharedState.faxNumber = investorElement.faxNumber
-              this.sharedState.Address = investorElement.Address
+              this.sharedState.address = investorElement.address
         },100000)
     }
 
@@ -147,7 +148,7 @@ class investorTest extends AbstractTests {
                 headers: { 'Content-Type': 'application/json'}
             })
             const jsonResponse = await response.json()
-            expect(Object.keys(jsonResponse)).toEqual(['msg'])
+            expect(Object.keys(jsonResponse)).toEqual(["data"])
 
             expect(jsonResponse.data.name).toEqual(this.sharedState.name)
             expect(jsonResponse.data.DOB).toEqual(this.sharedState.DOB)
@@ -188,7 +189,7 @@ class investorTest extends AbstractTests {
                 headers: { 'Content-Type': 'application/json' }
             },100000)
             const jsonResponse = await response.json()
-            expect(Object.keys(jsonResponse)).toEqual(['msg'])
+            expect(Object.keys(jsonResponse)).toEqual(['error'])
 
         },100000)
     }
