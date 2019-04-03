@@ -9,7 +9,7 @@ module.exports = {
       name: Joi.string().required(),
       nationality: Joi.string().required(),
       birth_date: Joi.date().required(),
-      mobile_number: Joi.number().required(),
+      mobile_number: Joi.string().required(),
       fax_number: Joi.number().required(),
       gender: Joi.string().required()
     };
@@ -23,10 +23,16 @@ module.exports = {
       name: Joi.string(),
       nationality: Joi.string(),
       birth_date: Joi.date(),
-      mobile_number: Joi.number(),
+      mobile_number: Joi.string(),
       fax_number: Joi.number(),
       gender: Joi.string()
     };
     return Joi.validate(request, updateSchema);
+  },
+  assigncaseslawyerValidation: request => {
+    const assignlawyerSchema = {
+      lawyer: Joi.string().required()
+    }
+    return Joi.validate(request, assignlawyerSchema)
   }
 };
