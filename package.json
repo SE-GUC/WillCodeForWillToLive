@@ -4,7 +4,7 @@
   "description": "This is an implementation of the Sumerge project for the Software Engineering course 'CSEN601'",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "concurrently \"node index.js\" \"jest --detectOpenHandles test.js\"",
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
