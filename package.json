@@ -44,6 +44,5 @@
   "directories": {
     "doc": "docs"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
