@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const FormProperties = require('../models/SpcFormProperties')
+const FormProperties = require('../models/SscFormProperties')
 
 module.exports = {
     validateCreate: async function (body) {
@@ -71,6 +71,7 @@ module.exports = {
         })
         return Joi.validate(schema)
     },
+
     validateUpdate: async function (body, cb) {
         const props = await FormProperties.getSingleton()
         const schema = Joi.object({
@@ -105,6 +106,20 @@ module.exports = {
                 fax: Joi.string().min(8).max(8),
                 email: Joi.string().email()
             }),
+            boardOfDirectors: Joi.array.items(object({
+                name: Joi.string().min(3).max(30),
+                investorType: Joi.string().allow(props.investorType),
+                gender: Joi.string().allow(props.gender),
+                nationality: Joi.string().allow(props.nationality),
+                idType: Joi.string().when('nationality', {
+                    is: 'Egyptian',
+                    then: Joi.allow(['nationalID'])
+                }),
+                idNumber: Joi.string(),
+                birthDate: Joi.diff('YEARS', new Date(), 21),
+                address: Joi.string().min(3).max(200),
+                position: Joi.string().allow(props.position)
+            }))
         })
         return Joi.validate(schema)
     }
