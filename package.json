@@ -45,6 +45,5 @@
     "doc": "docs"
   },
   "devDependencies": {
-    "jest": "^24.5.0"
   }
 }
