@@ -28,5 +28,11 @@ module.exports = {
       gender: Joi.string()
     };
     return Joi.validate(request, updateSchema);
+  },
+  assigncaseslawyerValidation: request => {
+    const assignlawyerSchema = {
+      lawyer: Joi.string().required()
+    }
+    return Joi.validate(request, assignlawyerSchema)
   }
 };
