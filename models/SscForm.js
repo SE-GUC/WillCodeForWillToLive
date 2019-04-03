@@ -3,118 +3,129 @@ const Schema = mongoose.Schema
 
 
 const SscFormSchema = new Schema({
-
-    CompanyName: {
-        type: String,
-        required: true,
-        unique: true
-
-    },
-    CompanyNationality: {
-        type: String,
-        required: true,
-        unique: true
-
-    },
-    CompanyName_English: {
-        type: String,
-        required: false
-    },
-    Currency: {
+    regulatingLaw: {
         type: String,
         required: true
     },
-    Capital: {
-        type: Number,
-        min:50000,
+    companyLegalForm: {
+        type: String,
+        required: true
     },
-    CreatedAt: {
+    companyName: {
+        arabic: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        english: {
+            type: String
+        }
+    },
+    hqInfo: {
+        governorate: {
+            type: String,
+            required: true
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        address: {
+            type: String,
+            required: true
+        },
+        telephone: {
+            type: String
+        },
+        fax: {
+            type: String
+        }
+    },
+    investorInfo: {
+        capitalCurrency: {
+            type: String,
+            required: true
+        },
+        capital: {
+            type: Number,
+            required: true
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        investorType: {
+            type: String,
+            required: true
+        },
+        gender: {
+            type: String
+        },
+        nationality: {
+            type: String,
+            required: true
+        },
+        idType: {
+            type: String
+        },
+        idNumber: {
+            type: String
+        },
+        birthDate: {
+            type: Date
+        },
+        address: {
+            type: String,
+            required: true
+        },
+        telephone: {
+            type: String
+        },
+        fax: {
+            type: String
+        },
+        email: {
+            type: String
+        }
+    },
+    boardOfDirectors: {
+        type: [{
+            name: {
+                type: String,
+                required: true
+            },
+            investorType: {
+                type: String
+            },
+            gender: {
+                type: String
+            },
+            nationality: {
+                type: String,
+                required: true
+            },
+            idType: {
+                type: String,
+            },
+            idNumber: {
+                type: String
+            },
+            birthDate: {
+                type: Date
+            },
+            address: {
+                type: String
+            },
+            position: {
+                type: String
+            }
+        }]
+    },
+    createdAt: {
         type: Date,
         required: true,
-        default:Date.now
-    },
-    RegulatedLaw: {
-        type: String,
-        required: true
-    },
-    FormOfLegalCompany: {
-        type: String,
-        required: true
-    },
-    Governorate: {
-        type: String,
-        required: true
-    },
-    City: {
-        type: String,
-        required: true
-    },
-    Address: {
-        type: String,
-        required: true
-    },
-    Reviewed: {
-        type: Boolean,
-        required: true
-    },
-    ReviewedComment: {
-        type: String,
-        required: false
-    },
-    ReviewedDate: {
-        type: Date,
-        required: false
-    },
-    Status: {
-        type: Boolean,
-        required: true
-    },
-    Fax: {
-        type: String,
-        required: true
-    },
-    LawyerName: {
-        type: String,
-        required: true
-    },
-
-    InvestorName: {
-        type: String,
-        required: true
-    },
-    InvestorGender: {
-        type: String,
-        required: true
-    },
-    InvestorNationality: {
-        type: String,
-        required: true
-    },
-    InvestorId: {
-        type: Number,
-        required: true,
-        unique: true
-    },
-    InvestorBirthdate: {
-        type: Date,
-        required: true
-    },
-    InvestorTelephone: {
-        type: Number,
-        required: true
-    },
-    InvestorFax: {
-     type: String,
-     required: true
-    },
-    InvestorEmail: {
-        type: String,
-        required: true
-    },
-    InvestorHomeAddress: {
-        type: String,
-        required: true
-    },
+        default: Date.now()
+    }
 })
 
 module.exports = SscForm = mongoose.model('SscForm', SscFormSchema)
