@@ -1,6 +1,6 @@
 const nfetch = require('node-fetch')
 const AbstractTests = require('../tests/AbstractTests.js')
-const Investor = require('../models/investor.js')
+const Investor = require('../models/Investor.js')
 
 class investorTest extends AbstractTests {
     constructor (PORT, ROUTE) {
