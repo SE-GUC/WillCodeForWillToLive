@@ -133,7 +133,7 @@ class investorTest extends AbstractTests {
               this.sharedState.DOB = investorElement.DOB
               this.sharedState.mobileNumber = investorElement.mobileNumber
               this.sharedState.gender = investorElement.gender
-              this.sharedState.id = investorElement.id
+              //this.sharedState.id = investorElement.id
               this.sharedState.faxNumber = investorElement.faxNumber
               this.sharedState.Address = investorElement.Address
         },100000)
@@ -225,11 +225,9 @@ class investorTest extends AbstractTests {
             })
             const jsonResponse = await response.json()
             expect(Object.keys(jsonResponse)).not.toEqual(['error'])
-
             const investorElement = await Investor.findById(this.sharedState.id).exec()
-            expect(investorElement.gender).toEqual('Female')
-            expect(investorElement.nationality).toEqual('French')
-
+            expect( investorElement.gender ).toEqual('Female')
+            expect( investorElement.nationality ).toEqual('French')
             this.sharedState.gender = investorElement.gender
             this.sharedState.nationality = investorElement.nationality
         },100000)
