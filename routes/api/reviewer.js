@@ -202,5 +202,29 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+//as a reviewer, assign task to lawyer
+router.put("/task/:username/:taskID", async (req, res) => {
+    try {
+        Task.findByIdAndUpdate(req.params.taskID, {
+            username: req.body.assignee
+        }, {
+            new: true
+        }, function (err, task) {
+            if (!err)
+                res.json({
+                    msg: "Your task has been assigned to the lawyer successfully",
+                    data: task
+                });
+            else
+                res.json({
+                    msg: err.message
+                });
+        });
+    } catch (error) {
+        res.json({
+            msg: error.message
+        });
+    }
+});
 
 module.exports = router;
