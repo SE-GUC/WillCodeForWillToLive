@@ -33,5 +33,11 @@ module.exports = {
             address: Joi.string().min(3).max(300)
         }
         return Joi.validate(request, updateSchema)
+    },
+    assigncasesreviewerValidation: request => {
+      const assignreviewerSchema = {
+        reviewer: Joi.string().required()
+      }
+      return Joi.validate(request, assignreviewerSchema)
     }
 }
