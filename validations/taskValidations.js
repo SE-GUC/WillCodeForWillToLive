@@ -7,7 +7,7 @@ module.exports = {
             description: Joi.string().min(3).max(300).required(),
             created_at: Joi.string().min(3).max(300).required(),
             isDone: Joi.boolean().required(),
-            dueDate: Joi.date().required(),
+            dueDate: Joi.string().min(3).max(300).required(),
             assignee: Joi.string().min(3).max(300).required()
         }
         return Joi.validate(request, createSchema)
@@ -19,7 +19,7 @@ module.exports = {
             description: Joi.string().min(3).max(300),
             created_at: Joi.string().min(3).max(300),
             isDone: Joi.boolean(),
-            dueDate: Joi.date(),
+            dueDate: Joi.string().min(3).max(300),
             assignee: Joi.string().min(3).max(300)
         }
         return Joi.validate(request, updateSchema)
