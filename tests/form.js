@@ -7,8 +7,6 @@ class SscTest {
 
   constructor(PORT, ROUTE) {
     this.base_url = `http://localhost:${PORT}/api/${ROUTE}`
-    this.sharedState = {}
-    this.runIndependently = this.runIndependently.bind(this)
     this.sharedState = {
       body: SscTest.createModelBody(1)
     }
@@ -120,7 +118,9 @@ class SscTest {
 
   putRequestIndependently () {
     const reqBody = {
-      companyNameArabic: 'NewNameArabic'
+      companyName:{
+        arabic: 'NewCompanyName'
+      }
     }
     test(`Updating the data of the created ${modelName}`, async() => {
       const res = await nfetch(`${this.base_url}/${this.sharedState.body._id}`, {
@@ -131,7 +131,7 @@ class SscTest {
       const jsonRes = res.json()
       expect(Object.keys(jsonRes)).not.toEqual(['error'])
       const modelInstance = await Model.findById(this.sharedState.body._id)
-      expect(modelInstance.companyNameArabic).toEqual('NewNameArabic')
+      expect(modelInstance.companyName.arabic).toEqual('NewCompanyName')
       this.sharedState.body = modelInstance
     }, TIMEOUT)
   }
@@ -164,35 +164,41 @@ class SscTest {
     return {
       regulatingLaw: empty? null:'Law72',
       companyType: empty? null:'SSC',
-      companyNameArabic: empty? null:'CompanyNameArabic',
-      companyNameEnglish: empty? null:'CompanyNameEnglish',
-      hqGovernorate: empty? null:'hqGov',
-      hqCity: empty? null:'hqCity',
-      hqTelephone: empty? null:'89127389124',
-      hqFax: empty? null:'9012489124',
-      capitalCurrency: empty? null:'EGP',
-      capital: empty? null:90000,
-      investorName: empty? null:'investorName',
-      investorType: empty? null:'person',
-      investorGender: empty? null:'male',
-      investorNationality: empty? null:'Egyptian',
-      investorIdType: empty? null:'nationalId',
-      investorId: empty? null:'298190289012',
-      investorBirthdate: empty? null:new Date('1-1-1990'),
-      investorTelephone: empty? null:'1284789124',
-      investorFax: empty? null:'124902094',
-      investorEmail: empty? null:'investorEmail',
-      investorAddress: empty? null:'investorPosition',
+      companyName: {
+        arabic: empty? null:'CompanyNameArabic',
+        english: empty? null:'CompanyNameEnglish',
+      },
+      hqInfo: {
+        governorate: empty? null:'hqGov',
+        city: empty? null:'hqCity',
+        telephone: empty? null:'89127389124',
+        fax: empty? null:'9012489124',
+      },
+      investorInfo: {
+        capitalCurrency: empty? null:'EGP',
+        capital: empty? null:90000,
+        name: empty? null:'investorName',
+        type: empty? null:'person',
+        gender: empty? null:'male',
+        nationality: empty? null:'Egyptian',
+        idType: empty? null:'nationalId',
+        idNumber: empty? null:'298190289012',
+        birthdate: empty? null:new Date('1-1-1990'),
+        telephone: empty? null:'1284789124',
+        fax: empty? null:'124902094',
+        email: empty? null:'investorEmail',
+        address: empty? null:'investorPosition',
+      },
       boardOfDirectors: empty? null:[{
-        directorName: 'Director1',
-        directorType: 'person',
-        directorGender: 'male',
-        directorNationality: 'Egyptian',
-        directorIdType: 'nationalId',
-        directorId: '82374892374892734',
-        directorBirthdate: new Date('1-1-1990'),
-        directorAddress: 'directorAddress',
-        directorPosition: 'directorPosition'
+        name: 'Director1',
+        type: 'person',
+        gender: 'male',
+        nationality: 'Egyptian',
+        idType: 'nationalId',
+        idNumber: '82374892374892734',
+        birthdate: new Date('1-1-1990'),
+        address: 'directorAddress',
+        position: 'directorPosition'
       }]
     }
   }

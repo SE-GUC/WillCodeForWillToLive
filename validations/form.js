@@ -2,78 +2,95 @@ const joi = require('joi')
 
 module.exports = {
   validateCreate: (body) => {
-    const directorSchema = joi.object({
-      directorName: joi.string(),
-      directorType: joi.string(),
-      directorGender: joi.string(),
-      directorNationality: joi.string(),
-      directorIdType: joi.string().when('directorType', {is: 'person', then: joi.required()}),
-      directorId: joi.string().when('directorType', {is: 'person', then: joi.required()}),
-      directorBirthdate: joi.date().when('directorType', {is: 'person', then: joi.required()}),
-      directorAddress: joi.string(),
-      directorPosition: joi.string()
-    })
+    const companyType = body && body.companyType
+    if(companyType === undefined) {
+      const valid = {
+        error: 'Empty body or company type'
+      }
+      return valid
+    }
     const schema = {
       regulatingLaw: joi.string().required(),
       companyType: joi.string().required(),
-      companyNameArabic: joi.string().required(),
-      companyNameEnglish: joi.string().required(),
-      hqGovernorate: joi.string().required(),
-      hqCity: joi.string().required(),
-      hqTelephone: joi.string(),
-      hqFax: joi.string(),
-      capitalCurrency: joi.string().required(),
-      capital: joi.number().min(50000).required(),
-      investorName: joi.string().required(),
-      investorType: joi.string().required(),
-      investorGender: joi.string(),
-      investorNationality: joi.string().required(),
-      investorIdType: joi.string().when('investorType', {is: 'person', then: joi.required()}),
-      investorId: joi.string().when('investorType', {is: 'person', then: joi.required()}),
-      investorBirthdate: joi.date().when('investorType', {is: 'person', then: joi.required()}),
-      investorTelephone: joi.string(),
-      investorFax: joi.string(),
-      investorEmail: joi.string(),
-      investorAddress: joi.string(),
-      boardOfDirectors: joi.array().items(directorSchema)
+      companyName: joi.object({
+        arabic: joi.string().required(),
+        english: joi.string(),
+      }),
+      hqInfo: joi.object({
+        governorate: joi.string().required(),
+        city: joi.string().required(),
+        telephone: joi.string(),
+        fax: joi.string()
+      }),
+      investorInfo: joi.object({
+        capitalCurrency: joi.string().required(),
+        capital: joi.number().min(50000).required(),
+        name: joi.string().required(),
+        type: joi.string().required(),
+        gender: joi.string(),
+        nationality: joi.string().required(),
+        idType: joi.string().when('investorType', {is: 'person', then: joi.required()}),
+        idNumber: joi.string().when('investorType', {is: 'person', then: joi.required()}),
+        birthdate: joi.date().when('investorType', {is: 'person', then: joi.required()}),
+        telephone: joi.string(),
+        fax: joi.string(),
+        email: joi.string(),
+        address: joi.string()
+      }),
+      boardOfDirectors: joi.array().items(joi.object({
+        name: joi.string(),
+        type: joi.string(),
+        gender: joi.string(),
+        nationality: joi.string(),
+        idType: joi.string().when('directorType', {is: 'person', then: joi.required()}),
+        idNumber: joi.string().when('directorType', {is: 'person', then: joi.required()}),
+        birthdate: joi.date().when('directorType', {is: 'person', then: joi.required()}),
+        address: joi.string(),
+        position: joi.string()
+      }))
     }
     return joi.validate(body, schema)
   },
   validateUpdate: (body) => {
-    const directorSchema = joi.object({
-      directorName: joi.string(),
-      directorType: joi.string(),
-      directorGender: joi.string(),
-      directorNationality: joi.string(),
-      directorIdType: joi.string(),
-      directorId: joi.string(),
-      directorBirthdate: joi.date(),
-      directorAddress: joi.string(),
-      directorPosition: joi.string()
-    })
     const schema = {
       regulatingLaw: joi.string(),
       companyType: joi.string(),
-      companyNameArabic: joi.string(),
-      companyNameEnglish: joi.string(),
-      hqGovernorate: joi.string(),
-      hqCity: joi.string(),
-      hqTelephone: joi.string(),
-      hqFax: joi.string(),
-      capitalCurrency: joi.string(),
-      capital: joi.number().min(50000),
-      investorName: joi.string(),
-      investorType: joi.string(),
-      investorGender: joi.string(),
-      investorNationality: joi.string(),
-      investorIdType: joi.string(),
-      investorId: joi.string(),
-      investorBirthdate: joi.date(),
-      investorTelephone: joi.string(),
-      investorFax: joi.string(),
-      investorEmail: joi.string(),
-      investorAddress: joi.string(),
-      boardOfDirectors: joi.array().items(directorSchema)
+      companyName: joi.object({
+        arabic: joi.string(),
+        english: joi.string(),
+      }),
+      hqInfo: joi.object({
+        governorate: joi.string(),
+        city: joi.string(),
+        telephone: joi.string(),
+        fax: joi.string()
+      }),
+      investorInfo: joi.object({
+        capitalCurrency: joi.string(),
+        capital: joi.number().min(50000),
+        name: joi.string(),
+        type: joi.string(),
+        gender: joi.string(),
+        nationality: joi.string(),
+        idType: joi.string(),
+        idNumber: joi.string(),
+        birthdate: joi.date(),
+        telephone: joi.string(),
+        fax: joi.string(),
+        email: joi.string(),
+        address: joi.string()
+      }),
+      boardOfDirectors: joi.array().items(joi.object({
+        name: joi.string(),
+        type: joi.string(),
+        gender: joi.string(),
+        nationality: joi.string(),
+        idType: joi.string(),
+        idNumber: joi.string(),
+        birthdate: joi.date(),
+        address: joi.string(),
+        position: joi.string()
+      }))
     }
     return joi.validate(body, schema)
   }
