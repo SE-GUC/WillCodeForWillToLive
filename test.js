@@ -18,7 +18,7 @@ const cases = new casesTest(3000,'cases')
 const lawyer = new lawyerTest(3000,'lawyer')
 const investor = new investorTest(3000,'investor')
 const externalEntity = new externalEntityTest(3000,'externalEntitys')
-const Comapny = new CompanyTest(3000,'company')
+const Company = new CompanyTest(3000,'company')
 
 Promise.all([admins.runIndependently()]).then(result => {})
 Promise.all([cases.runIndependently()]).then(result => {})
