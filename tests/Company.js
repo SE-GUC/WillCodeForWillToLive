@@ -86,8 +86,8 @@ class CompanyTest extends AbstractTests {
             Governorate: 'Giza',
             City: 'Cairo',
             Address: '1977streetbla',
-            Telephone: '23309392039',
-            Fax: 'gdsf3e2839429'
+            Telephone: '23309392',
+            Fax: 'gdsf3e28'
         }
 
         test(`Randomly creating a new Company,\t\t[=> POST\t${this.base_url}\t`, async () => {
@@ -209,11 +209,11 @@ class CompanyTest extends AbstractTests {
             expect(Object.keys(jsonResponse)).not.toEqual(['error'])
 
             const companyElement = await Company.findById(this.sharedState.id).exec()
-            expect(companyElement.status).toEqual('abbys')
-            expect(companyElement.investor).toEqual('Spc')
+            expect(companyElement.CompanyName).toEqual('abbys')
+            expect(companyElement.CompanyType).toEqual('Spc')
 
-            this.sharedState.status = companyElement.status
-            this.sharedState.investor = companyElement.investor
+            this.sharedState.CompanyName = companyElement.CompanyName
+            this.sharedState.CompanyType = companyElement.CompanyType
         },100000)
     }
 
