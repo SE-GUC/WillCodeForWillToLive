@@ -1,100 +1,72 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const router = express.Router();
 const mongoose = require('mongoose')
 
-const schema = require('../../models/Company')
-const config = require('../../config/keys')
+const Company = require('../../models/Company');
+const validator = require('../../validations/CompanyValidation');
 
-const router = express.Router()
-router.use(bodyParser.json())
-router.use(bodyParser.urlencoded({ extended: false }))
-
-const mongoURL = config.mongoURI
-mongoose.set('useCreateIndex', true)
-
-/*** CRUD implementation ***/
-router.post('/', (req, res)=>{
-    mongoose.connect(mongoURL, {useNewParser: true}).then(()=>{
-        schema.insertMany([req.body]).then(()=>{
-            return res.redirect('/api/company/')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(error)
-        })
-    }).catch((error)=>{
-        console.log('There')
-        mongoose.disconnect()
-        return res.send(error)
-    })
+router.get('/', async (req,res) => {
+    const Companys = await Company.find()
+    res.json({data: Companys})
 })
 
-// Show all data
-router.get('/', async (req, res)=>{
-    mongoose.connect(mongoURL).then(()=>{
-        schema.find({}).then((companies)=>{
-            return res.send({data: companies})
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+router.post('/', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newCompany = await Company.create(req.body)
+        res.json({ data: newCompany})
+    }catch(error){
+        res.status(404).send({error: 'Error Something is off'});
+    }
 })
 
-// Reading entry
-router.get('/:id', (req, res)=>{
-    mongoose.connect(mongoURL).then(()=>{
-        schema.findOne({'_id': req.params.id})
-        .exec()
-        .then((company)=>{
-            return res.send({data:company})
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+router.get('/:id', async (req, res)=>{
+    try{
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
+            res.status(404).send({error: 'Can not find what you are looking for'});
+        }else{
+            res.json({data: CompanyElement})
+        }
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
+    }
 })
 
-// Updating
-router.put('/:id', (req, res)=>{
-    mongoose.connect(mongoURL)
-    .then(()=>{
-        schema.findOneAndUpdate({'_id':req.params.id}, req.body)
-        .exec()
-        .then(()=>{
-            return res.redirect('/api/company/')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+router.put('/:id', async (req, res) => {
+    try{
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
+            res.status(404).send({error: 'Can not find what you are looking for'});
+        }
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedCompany = await Company.findByIdAndUpdate(CompanyId,req.body)
+        res.json({msg: 'update done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
+    }
 })
 
-// Deleting data
-router.delete('/:id', (req, res)=>{
-    mongoose.connect(mongoURL)
-    .then(()=>{
-        schema.deleteOne({'_id':req.params.id})
-        .exec()
-        .then(()=>{
-            return res.redirect('/api/company')
-        }).catch((error)=>{
-            mongoose.disconnect()
-            return res.send(`Error: ${error}.`)
-        })
-    }).catch((error)=>{
-        mongoose.disconnect()
-        return res.send(`Error: ${error}.`)
-    })
+
+
+router.delete('/:id', async (req,res) => {
+    try{
+        const CompanyId = req.params.id
+        const deletedCompany = await Company.findByIdAndRemove(CompanyId)
+        res.json({msg: 'Done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
+    }
 })
 
-//Exporting router
-module.exports = router
+
+module.exports = router;

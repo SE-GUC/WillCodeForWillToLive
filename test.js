@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 const db = require('./config/keys.js').mongoURI
 const AdminsTest = require('./tests/admin')
@@ -7,6 +8,7 @@ const lawyerTest = require('./tests/lawyer')
 const TasksTest = require("./tests/task")
 const externalEntityTest = require('./tests/externalEntity')
 const investorTest = require('./tests/investor')
+const CompanyTest = require('./tests/Company')
 
 mongoose.connect(db).then(() => console.log('Connected to Database')).catch(err => console.log(err))
 const admins = new AdminsTest(3000, 'admin')
@@ -16,6 +18,7 @@ const cases = new casesTest(3000,'cases')
 const lawyer = new lawyerTest(3000,'lawyer')
 const investor = new investorTest(3000,'investor')
 const externalEntity = new externalEntityTest(3000,'externalEntitys')
+const Company = new CompanyTest(3000,'company')
 
 Promise.all([admins.runIndependently()]).then(result => {})
 Promise.all([cases.runIndependently()]).then(result => {})
@@ -24,3 +27,4 @@ Promise.all([reviewer.runIndependently()]).then(result => {})
 Promise.all([lawyer.runIndependently()]).then(result => {})
 Promise.all([investor.runIndependently()]).then(result => {})
 Promise.all([externalEntity.runIndependently()]).then(result => {})
+Promise.all([Company.runIndependently()]).then(result => {})
