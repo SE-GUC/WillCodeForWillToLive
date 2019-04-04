@@ -1,32 +1,45 @@
-const joi = require('joi')
-const uuid = require('uuid')
+const mongoose = require('mongoose')
 
-class Form {
-  constructor(id,InvestorName,LawyerName,CompanyName,CompanyName_English,CreatedAt,RegulatedLaw,FormOfLegalCompany,Governorate,City,Address,Reviewed,Status)
-  {
-      _id = uuid.v4();
-      this.InvestorName = InvestorName;
-      this.LawyerName = LawyerName;
-      this.CompanyName = CompanyName;
-      this.CompanyName_English = CompanyName_English;
-      this.CreatedAt = CreatedAt;
-      this.RegulatedLaw = RegulatedLaw;
-      this.FormOfLegalCompany = FormOfLegalCompany;
-      this.Governorate =  Governorate;
-      this.City = City;
-      this.Address = Address;
-      this.Reviewed = Reviewed;
-      this.Status = Status;
-  }
-
-    validate(){
-
-        var schema = {
-            // TODO:
-        }
-        var val = joi.validate(schema, this);
-        return val.error;
-    }
+const schema = {
+  regulatingLaw: {type: String, required: true},
+  companyType: {type: String, required: true},
+  companyName: {
+    arabic: {type: String, required: true, unique: true},
+    english: {type: String}
+  },
+  hqInfo: {
+    governorate: {type: String, required: true},
+    city: {type: String, required: true},
+    telephone: String,
+    fax: String,
+  },
+  investorInfo: {
+    capitalCurrency: {type: String, required: true},
+    capital: {type: Number, required: true},
+    name: {type: String, required: true},
+    type: {type: String, required: true},
+    gender: String,
+    nationality: {type: String, required: true},
+    idType: {type: String},
+    idNumber: {type: String},
+    birthdate: {type: Date},
+    telephone: String,
+    fax: String,
+    email: String,
+    address: {type: String, required: true},
+  },
+  boardOfDirectors: [{
+    name: {type: String, required: true},
+    type: {type: String, required: true},
+    gender: String,
+    nationality: {type: String, required: true},
+    idType: {type: String},
+    idNumber: {type: String},
+    birthdate: {type: Date},
+    address: {type: String, required: true},
+    position: {type: String, required: true}
+  }]
 }
 
-module.exports = Form;
+module.exports = mongoose.model('Form', schema)
+

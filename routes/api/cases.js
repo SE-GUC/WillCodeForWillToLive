@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
 
 const Case = require('../../models/Case');
 const validator = require('../../validations/caseValidation');

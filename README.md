@@ -17,6 +17,7 @@ This is an implementation of the Sumerge project for the Software Engineering co
 - Access the repository directory ```cd WillCodeForWillToLive```
 - Check out to the correct branch ```git checkout <branch name>```
 - install required pacakges ```npm i```
+- Copy .env_example to .env then open it and add the server port number and mongo uri
 - To run the server use the command ```npm run dev``` and it will use nodemon to restart the server each time you save
 
 ----

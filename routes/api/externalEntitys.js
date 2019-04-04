@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
 
 const ExternalEntity = require('../../models/ExternalEntity')
 const validator = require('../../validations/ExternalEntityValidations')
@@ -13,8 +12,7 @@ router.get('/', async (req,res) => {
 router.get('/:id', async (req, res)=>{
     try{
         const externalEntityId = req.params.id
-        const externalEntityElement = await Case.findById(externalEntityId)
-        //console.log(caseElement)
+        const externalEntityElement = await ExternalEntity.findById(externalEntityId)
         if(!externalEntityElement){
             res.status(404).send({error: 'We can not find what you are looking for'});
         }else{
@@ -31,7 +29,7 @@ router.post('/', async (req,res) => {
     const isValidated = validator.createValidation(req.body)
     if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
     const newExternalEntity = await ExternalEntity.create(req.body)
-    res.json({msg:'a new External Entity was created successfully', data: newExternalEntity})
+    res.json({data: newExternalEntity})
    }
    catch(error) {
        console.log(error)
@@ -49,7 +47,7 @@ router.put('/:id', async (req,res) => {
      res.json({msg: 'External Entity updated successfully'})
     }
     catch(error) {
-        console.log(error)
+        res.status(404).send({error: 'Something went wrong'});
     }  
  })
 
@@ -60,7 +58,7 @@ router.put('/:id', async (req,res) => {
      res.json({msg:'External Entity was deleted successfully', data: deletedExternalEntity})
     }
     catch(error) {
-        console.log(error)
+        res.status(404).send({error: 'Something went wrong'});
     }  
  })
 
