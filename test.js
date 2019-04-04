@@ -1,6 +1,8 @@
-
+const dotenv = require('dotenv')
+dotenv.config()
+const port = process.env.PORT || 3002
 const mongoose = require('mongoose')
-const db = require('./config/keys.js').mongoURI
+const db = process.env.mongoURI
 const AdminsTest = require('./tests/admin')
 const ReviewerTest = require("./tests/reviewer")
 const casesTest = require('./tests/case')
@@ -11,16 +13,16 @@ const investorTest = require('./tests/investor')
 const FormTest = require('./tests/form')
 const CompanyTest = require('./tests/Company')
 
-mongoose.connect(db).then(() => console.log('Connected to Database')).catch(err => console.log(err))
-const admins = new AdminsTest(3000, 'admin')
-const task = new TasksTest(3000,'task')
-const reviewer = new ReviewerTest(3000,'reviewer')
-const cases = new casesTest(3000,'cases')
-const lawyer = new lawyerTest(3000,'lawyer')
-const investor = new investorTest(3000,'investor')
-const externalEntity = new externalEntityTest(3000,'externalEntitys')
-const form = new FormTest(3000, 'form')
-const Company = new CompanyTest(3000,'company')
+mongoose.connect(db, {useNewUrlParser: true}).then(() => console.log('Connected to Database')).catch(err => console.log(err))
+const admins = new AdminsTest(port, 'admin')
+const task = new TasksTest(port,'task')
+const reviewer = new ReviewerTest(port,'reviewer')
+const cases = new casesTest(port,'cases')
+const lawyer = new lawyerTest(port,'lawyer')
+const investor = new investorTest(port,'investor')
+const externalEntity = new externalEntityTest(port,'externalEntitys')
+const form = new FormTest(port, 'form')
+const Company = new CompanyTest(port,'company')
 
 Promise.all([admins.runIndependently()]).then(result => {})
 Promise.all([cases.runIndependently()]).then(result => {})

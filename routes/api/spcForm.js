@@ -1,10 +1,8 @@
 const router = require('express').Router()
-const mongoose = require('mongoose')
 const validator = require('../../validations/SpcFormValidation')
 const Form = require('../../models/SpcForm')
 
 const SpcForm = require('../../models/SpcForm');
-const config = require('../../config/keys')
 
 router.get('/', async (req,res) => {
     const SpcForms = await SpcForm.find()
