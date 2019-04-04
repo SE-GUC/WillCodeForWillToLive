@@ -38,7 +38,7 @@ app.use(express.json());
 // Adding routes
 app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
-app.use('/api/tasks', tasks)
+app.use('/api/task', tasks)
 app.use('/api/investor', investors)
 app.use('/api/company', companyRouter)
 app.use('/api/externalEntitys', externalEntitys)
@@ -50,7 +50,7 @@ app.use('/api/admin', adminRouter)
 app.get('/', (req, res) => { res.send('<h1>WillCodeToLive</h1>\n<h3>Index Page<h3>') })
 /** * Custom routing for wrong requests ***/
 app.use((req, res) => {
-  res.status(404).send({ err: 'Obi-Wan: You don\'t need to see this page...' })
+  res.status(404).send({ error: 'Obi-Wan: You don\'t need to see this page...' })
 })
 /** * Listening on serverport ***/
 app.listen(port, () => console.log(`Server up. Listening on port ${port}`))

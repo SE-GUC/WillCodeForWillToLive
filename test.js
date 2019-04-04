@@ -2,7 +2,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 const port = process.env.PORT || 3002
 const mongoose = require('mongoose')
-const db = process.env.mongoURL
+const db = process.env.mongoURI
 const AdminsTest = require('./tests/admin')
 const ReviewerTest = require("./tests/reviewer")
 const casesTest = require('./tests/case')
@@ -13,7 +13,7 @@ const investorTest = require('./tests/investor')
 const FormTest = require('./tests/form')
 const CompanyTest = require('./tests/Company')
 
-mongoose.connect(db).then(() => console.log('Connected to Database')).catch(err => console.log(err))
+mongoose.connect(db, {useNewUrlParser: true}).then(() => console.log('Connected to Database')).catch(err => console.log(err))
 const admins = new AdminsTest(port, 'admin')
 const task = new TasksTest(port,'task')
 const reviewer = new ReviewerTest(port,'reviewer')
