@@ -4,9 +4,11 @@ const Schema = mongoose.Schema
 const CompanySchema = new Schema({
     CompanyName: {
         type: String,
+        required: true
     },
     CompanyType: {
         type: String,
+        required: true
     },
     EstablishmentDate: {
         type: String,
@@ -45,10 +47,12 @@ const CompanySchema = new Schema({
      required: true
     },
     Telephone: {
-     type: String
+     type: String,
+     required: true
     },
     Fax: {
-     type: String
+     type: String,
+     required: true
     }
 })
 

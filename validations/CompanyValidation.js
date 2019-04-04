@@ -3,9 +3,9 @@ const Joi = require('joi')
 module.exports = {
     createValidation: request =>{
         const createSchema = {
-            companyName: Joi.string().required(),
+            CompanyName: Joi.string().required(),
             CompanyType: Joi.string().required(),
-            establishmentDate: Joi.date().required(),
+            EstablishmentDate: Joi.date().required(),
             InvestorName: Joi.string().required(),
             InvestorId: Joi.string().required(),
             CapitalCurrency: Joi.string().required(),
@@ -22,9 +22,9 @@ module.exports = {
     },
     updateValidation: request =>{
         const updateSchema = {
-            companyName: Joi.string().required(),
+            CompanyName: Joi.string().required(),
             CompanyType: Joi.string().required(),
-            establishmentDate: Joi.date().required(),
+            EstablishmentDate: Joi.date().required(),
             InvestorName: Joi.string().required(),
             CapitalCurrency: Joi.string().required(),
             Capital: Joi.number().required(),

@@ -6,6 +6,7 @@ class CompanyTest extends AbstractTests {
     constructor (PORT, ROUTE) {
         super(PORT, ROUTE)
         this.sharedState = {
+            id:null,
             CompanyName: null,
             CompanyType: null,
             EstablishmentDate: null,
@@ -101,6 +102,7 @@ class CompanyTest extends AbstractTests {
 
               const companyElement = await Company.findById(jsonResponse.data._id).exec()
               expect(companyElement).toMatchObject(requestBody)
+              this.sharedState.id = companyElement._id
               this.sharedState.CompanyName = companyElement.CompanyName
               this.sharedState.CompanyType = companyElement.CompanyType
               this.sharedState.EstablishmentDate = companyElement.EstablishmentDate

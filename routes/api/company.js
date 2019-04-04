@@ -6,8 +6,8 @@ const Company = require('../../models/Company');
 const validator = require('../../validations/CompanyValidation');
 
 router.get('/', async (req,res) => {
-    const companys = await Company.find()
-    res.json({data: companys})
+    const Companys = await Company.find()
+    res.json({data: Companys})
 })
 
 router.post('/', async (req,res) => {
@@ -23,12 +23,12 @@ router.post('/', async (req,res) => {
 
 router.get('/:id', async (req, res)=>{
     try{
-        const companyId = req.params.id
-        const companyElement = await Company.findById(companyId)
-        if(!companyElement){
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
             res.status(404).send({error: 'Can not find what you are looking for'});
         }else{
-            res.json({data: companyElement})
+            res.json({data: CompanyElement})
         }
     }
     catch(error){
@@ -38,16 +38,16 @@ router.get('/:id', async (req, res)=>{
 
 router.put('/:id', async (req, res) => {
     try{
-        const companyId = req.params.id
-        const companyElement = await Company.findById(companyId)
-        if(!companyElement){
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
             res.status(404).send({error: 'Can not find what you are looking for'});
         }
         const isValidated = validator.updateValidation(req.body)
         if (isValidated.error) {
             res.status(400).send({ error: isValidated.error.details[0].message })
         }
-        const updatedCompany = await Company.findByIdAndUpdate(companyId,req.body)
+        const updatedCompany = await Company.findByIdAndUpdate(CompanyId,req.body)
         res.json({msg: 'update done'})
     }
     catch(error){
@@ -59,8 +59,8 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req,res) => {
     try{
-        const companyId = req.params.id
-        const deletedCompany = await Company.findByIdAndRemove(companyId)
+        const CompanyId = req.params.id
+        const deletedCompany = await Company.findByIdAndRemove(CompanyId)
         res.json({msg: 'Done'})
     }
     catch(error){
