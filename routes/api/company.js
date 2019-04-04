@@ -1,80 +1,72 @@
-const router = require('express').Router()
-const Model = require('../../models/Company')
-const validator = require('../../validations/CompanyValidation')
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose')
 
-/** * CRUD implementation ***/
-// Create new record
-router.post('/', async (req, res)=>{
-    try{
-        const valid = await validator.createValidation(req.body)
-        if(valid.error) {
-            res.status(400).json({error: valid.error})
-        } else {
-            const newModel = await Model.create(req.body)
-            res.json(newModel)
-        }
-    } catch(err) {
-        res.status(500).json({error: err})
-    }
-    
+const Company = require('../../models/Company');
+const validator = require('../../validations/CompanyValidation');
+
+router.get('/', async (req,res) => {
+    const Companys = await Company.find()
+    res.json({data: Companys})
 })
 
-// Show all records
-router.get('/', async (req, res)=>{
+router.post('/', async (req,res) => {
     try{
-        const models = await Model.find()
-        res.json(models)
-    } catch(err) {
-        res.status(500).json({error: err})
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newCompany = await Company.create(req.body)
+        res.json({ data: newCompany})
+    }catch(error){
+        res.status(404).send({error: 'Error Something is off'});
     }
 })
 
-// Showing a record
 router.get('/:id', async (req, res)=>{
-    try {
-        const data = await Model.findById(req.params.id)
-        if(data === null) {
-            res.status(404).json({error: 'Resource not found'})
-        } else {
-            res.json(data)
-        }
-    } catch(err) {
-        res.status(500).json({error: err})
-    }
-})
-
-// Update a record
-router.put('/:id', async (req, res)=>{
     try{
-        const valid = await validator.updateValidation(req.body)
-        if(valid.error) {
-            res.status(400).json({error: valid.error})
-        } else {
-            const data = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
-            if(data === null) {
-                res.status(404).json({error: 'Resource not found'})
-            } else {
-                res.json(data)
-            }
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
+            res.status(404).send({error: 'Can not find what you are looking for'});
+        }else{
+            res.json({data: CompanyElement})
         }
-    } catch(err) {
-        res.status(500).json({error: err})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
     }
 })
 
-// Delete a record
-router.delete('/:id', async (req, res)=>{
-    try {
-        const data = await Model.findByIdAndDelete(req.params.id)
-        if(data === null) {
-            res.status(404).json({error: 'Resource not found'})
-        } else {
-            res.json(data)
+router.put('/:id', async (req, res) => {
+    try{
+        const CompanyId = req.params.id
+        const CompanyElement = await Company.findById(CompanyId)
+        if(!CompanyElement){
+            res.status(404).send({error: 'Can not find what you are looking for'});
         }
-    } catch(err) {
-        res.status(500).json({error: err})
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedCompany = await Company.findByIdAndUpdate(CompanyId,req.body)
+        res.json({msg: 'update done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
     }
 })
 
-//Exporting router
-module.exports = router
+
+
+router.delete('/:id', async (req,res) => {
+    try{
+        const CompanyId = req.params.id
+        const deletedCompany = await Company.findByIdAndRemove(CompanyId)
+        res.json({msg: 'Done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Error Something is off'});
+    }
+})
+
+
+module.exports = router;
