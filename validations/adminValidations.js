@@ -8,16 +8,13 @@ module.exports = {
       firstName: Joi.string().min(3).required(),
       middleName: Joi.string().min(3),
       lastName: Joi.string().min(3).required(),
-      DOB: Joi.date().required(),
+      DOB: Joi.string().required(),
       gender: Joi.string().required(),
       nationality: Joi.string().min(3).required(),
-      typeOfID: Joi.string().required(),
-      ID: Joi.string().required(),
-      jobTitle: Joi.string().min(3).required(),
-      mobileNumber: Joi.number(),
+      mobileNumber: Joi.number().required(),
       faxNumber: Joi.number(),
       emailAddress: Joi.string(),
-      address: Joi.string().required()
+      address: Joi.string()
     }
 
     return Joi.validate(request, createSchema)
@@ -30,12 +27,9 @@ module.exports = {
       firstName: Joi.string().min(3),
       middleName: Joi.string().min(3),
       lastName: Joi.string().min(3),
-      DOB: Joi.date(),
+      DOB: Joi.string(),
       gender: Joi.string(),
       nationality: Joi.string().min(3),
-      typeOfID: Joi.string(),
-      ID: Joi.string(),
-      jobTitle: Joi.string().min(3),
       mobileNumber: Joi.number(),
       faxNumber: Joi.number(),
       emailAddress: Joi.string(),
@@ -43,5 +37,35 @@ module.exports = {
     }
 
     return Joi.validate(request, updateSchema)
+
+  },
+  assigncasesadminValidation: request => {
+    const assignadminSchema = {
+      admin: Joi.string().required()
+    }
+    return Joi.validate(request, assignadminSchema)
   }
-}
+
+  }/* ,
+  assignlawyerValidation: request => {
+    const assignlawyerSchema = {
+      lawyer: Joi.string().required()
+    }
+
+    return Joi.validate(request, assignlawyerSchema)
+  },
+  assignreviewerValidation: request => {
+    const assignreviewerSchema = {
+      reviewer: Joi.string().required()
+    }
+
+    return Joi.validate(request, assignreviewerSchema)
+  },
+  assigntasksValidation: request => {
+    const assigntasksSchema = {
+      assignee: Joi.string().required()
+    }
+    return Joi.validate(request, assigntasksSchema)
+  } */
+
+

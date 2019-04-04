@@ -42,7 +42,7 @@ const functions = {
         return Tasks
     }
 
-  /*  createReviewer : async (req) => {
+   /*createReviewer : async (req) => {
         try{
         console.log({data: req})
         const validator = require('./validations/reviewerValidations')

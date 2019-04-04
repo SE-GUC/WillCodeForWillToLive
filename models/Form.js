@@ -4,7 +4,7 @@ const uuid = require('uuid')
 class Form {
   constructor(id,InvestorName,LawyerName,CompanyName,CompanyName_English,CreatedAt,RegulatedLaw,FormOfLegalCompany,Governorate,City,Address,Reviewed,Status)
   {
-      this.id = uuid.v4();
+      _id = uuid.v4();
       this.InvestorName = InvestorName;
       this.LawyerName = LawyerName;
       this.CompanyName = CompanyName;
@@ -18,11 +18,11 @@ class Form {
       this.Reviewed = Reviewed;
       this.Status = Status;
   }
-  
+
     validate(){
-     
+
         var schema = {
-            // TODO: 
+            // TODO:
         }
         var val = joi.validate(schema, this);
         return val.error;

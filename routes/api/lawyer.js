@@ -15,6 +15,7 @@ router.get('/', async (req,res) => {
 })
 
 
+
 router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
     try{
@@ -36,6 +37,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }
+
 })
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
@@ -60,9 +62,55 @@ router.get('/:id', async (req, res)=>{
         res.status(404).send({error: 'Something went wrong'});
     }
 })
+//as a lawyer, assign task to investor
+router.put("/task/:username/:taskID", async (req, res) => {
+    try {
+        Task.findByIdAndUpdate(req.params.taskID, {
+            username: req.body.assignee
+        }, {
+            new: true
+        }, function (err, task) {
+            if (!err)
+                res.json({
+                    msg: "Your task has been assigned to the investor successfully",
+                    data: task
+                });
+            else
+                res.json({
+                    msg: err.message
+                });
+        });
+    } catch (error) {
+        res.json({
+            msg: error.message
+        });
+    }
+});
+module.exports = router;
 
 
+router.post('/api/spcForm', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newLawyer = await Lawyer.create(req.body)
+        res.json({ data: newLawyer})
+    }catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
 
+
+router.post('/api/sscForm', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newLawyer = await Lawyer.create(req.body)
+        res.json({ data: newLawyer})
+    }catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
 
 
 router.post('/', async (req,res) => {
@@ -95,6 +143,86 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
+  try {
+    const caseId = req.params.id
+    const caseElement = await Case.findById(caseId)
+    if (!caseElement) {
+      res.status(404).send({ error: 'We can not find what you are looking for' })
+    }
+    const isValidated = validator.assigncaseslawyerValidation(req.body)
+    if (isValidated.error) {
+      res.status(400).send({ error: isValidated.error.details[0].message })
+    }
+    await Case.findByIdAndUpdate(caseId, req.body)
+    res.json({ msg: 'Assigned' })
+  } catch (error) {
+    res.status(400).send({ error: 'Something went wrong' })
+  }
+})
+
+//UPDATE SPcFORM STATUS
+
+router.put('/spcForm/:id',async (req,res) =>{
+  try{
+      const form = await SpcForm.findById(req.params.id)
+      if(!form){
+          res.status(404).send({error: 'We can not find what you are looking for'});
+      }
+      //const isValidated = validator.updateValidation(req.body)
+      //if (isValidated.error) {
+        //  res.status(400).send({ error: isValidated.error.details[0].message })
+      //}
+      if(req.body.Status){
+        const updatedForm = await SpcForm.findByIdAndUpdate(req.params.id,req.body)
+        res.json({msg: 'Status updated'})
+      }else{
+        res.status(404).send({error: 'Status is missing'})
+      }
+  }
+  catch(error){
+      res.status(404).send({error: 'Something went wrong'});
+}
+
+})
+
+//UPDATE SscFORM STATUS
+
+router.put('/sscform/:id',async (req,res) =>{
+  try{
+      const form = await SscForm.findById(req.params.id)
+      if(!form){
+          res.status(404).send({error: 'We can not find what you are looking for'});
+      }
+      //const isValidated = validator.updateValidation(req.body)
+      //if (isValidated.error) {
+        //  res.status(400).send({ error: isValidated.error.details[0].message })
+      //}
+      if(req.body.Status){
+        const updatedForm = await SscForm.findByIdAndUpdate(req.params.id,req.body)
+        res.json({msg: 'Status updated'})
+      }else{
+        res.status(404).send({error: 'Status is missing'})
+      }
+  }
+  catch(error){
+      res.status(404).send({error: 'Something went wrong'});
+}
+
+})
+
+//ADD A REVIEW
+
+router.post('/cases', async (req,res) => {
+    try{
+        const isValidated = validator.createValidation(req.body)
+        if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+        const newLawyer = await Lawyer.create(req.body)
+        res.json({ data: newLawyer})
+    }catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
 
 router.delete('/:id', async (req,res) => {
     try{
