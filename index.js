@@ -6,13 +6,10 @@ const mongoose = require('mongoose')
 const port = process.env.PORT || 3002
 
 /** * project modules ***/
-const SpcFormProps = require('./models/SpcFormProperties')
-const SscFormProps = require('./models/SscFormProperties')
 const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
 const investors = require('./routes/api/investor')
 const form = require('./routes/api/form')
-
 const externalEntitys = require('./routes/api/externalEntitys')
 const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
@@ -24,13 +21,7 @@ const app = express()
 const db = process.env.mongoURI
 
 mongoose.connect(db, {useNewUrlParser: true})
-  .then(() => {
-    console.log('Connected to Database')
-    SpcFormProps.getSingleton()
-    .then (() => console.log('Created spc props default'))
-    SscFormProps.getSingleton()
-    .then(() => console.log('Created ssc props default'))
-  })
+  .then(() => console.log('Connected to Database'))
   .catch(err => console.log(err))
 
 app.use(express.json());
