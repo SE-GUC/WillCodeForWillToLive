@@ -38,7 +38,12 @@ const schema = {
     birthdate: {type: Date},
     address: {type: String, required: true},
     position: {type: String, required: true}
-  }]
+  }],
+  fees: {
+    amount: {type: Number, default: 0},
+    isPaid: {type: Boolean, default: false},
+    currency: {type: String, default: 'EGP'}
+  }
 }
 
 module.exports = mongoose.model('Form', schema)

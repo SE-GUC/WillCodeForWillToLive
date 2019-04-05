@@ -93,5 +93,12 @@ module.exports = {
       }))
     }
     return joi.validate(body, schema)
+  },
+  validateFees: (body) => {
+    const schema = {
+      amount: joi.number().precision(2),
+      currency: joi.string(),
+      isPaid: joi.boolean()
+    }
   }
 }

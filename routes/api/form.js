@@ -110,4 +110,22 @@ router.get('/calculateFees/:id',async (req,res) =>{
   }
 })
 
+router.put('/updateFees/:id', async (req, res) => {
+  try{
+    const valid = validator.validateFees(req.body)
+    if(valid.error) {
+      res.status(400).json({error: valid.error})
+    } else {
+      const model = Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      if(model === null) {
+        res.status(404).json({error: 'Page not found'})
+      } else {
+        res.json(model)
+      }
+    }
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
+})
+
 module.exports = router
