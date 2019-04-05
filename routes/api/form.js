@@ -1,6 +1,28 @@
 const Model = require('../../models/Form')
 const validator = require('../../validations/form')
 const router = require('express').Router()
+const nfetch = require('node-fetch')
+
+const createNewCase = async (body) => {
+  try{
+    const investor = body.investorInfo.name
+    const company = body.companyName.arabic
+    const requestBody = {
+        status: 'pending',
+        investor: investor,
+        reviewer: '-',
+        lawyer: '-',
+        company_name: company
+    }
+    await nfetch(`http://localhost:${process.env.PORT}/api/cases/`,{
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+    })
+  } catch(error) {
+    console.log(`Error creating case: ${error}`)
+  }
+}
 
 router.post('/', async (req, res) => {
   try {
@@ -9,6 +31,7 @@ router.post('/', async (req, res) => {
       res.status(400).json({error: valid.error.details[0].message})
     } else {
       const data = await Model.create(req.body)
+      createNewCase(req.body)
       res.json(data)
     }
   } catch(err) {

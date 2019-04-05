@@ -119,7 +119,7 @@ class SscTest {
   putRequestIndependently () {
     const reqBody = {
       companyName:{
-        arabic: 'NewCompanyName'
+        arabic: `NewCompanyName${Date.now()}`
       }
     }
     test(`Updating the data of the created ${modelName}`, async() => {
@@ -131,7 +131,7 @@ class SscTest {
       const jsonRes = res.json()
       expect(Object.keys(jsonRes)).not.toEqual(['error'])
       const modelInstance = await Model.findById(this.sharedState.body._id)
-      expect(modelInstance.companyName.arabic).toEqual('NewCompanyName')
+      expect(modelInstance.companyName.arabic).toEqual(reqBody.companyName.arabic)
       this.sharedState.body = modelInstance
     }, TIMEOUT)
   }
@@ -167,7 +167,7 @@ class SscTest {
         companyType: empty? null:'SSC',
       },
       companyName: {
-        arabic: empty? null:'CompanyNameArabic',
+        arabic: empty? null:(`CompanyNameArabic${Date.now()}`),
         english: empty? null:'CompanyNameEnglish',
       },
       hqInfo: {
