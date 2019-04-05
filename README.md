@@ -30,12 +30,12 @@ This is an implementation of the Sumerge project for the Software Engineering co
 - ~~go back to repo directory ```cd ..```~~
 - pull from react_dev branch ```git pull origin react_dev```
 - Run this command ```cp .env_example .env && npm i && cd client && cp .env_example .env && npm i && cd ..``` **If that didn't work:** split the && to lines (ie: type the followinig):
---```cp .env_example .env```
---```npm i```
---```cd client```
---```cp .env_example .env```
---```npm i```
---```cd ..```
+1.```cp .env_example .env```
+2.```npm i```
+3.```cd client```
+4.```cp .env_example .env```
+5.```npm i```
+6.```cd ..```
 - Copy .env_example to .env then open it and add the server port number and mongo uri inside WillCodeForWillToLive (do not add anything to the .env inside client just yet)
 - make sure to add a port number besides 3000
 - to run both react and and node use the command ```npm run both```
