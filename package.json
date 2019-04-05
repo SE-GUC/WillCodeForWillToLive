@@ -7,7 +7,7 @@
     "test": "concurrently \"node index.js\" \"jest --detectOpenHandles test.js\"",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "both": "concurrently \"npm run dev\" \"cd client && SKIP_PREFLIGHT_CHECK=true npm start\""
+    "both": "concurrently \"npm run dev\" \"cd client && npm start\""
   },
   "nodemonConfig": {
     "ignore": [

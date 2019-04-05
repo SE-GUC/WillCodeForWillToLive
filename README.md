@@ -19,6 +19,8 @@ This is an implementation of the Sumerge project for the Software Engineering co
 - install required pacakges ```npm i```
 - Copy .env_example to .env then open it and add the server port number and mongo uri
 - To run the server use the command ```npm run dev``` and it will use nodemon to restart the server each time you save
+### React / Both
+- Run this command ```cp .env_example .env && npm i && cd client && cp .env_example .env && npm i && cd ..``` instead of the command in the 4th step
 ----
 ## Important: For React
 - Clone the repository ```git clone https://github.com/SE-GUC/WillCodeForWillToLive```
