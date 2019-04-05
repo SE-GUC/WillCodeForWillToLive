@@ -36,7 +36,7 @@ class SscTest {
 
   postRequestWithMissingParameters () {
     let reqBody = SscTest.createModelBody(null)
-    delete reqBody.regulatingLaw
+    delete reqBody.companyLegalInfo
     test(`creating an ${modelName} with no regulating law`, async () => {
       const res = await nfetch(this.base_url, {
         method: 'POST',
@@ -162,8 +162,10 @@ class SscTest {
 
   static createModelBody (empty) {
     return {
-      regulatingLaw: empty? null:'Law72',
-      companyType: empty? null:'SSC',
+      companyLegalInfo: {
+        regulatingLaw: empty? null:'Law72',
+        companyType: empty? null:'SSC',
+      },
       companyName: {
         arabic: empty? null:'CompanyNameArabic',
         english: empty? null:'CompanyNameEnglish',
