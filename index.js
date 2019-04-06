@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config() // Setting env variables
 const express = require('express')
 const mongoose = require('mongoose')
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 3001
 
 /** * project modules ***/
 const reviewers = require('./routes/api/reviewer')
