@@ -12,6 +12,12 @@ class App extends Component {
           {
                 <Route path="/Form" component={Form} />
           }
+       {
+                <Route path="/registerLawyer" component={RegisterLawyer} />
+          }
+       {
+                <Route path="/registerReviewer" component={RegisterReviewer} />
+          }
        
 
         </Switch>
