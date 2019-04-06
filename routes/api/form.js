@@ -1,6 +1,28 @@
 const Model = require('../../models/Form')
 const validator = require('../../validations/form')
 const router = require('express').Router()
+const nfetch = require('node-fetch')
+
+const createNewCase = async (body) => {
+  try{
+    const investor = body.investorInfo.name
+    const company = body.companyName.arabic
+    const requestBody = {
+        status: 'pending',
+        investor: investor,
+        reviewer: '-',
+        lawyer: '-',
+        company_name: company
+    }
+    await nfetch(`http://localhost:${process.env.PORT}/api/cases/`,{
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+    })
+  } catch(error) {
+    console.log(`Error creating case: ${error}`)
+  }
+}
 
 router.post('/', async (req, res) => {
   try {
@@ -9,6 +31,7 @@ router.post('/', async (req, res) => {
       res.status(400).json({error: valid.error.details[0].message})
     } else {
       const data = await Model.create(req.body)
+      createNewCase(req.body)
       res.json(data)
     }
   } catch(err) {
@@ -107,6 +130,24 @@ router.get('/calculateFees/:id',async (req,res) =>{
       return res.json({data: newForm})
   } catch (err) {
       return res.status(404).json({error: err})
+  }
+})
+
+router.put('/updateFees/:id', async (req, res) => {
+  try{
+    const valid = validator.validateFees(req.body)
+    if(valid.error) {
+      res.status(400).json({error: valid.error})
+    } else {
+      const model = Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      if(model === null) {
+        res.status(404).json({error: 'Page not found'})
+      } else {
+        res.json(model)
+      }
+    }
+  } catch (error) {
+    res.status(500).json({error: error})
   }
 })
 
