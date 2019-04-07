@@ -116,7 +116,8 @@ router.post('/', async (req,res) => {
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
         const newLawyer = await Lawyer.create(req.body)
-        res.json({ data: newLawyer})
+        
+        res.json({msg: 'Lawyer created succcessfully', data: newLawyer})
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }

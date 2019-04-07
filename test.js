@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 dotenv.config()
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 3001
 const mongoose = require('mongoose')
 const db = process.env.mongoURI
 const AdminsTest = require('./tests/admin')
