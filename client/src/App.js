@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-// import Form from './components/Form'
+import investor from './components/investor'
 
 class App extends Component {
   render() {
+    
     return (
-      <Router>
-        <Switch>
-          {/* <Route path="/Form" component={Form} /> */}
-        </Switch>
-      </Router>
+      <div>
+        <Router>
+          <Switch>
+            <Route path="/investor" component={investor} />   
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }
-
-export default App;
+export default (App);
