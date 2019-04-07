@@ -2,7 +2,6 @@ const joi = require('joi')
 
 module.exports = {
   validateCreate: (body) => {
-    console.log(body)
     const companyType = body && body.companyType
     if(companyType === undefined) {
       const valid = {
@@ -11,8 +10,10 @@ module.exports = {
       return valid
     }
     const schema = {
-      regulatingLaw: joi.string().required(),
-      companyType: joi.string().required(),
+      companyLegalInfo: joi.object({
+        regulatingLaw: joi.string().required(),
+        companyType: joi.string().required(),
+      }),
       companyName: joi.object({
         arabic: joi.string().required(),
         english: joi.string(),
@@ -54,8 +55,10 @@ module.exports = {
   },
   validateUpdate: (body) => {
     const schema = {
-      regulatingLaw: joi.string(),
-      companyType: joi.string(),
+      companyLegalInfo: joi.object({
+        regulatingLaw: joi.string(),
+        companyType: joi.string(),
+      }),
       companyName: joi.object({
         arabic: joi.string(),
         english: joi.string(),
