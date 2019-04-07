@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import nfetch from 'node-fetch'
-//import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 class Cases extends Component {
