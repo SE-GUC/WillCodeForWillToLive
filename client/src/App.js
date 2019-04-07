@@ -7,7 +7,7 @@ import RegisterLawyer from './components/pages/RegisterLawyer';
 import RegisterReviewer from './components/pages/RegisterReviewer';
 import Companies from './components/Companies';
 import Cases from './components/Cases'
-
+import lawyer from './components/lawyer'
 class App extends Component {
   render() {
     const classes = this.props.classes
@@ -20,6 +20,7 @@ class App extends Component {
             <Route path="/registerLawyer" component={RegisterLawyer} />
             <Route path="/registerReviewer" component={RegisterReviewer} />
             <Route path="/cases" component={Cases} />
+            <Route path="/Lawyer" component = {lawyer} />
           </Switch>
         </Router>
       </div>
