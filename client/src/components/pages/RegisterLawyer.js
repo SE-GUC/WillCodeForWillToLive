@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../layout/RegisterReviewerHeader'
+import Header from '../layout/RegisterLawyerHeader'
 import InputField from '../inputFields/inputRegister'
 import nfetch from 'node-fetch'
 
