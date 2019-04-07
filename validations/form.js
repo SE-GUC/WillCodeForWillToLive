@@ -2,6 +2,13 @@ const joi = require('joi')
 
 module.exports = {
   validateCreate: (body) => {
+    const companyType = body && body.companyLegalInfo && body.companyLegalInfo.companyType
+    if(companyType === undefined) {
+      const valid = {
+        error: 'Empty body or company type'
+      }
+      return valid
+    }
     const schema = {
       companyLegalInfo: joi.object({
         regulatingLaw: joi.string().required(),
@@ -30,7 +37,7 @@ module.exports = {
         telephone: joi.string(),
         fax: joi.string(),
         email: joi.string(),
-        address: joi.string()
+        address: joi.string().required()
       }),
       boardOfDirectors: joi.array().items(joi.object({
         name: joi.string(),
@@ -40,8 +47,8 @@ module.exports = {
         idType: joi.string().when('directorType', {is: 'person', then: joi.required()}),
         idNumber: joi.string().when('directorType', {is: 'person', then: joi.required()}),
         birthdate: joi.date().when('directorType', {is: 'person', then: joi.required()}),
-        address: joi.string(),
-        position: joi.string()
+        address: joi.string().required(),
+        position: joi.string().required()
       }))
     }
     return joi.validate(body, schema)
