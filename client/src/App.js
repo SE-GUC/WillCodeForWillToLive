@@ -5,7 +5,6 @@ import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
 import RegisterReviewer from './components/pages/RegisterReviewer';
-import Form from './components/Form'
 import Companies from './components/Companies';
 import Cases from './components/Cases'
 
