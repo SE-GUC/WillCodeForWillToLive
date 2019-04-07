@@ -3,7 +3,8 @@ const dotenv = require('dotenv')
 dotenv.config() // Setting env variables
 const express = require('express')
 const mongoose = require('mongoose')
-const port = process.env.PORT || 3002
+const bodyParser = require('body-parser')
+const port = process.env.PORT || 3001
 
 /** * project modules ***/
 const reviewers = require('./routes/api/reviewer')
@@ -24,7 +25,8 @@ mongoose.connect(db, {useNewUrlParser: true})
   .then(() => console.log('Connected to Database'))
   .catch(err => console.log(err))
 
-app.use(express.json());
+app.use(express.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 //IMPORTANT!!!! DO NOT REMOVE
 app.use(function(req, res, next) {
