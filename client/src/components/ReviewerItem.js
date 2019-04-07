@@ -25,20 +25,18 @@ export class Revieweritem extends Component {
             background: '#f4f4f4',
             padding: '10px',
             borderBottom: '1px #ccc dotted',
-            textDecoration: this.props.caseVar.completed ? 'line-through' : 'none'
+            textDecoration: this.props.caseVar.reviewed_by_reviewer ? 'none' : 'line-through'
         }
     }
 
-    textFOnChange = (e) => this.setState({review_comment_by_reviewer: e.target.value });
-
-
 
   render() {
-      const { _id, lawyer} = this.props.caseVar;
+      console.log("Props: " + this.props.caseVar)
+      const { _id, reviewer} = this.props.caseVar;
     return (
       <div style={this.getStyle()}>
         <p>
-            <h4 style={floatingleft}>{lawyer}</h4>
+            {reviewer}
             <ButtonGroup style = {btnStyle1}>
             <Button outline color = "success" style = {btnStyle2} onClick={this.props.accept.bind(this, _id)}>accept</Button>{' '}
             <Button outline color = "danger" style = {btnStyle1} onClick={this.props.reject.bind(this, _id)}>reject</Button>{' '}

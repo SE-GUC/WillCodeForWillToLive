@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/SE-GUC/willcodeforwilltolive#readme",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
@@ -40,11 +41,21 @@
     "mongoose-type-email": "^1.0.10",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
+<<<<<<< HEAD
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "reactstrap": "^8.0.0",
+=======
+
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "reactstrap": "^8.0.0",
+    "react-bootstrap": "^1.0.0-beta.6",
+
+>>>>>>> bd7a7e840a9e2fc958f2c53e9030bfb068329900
     "standard": "^12.0.1",
     "uuid": "^3.3.2"
   },

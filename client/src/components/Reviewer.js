@@ -59,13 +59,19 @@ class Reviewer extends Component {
         accept = {this.props.accept}
         reject = {this.props.reject} /> 
       )*/
-
       )
-  }
+      }
 
   accept = (id) => {
+    console.log('Inside super accept ' + id)
     this.setState({cases: this.state.cases.map( cas => {
-      if(cas.id === id){
+      console.log('Inside map')
+      if(cas._id === id){
+        let URL = `http://localhost:3002/api/cases/${id}`
+        console.log('URL: ' + URL);
+        axios.put(URL, {
+          reviewed_by_reviewer: true
+        })
         cas.reviewed_by_reviewer = true
       }
       return cas
@@ -74,7 +80,11 @@ class Reviewer extends Component {
   
   reject = (id) => {
     this.setState({cases: this.state.cases.map(cas => {
-      if(cas.id === id){
+      if(cas._id === id){
+        let URL = `http://localhost:3002/api/cases/${id}`
+        axios.put(URL, {
+          reviewed_by_reviewer: false
+        })
         cas.reviewed_by_reviewer = false
       }
       return cas
