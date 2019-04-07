@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Reviewer from './components/Reviewer';
-<<<<<<< HEAD
-
-=======
 import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
 import RegisterReviewer from './components/pages/RegisterReviewer';
 import Cases from './components/Cases'
->>>>>>> bd7a7e840a9e2fc958f2c53e9030bfb068329900
 
 class App extends Component {
 /* state = {
