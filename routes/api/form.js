@@ -28,13 +28,14 @@ router.post('/', async (req, res) => {
   try {
     const valid = validator.validateCreate(req.body)
     if(valid.error) {
-      res.status(400).json({error: valid.error.details[0].message})
+      res.status(400).json({error: valid.error})
     } else {
       const data = await Model.create(req.body)
       createNewCase(req.body)
       res.json(data)
     }
   } catch(err) {
+    console.log(err)
     res.status(500).json({error: err})
   }
 })
@@ -65,7 +66,7 @@ router.put('/:id', async (req, res) => {
   try {
     const valid = validator.validateUpdate(req.body)
     if(valid.error) {
-      res.status(400).json({error: valid.error.details[0].message})
+      res.status(400).json({error: valid.error})
     } else {
       const data = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
       if(!data) {
