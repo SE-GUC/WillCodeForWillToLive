@@ -5,7 +5,7 @@ import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
 import RegisterReviewer from './components/pages/RegisterReviewer';
-
+import Companies from './components/Companies';
 import Cases from './components/Cases'
 import lawyer from './components/lawyer'
 class App extends Component {
@@ -15,6 +15,7 @@ class App extends Component {
       <div className={classes.root}>
         <Router>
           <Switch>
+            <Route path="/Companies" component={Companies} />
             <Route path="/Form" component={Form} />
             <Route path="/registerLawyer" component={RegisterLawyer} />
             <Route path="/registerReviewer" component={RegisterReviewer} />
