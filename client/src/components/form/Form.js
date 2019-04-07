@@ -85,8 +85,8 @@ class Form extends Component {
       <div className={classes.form}>
           <div>
             <h2>Company Information</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="regulatingLaw" label="Regulating Law"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyType" label="Company Type"/>
+            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyLegalInfo.regulatingLaw" label="Regulating Law"/>
+            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyLegalInfo.companyType" label="Company Type"/>
           </div>
           <div>
             <h2>Company Name</h2>

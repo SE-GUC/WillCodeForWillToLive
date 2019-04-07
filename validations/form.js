@@ -2,7 +2,7 @@ const joi = require('joi')
 
 module.exports = {
   validateCreate: (body) => {
-    const companyType = body && body.companyType
+    const companyType = body && body.companyLegalInfo && body.companyLegalInfo.companyType
     if(companyType === undefined) {
       const valid = {
         error: 'Empty body or company type'
