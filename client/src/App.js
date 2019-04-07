@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import investor from './components/investor'
 import Reviewer from './components/Reviewer';
 import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
@@ -70,11 +71,14 @@ reject = (id) => {
             <Route path="/cases" component={Cases} />
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path="/Lawyer" component = {lawyer} />
+            <Route path="/investor" component={investor} /> 
+
           </Switch>
         </Router>
       </div>
     );
   }
 }
+
 
 export default withStyles(appStyle)(App);
