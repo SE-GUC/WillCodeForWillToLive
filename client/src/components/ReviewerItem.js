@@ -29,6 +29,7 @@ export class Revieweritem extends Component {
         }
     }
 
+    textFOnChange = (e) => this.setState({review_comment_by_reviewer: e.target.value });
 
   render() {
       console.log("Props: " + this.props.caseVar)

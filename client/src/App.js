@@ -62,6 +62,10 @@ reject = (id) => {
       <div className={classes.root}>
         <Router>
           <Switch>
+          <Route path="/Form" component={Form} />
+            <Route path="/registerLawyer" component={RegisterLawyer} />
+            <Route path="/registerReviewer" component={RegisterReviewer} />
+            <Route path="/cases" component={Cases} />
             <Route path = "/Reviewer" component = {Reviewer} />
           </Switch>
         </Router>
