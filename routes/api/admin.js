@@ -316,7 +316,6 @@ router.put('/assigntasks/:id/', async (req, res) => {
   }
 }) */
 router.post('/createlawyer', async (req, res) => {
-  
   res.redirect(307, './../Lawyer')
 })
 router.post('/createreviewer', async (req, res) => {
