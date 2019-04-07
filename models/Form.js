@@ -39,6 +39,7 @@ const schema = {
     address: {type: String, required: true},
     position: {type: String, required: true}
   }]
+  
 }
 
 module.exports = mongoose.model('Form', schema)

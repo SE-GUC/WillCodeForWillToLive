@@ -28,6 +28,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
     "concurrently": "^4.1.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
@@ -39,6 +40,11 @@
     "mongoose-type-email": "^1.0.10",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "reactstrap": "^8.0.0",
     "standard": "^12.0.1",
     "uuid": "^3.3.2"
   },
