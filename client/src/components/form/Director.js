@@ -35,6 +35,7 @@ class Director extends Component {
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="gender" label="Gender"/>
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="nationality" label="Nationality"/>
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="idType" label="ID Type"/>
+        <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="idNumber" label="ID Number"/>
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="birthdate" label="Birth Date"/>
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="address" label="Address"/>
         <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="position" label="Position"/>

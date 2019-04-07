@@ -49,17 +49,27 @@ class Form extends Component {
 
   handleChange = event => {
     let form = this.state.form
-    let [head, ...tail] = event.target.name.split('.')
-    const bar = ([head, ...tail], val) => tail.length === 0? {[head]: val} : {[head]: bar(tail, val)}
-    form[head] = bar(tail, event.target.value)
+    let list = event.target.name.split('.')
+    const helper = (accu, [head, ...tail], val) => {
+      if(!accu[head]) {
+        accu[head] = {}
+      }
+      if(tail.length !== 0){
+        helper(accu[head], tail, val)
+      } else {
+        accu[head] = val
+      }
+    }
+    helper(form, list, event.target.value)
     this.setState({form: form})
   }
 
   createForm = () => {
+    const form = this.state.form
     axios(`/api/form`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(this.state.form)
+      data: form
     })
     .then(res => console.log('Created form'))
     .catch(error => console.log(error))
@@ -75,8 +85,8 @@ class Form extends Component {
       <div className={classes.form}>
           <div>
             <h2>Company Information</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyInfo.regulatingLaw" label="Regulating Law"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyInfo.companyType" label="Company Type"/>
+            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="regulatingLaw" label="Regulating Law"/>
+            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyType" label="Company Type"/>
           </div>
           <div>
             <h2>Company Name</h2>
@@ -99,6 +109,7 @@ class Form extends Component {
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.gender" label="Gender"/>
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.nationality" label="Nationality"/>
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.idType" label="ID Type"/>
+            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.idNumber" label="ID Number"/>
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.birthdate" label="Birth Date"/>
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.telephone" label="Telephone"/>
             <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.fax" label="Fax"/>
