@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
 
 const schema = {
-  regulatingLaw: {type: String, required: true},
-  companyType: {type: String, required: true},
+  companyLegalInfo: {
+    regulatingLaw: {type: String, required: true},
+    companyType: {type: String, required: true},
+  },
   companyName: {
     arabic: {type: String, required: true, unique: true},
     english: {type: String}
@@ -39,6 +41,7 @@ const schema = {
     address: {type: String, required: true},
     position: {type: String, required: true}
   }]
+  
 }
 
 module.exports = mongoose.model('Form', schema)

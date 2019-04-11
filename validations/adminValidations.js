@@ -37,7 +37,6 @@ module.exports = {
     }
 
     return Joi.validate(request, updateSchema)
-
   },
   assigncasesadminValidation: request => {
     const assignadminSchema = {
@@ -46,7 +45,7 @@ module.exports = {
     return Joi.validate(request, assignadminSchema)
   }
 
-  }/* ,
+}/* ,
   assignlawyerValidation: request => {
     const assignlawyerSchema = {
       lawyer: Joi.string().required()
@@ -67,5 +66,3 @@ module.exports = {
     }
     return Joi.validate(request, assigntasksSchema)
   } */
-
-

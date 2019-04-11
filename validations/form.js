@@ -2,7 +2,7 @@ const joi = require('joi')
 
 module.exports = {
   validateCreate: (body) => {
-    const companyType = body && body.companyType
+    const companyType = body && body.companyLegalInfo && body.companyLegalInfo.companyType
     if(companyType === undefined) {
       const valid = {
         error: 'Empty body or company type'
@@ -10,8 +10,10 @@ module.exports = {
       return valid
     }
     const schema = {
-      regulatingLaw: joi.string().required(),
-      companyType: joi.string().required(),
+      companyLegalInfo: joi.object({
+        regulatingLaw: joi.string().required(),
+        companyType: joi.string().required(),
+      }),
       companyName: joi.object({
         arabic: joi.string().required(),
         english: joi.string(),
@@ -35,7 +37,7 @@ module.exports = {
         telephone: joi.string(),
         fax: joi.string(),
         email: joi.string(),
-        address: joi.string()
+        address: joi.string().required()
       }),
       boardOfDirectors: joi.array().items(joi.object({
         name: joi.string(),
@@ -45,16 +47,18 @@ module.exports = {
         idType: joi.string().when('directorType', {is: 'person', then: joi.required()}),
         idNumber: joi.string().when('directorType', {is: 'person', then: joi.required()}),
         birthdate: joi.date().when('directorType', {is: 'person', then: joi.required()}),
-        address: joi.string(),
-        position: joi.string()
+        address: joi.string().required(),
+        position: joi.string().required()
       }))
     }
     return joi.validate(body, schema)
   },
   validateUpdate: (body) => {
     const schema = {
-      regulatingLaw: joi.string(),
-      companyType: joi.string(),
+      companyLegalInfo: joi.object({
+        regulatingLaw: joi.string(),
+        companyType: joi.string(),
+      }),
       companyName: joi.object({
         arabic: joi.string(),
         english: joi.string(),
