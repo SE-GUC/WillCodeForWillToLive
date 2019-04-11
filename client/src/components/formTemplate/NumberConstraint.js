@@ -20,7 +20,7 @@ const StringConstraint = ({keyy, classes, deleteConstraint, updateConstraint}) =
     const [anchorEl, setAnchorEl] = useState(null)
     const update = e => {
         if(data.name) {
-            updateConstraint(keyy, {[data.name]: e.target.value})
+            updateConstraint(keyy, {name: data.name, value: e.target.value})
         }
     }
     const handleDropDown = (name, type) => {

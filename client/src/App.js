@@ -10,6 +10,8 @@ import RegisterReviewer from './components/pages/RegisterReviewer';
 import Companies from './components/Companies';
 import Cases from './components/Cases'
 import lawyer from './components/lawyer'
+import FormTemplate from './components/formTemplate/FormTemplate'
+
 class App extends Component {
 /* state = {
    reviewers: [
@@ -72,7 +74,7 @@ reject = (id) => {
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
-
+            <Route path="/formTemplate" component={FormTemplate} />
           </Switch>
         </Router>
       </div>

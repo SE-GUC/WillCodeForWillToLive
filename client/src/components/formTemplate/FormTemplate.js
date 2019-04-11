@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, withStyles, TextField } from '@material-ui/core'
 import Field from './Field'
 import useFormState from './useFormState'
+import axios from 'axios'
 
 const styles = theme => ({
     button: {
@@ -24,7 +25,19 @@ const FormTemplate = (props) => {
             newForm[name] = value
             setForm(newForm)
         }
-        const createForm = _ => console.log({form, fields:fields})
+        const createForm = _ => {
+            axios.post('/api/formTemplate', {
+                headers: [{'Content-Type': 'application/json'}],
+                body: {...fields, formInfo: form}
+            })
+            .then( async res => {
+                const resJson = await res.json()
+                if(resJson.error) {
+                    alert(resJson.error)
+                }
+            })
+            .catch(error => {console.log(`Error: ${error}`)})
+        }
 
         return (
             <div className="formMeta">
