@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/SE-GUC/willcodeforwilltolive#readme",
   "dependencies": {
+    "acorn": "^6.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "concurrently": "^4.1.0",
@@ -34,13 +35,22 @@
     "jest": "^24.5.0",
     "jest-cli": "^24.5.0",
     "joi": "^14.3.1",
+    "minimatch": "^3.0.4",
+    "minimist": "0.0.8",
+    "minipass": "^2.2.4",
+    "mkdirp": "^0.5.1",
     "mocha": "^6.0.2",
     "mongoose": "^5.4.19",
     "mongoose-type-email": "^1.0.10",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^2.1.8",
+    "safe-buffer": "^5.1.1",
     "standard": "^12.0.1",
-    "uuid": "^3.3.2"
+    "typescript": "^3.4.3",
+    "uuid": "^3.3.2",
+    "yallist": "^3.0.2"
   },
   "directories": {
     "doc": "docs"

@@ -26,6 +26,22 @@ mongoose.connect(db, {useNewUrlParser: true})
 
 app.use(express.json());
 
+//IMPORTANT!!!! DO NOT REMOVE
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // Adding routes
 app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
