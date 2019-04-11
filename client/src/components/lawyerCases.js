@@ -4,12 +4,48 @@ import React, { Component } from 'react';
   class lawyerCases extends Component {
       state={
           lawyerCases:[],
-          username: "idk"
+          sortedByID: [],
+          sortedByCreationDate: [],
+          username: "omarr"
       }
+
+      handleClick1 = () => {
+
+        // for(var i = 0; i < this.state.sortedByID.length; i++){
+        
+        //   if(this.state.sortedByID[i].lawyer !== this.state.username){
+        //     this.state.sortedByID.splice(i, 1);
+        //     i--
+           
+        //   }
+        // }
+      this.state.lawyerCases.sort((a,b) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
+
+      this.setState({ lawyerCases: this.state.lawyerCases })
+    
+     }
+      handleClick2 = () => {
+        // for(var i = 0; i < this.state.sortedByCreationDate.length; i++){
+        
+        //   if(this.state.sortedByCreationDate[i].lawyer !== this.state.username){
+        //     this.state.sortedByCreationDate.splice(i, 1);
+        //     i--
+           
+        //   }
+
+      this.state.lawyerCases.sort((b,a) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
+      this.setState({ lawyerCases: this.state.lawyerCases })
+   
+   }
+  
+
       
       componentDidMount(){
        
        axios.get('http://localhost:3002/api/lawyer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({lawyerCases:element.data}))
+       //axios.get('http://localhost:3002/api/lawyer/sortTaskByID/').then(res => Object.values(res)[0]).then(element => this.setState({sortedByID:element.data}))
+       //axios.get('http://localhost:3002/api/lawyer/sortTaskByCreationDate/').then(res =>Object.values(res)[0]).then(element=> this.setState({sortedByCreationDate:element.data}))
+         
       }
     render() {
 
@@ -31,9 +67,14 @@ import React, { Component } from 'react';
                 </tr>
               )
             })}
+             </tbody>
+              <button onClick={this.handleClick1}>
+               sortByID
+                </button>
+                <button onClick={this.handleClick2}>
+               sortByCreationDate
+                </button>
        
-         
-          </tbody>
         </table>
         </div>
       );

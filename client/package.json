@@ -6,6 +6,7 @@
     "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "material-ui": "^1.0.0-beta.47",
     "nfetch": "^1.0.7",
     "node-fetch": "^2.3.0",
     "react": "^16.8.6",

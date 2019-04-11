@@ -34,9 +34,9 @@ router.get('/investorCases/:investor', async (req, res)=>{
     }
 })
 
-router.get('/reviewerCases/:lawyer', async (req, res)=>{
+router.get('/reviewerCases/:reviewer', async (req, res)=>{
     try{
-        const caseReviewer = req.params.lawyer
+        const caseReviewer = req.params.reviewer
         var caseElements = await Case.find({"reviewer": caseReviewer})
         if(!caseElements){
             res.status(404).send({error: 'We can not find what you are looking for'});
