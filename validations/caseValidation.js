@@ -5,8 +5,8 @@ module.exports = {
         const createSchema = {
             status: Joi.string().required(),
             investor: Joi.string().required(),
-            lawyer: Joi.string().required(),
-            reviewer: Joi.string().required(),
+            lawyer: Joi.string(),
+            reviewer: Joi.string(),
             company_name: Joi.string().required(),
             reviewed_by_lawyer: Joi.boolean().required(),
             review_comment_by_lawyer: Joi.string(),

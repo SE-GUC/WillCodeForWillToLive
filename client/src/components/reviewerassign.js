@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 // import nfetch from 'node-fetch'
 import axios from 'axios';
 
-class lawyer extends Component {
+class reviewer extends Component {
     state={
         cases:[],
-        username: ""
+        username: "-"
     }
 
     componentDidMount(){
-     axios.get('http://localhost:3002/api/lawyer/getCases').then(res => Object.values(res)[0]).then(element => this.setState({cases:element.data}))
+     axios.get('http://localhost:3002/api/reviewer/getCases').then(res => Object.values(res)[0]).then(element => this.setState({cases:element.data}))
     }
     assigncase =(id) =>{
       //console.log(id)
-      axios.put('http://localhost:3002/api/lawyer/assigncasestomyselfthelawyer/'+id, {
-        lawyer: this.state.username
+      axios.put('http://localhost:3002/api/reviewer/assigncasestomyselfthereviewer/'+id, {
+        reviewer: this.state.username
     }).then(res => Object.values(res)[0]).then(element => alert('case assigned')).catch(err => alert('case unavailable'))
     }
   render() {
     return(
-      <div className="lawyer">
-      <h2>lawyer cases</h2>
+      <div className="reviewer">
+      <h2>reviewer cases</h2>
       <br/>
       <table>
         <thead>
@@ -45,11 +45,4 @@ class lawyer extends Component {
   }
 }
 
-export default lawyer;
-
-/*
-const response = nfetch(`http://localhost:3002/api/admin/getCases`,{
-        method: 'GET',
-        headers: {'Content-Type': 'application/json' }
-    }).then(res => res.json()).then(json => alert(Object.values(json)[0])).catch(err => alert('Something went wrong'))
-    */
+export default reviewer;
