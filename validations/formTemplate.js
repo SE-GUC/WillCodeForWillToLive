@@ -2,10 +2,10 @@ const joi = require('joi')
 
 module.exports = {
     validateCreate: body => {
-        const schema = joi.schema({
+        const schema = joi.object({
             formNameArabic: joi.string().required(),
             formNameEnglish: joi.string().required(),
-            fields: joi.array.items(object({
+            fields: joi.array().items(joi.object({
                 type: joi.string().allow(['string', 'number', 'date']).required(),
                 nameArabic: joi.string().required(),
                 nameEnglish: joi.string().required(),
@@ -22,7 +22,7 @@ module.exports = {
         const schema = joi.schema({
             formNameArabic: joi.string(),
             formNameEnglish: joi.string(),
-            fields: joi.array.items(object({
+            fields: joi.array().items(joi.object({
                 type: joi.string().allow(['string', 'number', 'date']),
                 nameArabic: joi.string(),
                 nameEnglish: joi.string(),

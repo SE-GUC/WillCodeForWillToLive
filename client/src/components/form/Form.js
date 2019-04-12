@@ -69,7 +69,7 @@ class Form extends Component {
     axios(`/api/form`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      data: form
+      body: form
     })
     .then(res => console.log('Created form'))
     .catch(error => console.log(error))

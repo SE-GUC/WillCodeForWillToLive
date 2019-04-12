@@ -39,7 +39,8 @@ const FormTemplate = (props) => {
                 return field
             })
             const body = {fields: fieldsNew, formInfo: form}
-            axios.post('/api/formTemplate', {
+            axios('/api/formTemplate', {
+                method: 'POST',
                 headers: [{'Content-Type': 'application/json'}],
                 body: body
             })
