@@ -13,6 +13,7 @@ class ReviewerTest extends AbstractTests {
             birth_date: null,
             gender: null,
             nationallity: null,
+            ID: null,
             type_of_ID: null,
             mobile_number: null,
             fax_number: null,
@@ -75,6 +76,7 @@ class ReviewerTest extends AbstractTests {
             birth_date: '12-05-1990',
             gender: 'Male',
             nationallity: 'Egyptian',
+            ID: 'asd2asd32132',
             type_of_ID: 'Basic',
             mobile_number: '3543542485',
             fax_number: '3546464',
@@ -101,6 +103,7 @@ class ReviewerTest extends AbstractTests {
               this.sharedState.birth_date = reviewer.birth_date
               this.sharedState.gender = reviewer.gender
               this.sharedState.nationallity = reviewer.nationallity
+              this.sharedState.ID = reviewer.ID
               this.sharedState.type_of_ID = reviewer.type_of_ID
               this.sharedState.mobile_number = reviewer.mobile_number
               this.sharedState.fax_number = reviewer.fax_number
@@ -161,6 +164,7 @@ class ReviewerTest extends AbstractTests {
             expect(jsonResponse.data.birth_date).toEqual(this.sharedState.birth_date)
             expect(jsonResponse.data.gender).toEqual(this.sharedState.gender)
             expect(jsonResponse.data.nationallity).toEqual(this.sharedState.nationallity)
+            expect(jsonResponse.data.ID).toEqual(this.sharedState.ID)
             expect(jsonResponse.data.type_of_ID).toEqual(this.sharedState.type_of_ID)
             expect(jsonResponse.data.mobile_number).toEqual(this.sharedState.mobile_number)
             expect(jsonResponse.data.fax_number).toEqual(this.sharedState.fax_number)
