@@ -10,6 +10,7 @@ import RegisterReviewer from './components/pages/RegisterReviewer';
 import Companies from './components/Companies';
 import Cases from './components/Cases'
 import lawyer from './components/lawyer'
+import AllForms from './components/form/AllForms'
 class App extends Component {
 /* state = {
    reviewers: [
@@ -72,7 +73,7 @@ reject = (id) => {
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
-
+            <Route path="/allForms" component={AllForms} /> 
           </Switch>
         </Router>
       </div>
