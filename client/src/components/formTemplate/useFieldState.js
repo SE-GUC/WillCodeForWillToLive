@@ -5,12 +5,12 @@ export default initialValue => {
 
     return {
         attributes,
-        setAttribute: (name, value) => {
+        setAttributeWrap: (name, value) => {
             const newAttributes = attributes
             newAttributes[name] = value
             setAttributes(newAttributes)
         },
-        deleteAttribute: name => {
+        deleteAttributeWrap: name => {
             const newAttributes = attributes
             delete newAttributes[name]
             setAttributes(newAttributes)

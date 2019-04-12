@@ -18,12 +18,12 @@ const styles = theme =>  ({
     }
 })
 
-const StringConstraint = ({keyy, classes, deleteConstraint, updateConstraint}) => {
+const StringConstraint = ({index, classes, deleteConstraint, updateConstraint}) => {
     const [data, setData] = useState(null)
     const [anchorEl, setAnchorEl] = useState(null)
     const update = e => {
         if(data.name) {
-            updateConstraint(keyy, {name: data.name, value: e.target.value})
+            updateConstraint(index, {name: data.name, value: e.target.value})
         }
     }
     const handleDropDown = (name, type) => {
@@ -36,7 +36,7 @@ const StringConstraint = ({keyy, classes, deleteConstraint, updateConstraint}) =
             <IconButton variant='contained' 
                 className={classes.margin} 
                 aria-label='Delete'
-                onClick={()=>{deleteConstraint(keyy)}}
+                onClick={()=>{deleteConstraint(index)}}
             >
                 <DeleteIcon className={classes.rightIcon} />
             </IconButton>

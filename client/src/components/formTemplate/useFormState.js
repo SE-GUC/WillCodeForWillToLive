@@ -6,7 +6,7 @@ export default initialValue => {
     return {
         fields,
         addField: _ => setFields([...fields, {key:Date.now()}]),
-        deleteField: key => setFields(fields.filter(f => f.key !== key)),
-        updateField: (key, data) => setFields(fields.map(f => f.key===key? {...data, key:key}:f))
+        deleteField: index => setFields(fields.filter((_, i) => i !== index)),
+        updateField: (index, data) => setFields(fields.map((f, i) => index===index? {...data, key:f.key}:f))
     }
 }

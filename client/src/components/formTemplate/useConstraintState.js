@@ -6,8 +6,8 @@ export default initialValue => {
     return {
         constraints,
         addConstraint: _ => setConstraints([...constraints, {key: Date.now()}]),
-        deleteConstraint: key => setConstraints(constraints.filter(c => c.key !== key)),
-        updateConstraint: (key, data) => setConstraints(constraints.map(c => c.key===key?{...data, key:key}:c)),
+        deleteConstraint: index => setConstraints(constraints.filter((_, i) => i !== index)),
+        updateConstraint: (index, data) => setConstraints(constraints.map((c, i) => i===index?{...data, key:c.key}:c)),
         resetConstraints: _ => setConstraints([])
     }
 }

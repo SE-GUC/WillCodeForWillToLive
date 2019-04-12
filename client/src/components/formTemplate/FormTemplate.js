@@ -26,9 +26,22 @@ const FormTemplate = (props) => {
             setForm(newForm)
         }
         const createForm = _ => {
+            const fieldsNew = fields.map(field => {
+                if(field.key){
+                    delete field.key
+                }
+                field.constraints = field.constraints.map(constraint => {
+                    if(constraint.key) {
+                        delete constraint.key
+                    }
+                    return constraint
+                })
+                return field
+            })
+            const body = {fields: fieldsNew, formInfo: form}
             axios.post('/api/formTemplate', {
                 headers: [{'Content-Type': 'application/json'}],
-                body: {...fields, formInfo: form}
+                body: body
             })
             .then( async res => {
                 const resJson = await res.json()

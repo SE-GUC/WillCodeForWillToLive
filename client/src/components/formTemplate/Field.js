@@ -25,12 +25,16 @@ const styles = theme =>  ({
     }
 })
 
-const Field = ({index, keyy, classes, deleteField, updateField}) => {
+const Field = ({index, classes, deleteField, updateField}) => {
     const [anchorEl, setAnchorEl] = useState(null)
-    const {attributes, setAttribute} = useFieldState({required: false})
+    const {attributes, setAttributeWrap} = useFieldState({required: false})
     const {constraints, addConstraint, deleteConstraint, updateConstraint, resetConstraints} = useConstraintState([])
+    const setAttribute = (name, value) => {
+        setAttributeWrap(name, value)
+        updateField(index, attributes)
+    }
     useEffect(_ => setAttribute('constraints', constraints), [constraints])
-    useEffect(_ => updateField(keyy, attributes), [attributes])
+    useEffect(_ => updateField(index, attributes), [attributes])
     const handleDropdownClick = (name, value) => {
         const oldValue = attributes.fieldType
         if(oldValue !== value){
@@ -39,14 +43,14 @@ const Field = ({index, keyy, classes, deleteField, updateField}) => {
         setAttribute(name, value)
         setAnchorEl(null)
     }
-    const getConstraintTag = ({name, key}) => {
+    const getConstraintTag = ({name, key}, index) => {
         switch(attributes.fieldType) {
             case 'text':
-                return <StringConstraint key={key} keyy={key} name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
+                return <StringConstraint key={key} index={index} name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
             case 'number':
-                return <NumberConstraint key={key} keyy={key}  name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
+                return <NumberConstraint key={key} index={index} name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
             case 'date':
-                return <DateConstraint key={key} keyy={key}  name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
+                return <DateConstraint key={key} index={index} name={name} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />
             default:
                 return null
         }
@@ -58,7 +62,11 @@ const Field = ({index, keyy, classes, deleteField, updateField}) => {
         <div id='common-props'>
             <TextField
                 required={true} className={classes.textField} variant="outlined"
-                onChange={e => setAttribute(e.target.name, e.target.value)}
+                onChange={e => {
+                    setAttribute(e.target.name, e.target.value)
+                    updateField(index, attributes)
+                }
+                }
                 name='nameArabic' label='Name Arabic'
             />
             <TextField
@@ -98,7 +106,7 @@ const Field = ({index, keyy, classes, deleteField, updateField}) => {
             {constraints.map((e, i) => getConstraintTag(e, i))}
             </div>
             <Button className={classes.button} variant='contained' onClick={addConstraint}>Add Constraint</Button>
-            <Button className={classes.button} variant='contained' onClick={() => deleteField(keyy)}>Remove field</Button>
+            <Button className={classes.button} variant='contained' onClick={() => deleteField(index)}>Remove field</Button>
             </Paper>
         </div>
     )
