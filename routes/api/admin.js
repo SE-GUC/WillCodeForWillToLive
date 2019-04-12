@@ -97,12 +97,12 @@ router.post('/', async (req, res) => {
 }) */
 
 router.get('/getCompanys', async (req, res) => {
-  res.redirect('../../company/')
+  res.redirect('./../company/')
 })
 
 //  search using /api/admin/getCases/
 router.get('/getCases', async (req, res) => {
-  res.redirect('../../cases/')
+  res.redirect('./../cases/')
 })
 
 router.get('/:id', async (req, res) => {
