@@ -15,6 +15,7 @@ import investorprofile from './components/profiles/investorprofile'
 import lawyerprofile from './components/profiles/lawyerprofile'
 import reviewerprofile from './components/profiles/reviewerprofile'
 import adminprofile from './components/profiles/adminprofile'
+import UnregisteredUser from './components/unregisteredUser'
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
           <Route path="/lawyerprofile" component={lawyerprofile} />
           <Route path="/reviewerprofile" component={reviewerprofile} />
           <Route path="/adminprofile" component={adminprofile} />
+          <Route path="/unregisteredUser" component={UnregisteredUser} />
 
 
 
