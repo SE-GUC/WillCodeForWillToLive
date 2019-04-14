@@ -10,7 +10,7 @@ class Companies extends Component {
     }
     
     componentDidMount(){
-     axios.get('http://localhost:3002/api/comapny/:'+this.state.username).then(res => Object.values(res)[0]).then(fuck => this.setState({Companies:fuck.data}))
+     axios.get('http://localhost:3002/api/comapny/:'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({Companies:element.data}))
     }
   /*  onSubmit = (e) =>{
       e.preventDefault()
