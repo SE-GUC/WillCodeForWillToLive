@@ -13,7 +13,16 @@ class CaseTest extends AbstractTests {
             lawyer: null,
             company_name: null,
 			reviewed_by_lawyer : null,
-			reviewed_by_reviewer:null
+            reviewed_by_reviewer:null,
+            fees: null,
+            paid: null,
+            currency: null,
+            formID: null,
+            priority: null,
+            description: null,
+            created_at: null,
+            isDone: null,
+            dueDate: null
         }
     }
     runIndependently(){
@@ -67,7 +76,15 @@ class CaseTest extends AbstractTests {
             lawyer: 'lawyer',
             company_name: 'company',
 			reviewed_by_lawyer : false,
-			reviewed_by_reviewer:false
+            reviewed_by_reviewer:false,
+            fees: 50000,
+            paid: false,
+            currency: 'Sterling',
+            priority: 'High',
+            description: 'Financial Case',
+            created_at: '2/1/2011',
+            isDone: false,
+            dueDate: '13/1/2011'
         }
 
         test(`Randomly creating a new case,\t\t[=> POST\t${this.base_url}\t`, async () => {
@@ -89,7 +106,12 @@ class CaseTest extends AbstractTests {
               this.sharedState.lawyer = caseElement.lawyer
               this.sharedState.company_name = caseElement.company_name
               this.sharedState.reviewed_by_lawyer = caseElement.reviewed_by_lawyer
-              this.sharedState.reviewed_by_reviewer = caseElement.reviewed_by_reviewer 
+              this.sharedState.reviewed_by_reviewer = caseElement.reviewed_by_reviewer
+              this.sharedState.priority = caseElement.priority
+              this.sharedState.description = caseElement.description
+              this.sharedState.created_at = caseElement.created_at
+              this.sharedState.isDone = caseElement.isDone
+              this.sharedState.dueDate = caseElement.dueDate
         },100000)
     }
 
@@ -110,6 +132,15 @@ class CaseTest extends AbstractTests {
             expect(jsonResponse.data.company_name).toEqual( this.sharedState.company_name)
             expect(jsonResponse.data.reviewed_by_lawyer).toEqual(this.sharedState.reviewed_by_lawyer)
             expect(jsonResponse.data.reviewed_by_reviewer).toEqual(this.sharedState.reviewed_by_reviewer)
+            expect(jsonResponse.data.fees).toEqual(this.sharedState.fees)
+            expect(jsonResponse.data.paid).toEqual(this.sharedState.paid)
+            expect(jsonResponse.data.currency).toEqual(this.sharedState.currency)
+            expect(jsonResponse.data.formID).toEqual(this.sharedState.formID)
+            expect(jsonResponse.data.priority).toEqual(this.sharedState.priority)
+            expect(jsonResponse.data.description).toEqual(this.sharedState.description)
+            expect(jsonResponse.data.created_at).toEqual(this.sharedState.created_at)
+            expect(jsonResponse.data.isDone).toEqual(this.sharedState.isDone)
+            expect(jsonResponse.data.dueDate).toEqual(this.sharedState.dueDate)
         },100000)
     }
 
