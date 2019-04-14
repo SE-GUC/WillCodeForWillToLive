@@ -45,22 +45,38 @@ router.post('/', async (req, res) => {
 router.get('/', async (_, res) => {
   try {
     const data = await Model.find()
-    res.json(data)
+    const getResult = data.map(form => form.fields)
+    res.json(getResult)
   } catch(err) {
     res.status(500).json({error: err})
   }
 })
 
 router.get('/:id', async (req, res) => {
-  try {
+  try {lc
     const data = await Model.findById(req.params.id)
     if(!data){
       res.status(404).json({error: 'Page not found.'})
     } else {
-      res.json(data)
+      res.json(data.fields)
     }
   } catch(err) {
     res.status(500).json({error: err})
+  }
+})
+
+router.get('/allForms/:id', async (req, res) => {
+  try{
+    const data = await Model.find({userId: req.params.id})
+    const getResult = data.map(form => form.fields)
+    res.json(getResult)
+    if(!data) {
+      res.status(404).json({error: 'No data found'})
+    } else {
+      res.json(data)
+    }
+  }catch (error) {
+    res.status(500).json({error: error})
   }
 })
 
