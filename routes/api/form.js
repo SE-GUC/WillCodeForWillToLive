@@ -2,6 +2,8 @@ const Model = require('../../models/Form')
 const validator = require('../../validations/form')
 const router = require('express').Router()
 const nfetch = require('node-fetch')
+const PdfPrinter = require('pdfmake')
+const fs = require('fs')
 
 const createNewCase = async (body) => {
   try{
@@ -30,8 +32,10 @@ router.post('/', async (req, res) => {
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {
-      const data = await Model.create(req.body)
-      createNewCase(req.body)
+      const modelData = {fields: Object.keys(req.body).map(key => ({name: key, value: req.body[key]}))}
+      modelData.userId='1'
+      const data = await Model.create(modelData)
+      // createNewCase(req.body)
       res.json(data)
     }
   } catch(err) {
@@ -43,22 +47,40 @@ router.post('/', async (req, res) => {
 router.get('/', async (_, res) => {
   try {
     const data = await Model.find()
-    res.json(data)
+    const getResult = data.map(form => form.fields)
+    res.json(getResult)
   } catch(err) {
     res.status(500).json({error: err})
   }
 })
 
 router.get('/:id', async (req, res) => {
-  try {
+  try {lc
     const data = await Model.findById(req.params.id)
     if(!data){
       res.status(404).json({error: 'Page not found.'})
     } else {
-      res.json(data)
+      res.json(data.fields)
     }
   } catch(err) {
     res.status(500).json({error: err})
+  }
+})
+
+
+
+router.get('/allForms/:id', async (req, res) => {
+  try{
+    const data = await Model.find({userId: req.params.id})
+    const getResult = data.map(form => form.fields)
+    res.json(getResult)
+    if(!data) {
+      res.status(404).json({error: 'No data found'})
+    } else {
+      res.json(data)
+    }
+  }catch (error) {
+    res.status(500).json({error: error})
   }
 })
 
@@ -68,7 +90,8 @@ router.put('/:id', async (req, res) => {
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {
-      const data = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      const modelData = {fields: [Object.keys(req.body).map(key => ({name: key, value: req.body[key]}))]}
+      const data = await Model.findByIdAndUpdate(req.params.id, modelData, {new: true})
       if(!data) {
         res.status(404).json({error: 'Page not found.'})
       } else {
@@ -151,5 +174,45 @@ router.put('/updateFees/:id', async (req, res) => {
     res.status(500).json({error: error})
   }
 })
+
+// PDF STUFF
+const fonts = {
+  Roboto: {
+    normal: 'fonts/Roboto-regular.ttf',
+    bold: 'fonts/Roboto-Medium.ttf',
+    italics: 'fonts/Roboto-Italic.ttf',
+    bolditalics: 'fonts/Roboto-MediumItalic.ttf'
+  }
+}
+
+router.get('/createPdf/:id', async(req, res) => {
+  try{
+    const printer = new PdfPrinter(fonts)
+    const data = await Model.findById(req.params.id)
+    if(!data) {
+      res.status(404).json({error: 'Form not found'})
+    } else {
+      const fields = data.fields
+      const docDefinition = {
+        content: fields.map(field => ({
+          text: [
+            {text: field.name, fontSize: 20, bold: true},
+            {text: ` ${field.value}`, fontSize: 15, bold: false},
+          ]
+        }))
+      }
+      const pdfDoc = printer.createPdfKitDocument(docDefinition)
+      pdfDoc.end()
+      pdfDoc.pipe(fs.createWriteStream('document.pdf'))
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Disposition', 'inline; filename="Document.pdf"')
+      pdfDoc.pipe(res)
+    }
+  } catch(error){
+    console.log(error)
+     res.status(500).send({error: error})
+  }
+})
+
 
 module.exports = router
