@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import lawyerCases from './components/lawyerCases'
+import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
 import Reviewer from './components/Reviewer';
 import Form from './components/form/Form'
@@ -21,10 +23,12 @@ import AllForms from './components/form/AllForms'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
 
+
 class App extends Component {
   render() {
     const classes = this.props.classes
     return (
+
       <div className={classes.root}>
         <Router>
           <Switch>
@@ -42,6 +46,8 @@ class App extends Component {
             <Route path = "/reviewerassign" component = {reviewerassign} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
+            <Route path="/lawyerCases" component={lawyerCases} /> 
+            <Route path="/reviewerCases" component={reviewerCases}/>
             <Route path="/formTemplate" component={FormTemplate} />
             <Route path="/allForms" component={AllForms} /> 
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
@@ -49,6 +55,7 @@ class App extends Component {
           </Switch>
         </Router>
       </div>
+
     );
   }
 }
