@@ -8,28 +8,26 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import nfetch from 'node-fetch'
 
-class AlertDialogInvestorRegister extends React.Component {
+class AlertDialogLawyerRegister extends React.Component {
   state = {
     open: false,
     msg:''
   };
   handleClickOpen = () => {
     const requestBody = {
-        username: this.props.stateinvestor.username,
-        name: this.props.stateinvestor.name,
-        DOB: this.props.stateinvestor.DOB,
-        gender: this.props.stateinvestor.gender,
-        nationality: this.props.stateinvestor.nationality,
-        mobileNumber: this.props.stateinvestor.mobileNumber,
-        faxNumber: this.props.stateinvestor.faxNumber,
-        email: this.props.stateinvestor.email,
-        address: this.props.stateinvestor.address,
-        password: this.props.stateinvestor.password,
-        ID: this.props.stateinvestor.ID,
-        typeOfID: this.props.stateinvestor.typeOfID,
-        capital: this.props.stateinvestor.capital
+        name: this.props.lawyeradmin.name,
+        username: this.props.lawyeradmin.username,
+        password: this.props.lawyeradmin.password,
+        birth_date: this.props.lawyeradmin.dob,
+        nationality: this.props.lawyeradmin.nationality,
+        gender: this.props.lawyeradmin.gender,
+        ID: this.props.lawyeradmin.ID,
+        typeOfID: this.props.lawyeradmin.typeofid,
+        mobile_number: this.props.lawyeradmin.mobile,
+        fax_number: this.props.lawyeradmin.fax,
+        email_address: this.props.lawyeradmin.email
       }
-      const response =nfetch(`http://localhost:3002/api/investor`,{
+      const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {'Content-Type': 'application/json' }
@@ -45,7 +43,7 @@ class AlertDialogInvestorRegister extends React.Component {
     return (
       <div>
         <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Sign Up 
+          Submit 
         </Button>
         <Dialog
           open={this.state.open}
@@ -60,7 +58,7 @@ class AlertDialogInvestorRegister extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} variant="outlined" color="primary" autoFocus>
+            <Button onClick={this.handleClose} color="primary" autoFocus>
               OK
             </Button>
           </DialogActions>
@@ -70,4 +68,4 @@ class AlertDialogInvestorRegister extends React.Component {
   }
 }
 
-export default AlertDialogInvestorRegister;
+export default AlertDialogLawyerRegister;

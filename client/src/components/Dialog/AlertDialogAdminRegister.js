@@ -43,7 +43,7 @@ class AlertDialogAdminRegister extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
           Submit 
         </Button>
         <Dialog
