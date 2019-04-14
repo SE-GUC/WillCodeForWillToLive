@@ -61,9 +61,10 @@ function Form ({classes}) {
   }
 
   const sendForm = _ => {
+    console.log(formData)
     axios('/api/form', {
       method: 'POST',
-      body: formData,
+      data: formData,
       headers: {'Content-Type': 'application/json'}
     })
     .then(res => {
