@@ -7,12 +7,14 @@ router.post('/', async (req, res) => {
     const valid = validator.validateCreate(req.body)
     if(valid.error) {
       res.status(400).json({error: valid.error})
+      // console.log(valid.error)
     } else {
       const data = await Model.create(req.body)
       res.json(data)
     }
   } catch(err) {
     res.status(500).json({error: err})
+    console.log(err)
   }
 })
 

@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
     formNameArabic: {type: String, required: true},
     formNameEnglish: {type: String, required: true},
     fields: [{
-        type: {type: String, required: true},
+        fieldType: {type: String, required: true},
         nameArabic: {type: String, required: true},
         nameEnglish: {type: String, required: true},
         required: {type: Boolean, required: true},

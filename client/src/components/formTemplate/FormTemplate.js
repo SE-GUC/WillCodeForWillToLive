@@ -38,11 +38,11 @@ const FormTemplate = (props) => {
                 })
                 return field
             })
-            const body = {fields: fieldsNew, formInfo: form}
+            const body = {fields: fieldsNew, ...form}
             axios('/api/formTemplate', {
                 method: 'POST',
                 headers: [{'Content-Type': 'application/json'}],
-                body: body
+                data: body
             })
             .then( async res => {
                 const resJson = await res.json()
@@ -50,7 +50,7 @@ const FormTemplate = (props) => {
                     alert(resJson.error)
                 }
             })
-            .catch(error => {console.log(`Error: ${error}`)})
+            .catch(error => {alert(error)})
         }
 
         return (

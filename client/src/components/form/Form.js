@@ -1,133 +1,141 @@
-import React, { Component } from 'react'
-import Director from './Director'
-import {withStyles} from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import styles from './styles'
+import React, { useState, useEffect } from 'react'
+import { TextField, Button, withStyles, Paper, Menu, MenuItem } from '@material-ui/core'
 import axios from 'axios'
 
-class Form extends Component {
+const styles = theme =>  ({
+  root: {
+      ...theme.mixins.gutters(),
+      paddingTop: theme.spacing.unit*2,
+      paddingBottom: theme.spacing.unit*2,
+      background: '#e3e3e3',
+      marginBottom: theme.spacing.unit,
+      marginTop: theme.spacing.unit,
+  },
+  button: {
+      margin: theme.spacing.unit*0.5,
+  },
+  textField: {
+      margin: theme.spacing.unit*0.5,
+      width: 200,
+      marginTop: '0.5vw',
+  }
+})
+
+function Form ({classes}) {
+  const [forms, setForms] = useState([])
+  const [formData, setFormData] = useState({})
+  const [lawDropdownState, setLawDropdownState] = useState(null)
+  const [formDropdownState, setFormDropdownState] = useState(null)
+  const [formFields, setformFields] = useState([])
+  useEffect(_=>{
+    axios('/api/formTemplate', {method: 'GET'})
+    .then(res => {
+      if(res.data){
+        setForms(res.data)
+      }
+    }).catch(e => console.log(e))
+  }, [])
   
-  constructor(props) {
-    super(props)
-    this.props = props
-    this.state = {
-      directors: 0,
-      form: {
-        boardOfDirectors: []
-      }
+
+  const handleLawDropdown = lawName => {
+    const newFormData = formData
+    newFormData.regulatingLaw = lawName
+    setFormData(newFormData)
+    setLawDropdownState(null)
+  }
+
+  const handleFormDropdown = formName => {
+    const newData = {formName: formName}
+    if(formData && formData.regulatingLaw) {
+      newData.regulatingLaw = formData.regulatingLaw
     }
+    setFormData(newData)
+    setformFields(forms[forms.findIndex(f => f.formNameEnglish === formName)].fields)
+    setFormDropdownState(null)
   }
 
-  directorFuncs = {
-    push: director => {
-      const form = this.state.form
-      form.boardOfDirectors.push(director)
-      this.setState({form: form})
-    },
-    remove: (index) => {
-      const form = this.state.form
-      form.boardOfDirectors.splice(index, 1)
-      this.setState({
-        directors: this.state.directors-1,
-        form: form
-      })
-    },
-    pop: () => {
-      const form = this.state.form
-      form.boardOfDirectors.pop()
-      this.setState({
-        directors: this.state.directors-1,
-        form: form
-      })
-    }
+  const handleFieldInput = (name, value) => {
+    const newFormData = formData
+    newFormData[name] = value
+    setFormData(newFormData)
   }
 
-  addDirector = () => {
-    this.setState({directors: this.state.directors+1})
-  }
-
-  handleChange = event => {
-    let form = this.state.form
-    let list = event.target.name.split('.')
-    const helper = (accu, [head, ...tail], val) => {
-      if(!accu[head]) {
-        accu[head] = {}
-      }
-      if(tail.length !== 0){
-        helper(accu[head], tail, val)
-      } else {
-        accu[head] = val
-      }
-    }
-    helper(form, list, event.target.value)
-    this.setState({form: form})
-  }
-
-  createForm = () => {
-    const form = this.state.form
-    axios(`/api/form`, {
+  const sendForm = _ => {
+    axios('/api/form', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: form
+      body: formData,
+      headers: {'Content-Type': 'application/json'}
     })
-    .then(res => console.log('Created form'))
-    .catch(error => console.log(error))
+    .then(res => {
+      if(res.error){
+        alert(JSON.stringify(res.error))
+      } else {
+        alert('Form created!')
+      }
+    }).catch(e => console.log(e))
   }
 
-  render() {
-    const {classes} = this.props
-    let removeButton
-    if (this.state.directors !== 0) {
-      removeButton = <Button className={classes.button} variant="contained" onClick={this.directorFuncs.pop} >Remove</Button>
-    }
     return (
-      <div className={classes.form}>
-          <div>
-            <h2>Company Information</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyLegalInfo.regulatingLaw" label="Regulating Law"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyLegalInfo.companyType" label="Company Type"/>
+      <div>
+        <Paper className={classes.root}>
+          <div id='drop-downs'>
+            <Button
+              className={classes.button}
+              variant='contained'
+              aria-owns={lawDropdownState? 'regulatingLawMenu':undefined}
+              aria-haspopup='true'
+              onClick={e => setLawDropdownState(e.currentTarget)}
+            >
+              {formData.regulatingLaw || 'Choose Regulating Law'}
+            </Button>
+            <Menu
+            id='regulatingLawMenu'
+            anchorEl={lawDropdownState}
+            open={Boolean(lawDropdownState)}
+            onClose={_=>setLawDropdownState(null)}
+            >
+              <MenuItem onClick={_ => handleLawDropdown('Law 72')}>Law 72</MenuItem>
+              <MenuItem onClick={_ => handleLawDropdown('Law 195')}>Law 195</MenuItem>
+            </Menu>
+            <Button
+              className={classes.button}
+              variant='contained'
+              aria-owns={formDropdownState? 'FormType':undefined}
+              aria-haspopup='true'
+              onClick={e => setFormDropdownState(e.currentTarget)}
+            >
+              {formData.formNameEnglish || 'Choose Form Type'}
+            </Button>
+            <Menu
+            id='FormType'
+            anchorEl={formDropdownState}
+            open={Boolean(formDropdownState)}
+            onClose={_=>setFormDropdownState(null)}
+            >
+              {forms.map((form, i) => 
+                <MenuItem
+                  key={i.toString()}
+                  onClick={_ => handleFormDropdown(form.formNameEnglish)}
+                >
+                  {form.formNameEnglish}
+                </MenuItem>
+              )}
+            </Menu>
           </div>
-          <div>
-            <h2>Company Name</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyName.arabic" label="Company Name Arabic"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="companyName.english" label="Company Name English"/>
+          <div id='form'>
+            {formFields.map(field =>
+            <TextField 
+              variant='outlined'
+              className={classes.textField}
+              type={field.fieldType.toLowerCase()}
+              onChange={e => handleFieldInput(field.nameEnglish, e.target.value)}
+              label={field.nameEnglish}
+            />)}
           </div>
-          <div>
-            <h2>Headquaters Information</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="hqInfo.governorate" label="Governorate"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="hqInfo.city" label="City"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="hqInfo.telephone" label="Telephone"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="hqInfo.fax" label="Fax"/>
-          </div>
-          <div>
-            <h2>Investor Information</h2>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.capitalCurrency" label="Capital Currency"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.capital" label="Capital"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.name" label="Name"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.type" label="Type"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.gender" label="Gender"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.nationality" label="Nationality"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.idType" label="ID Type"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.idNumber" label="ID Number"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.birthdate" label="Birth Date"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.telephone" label="Telephone"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.fax" label="Fax"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.email" label="Email"/>
-            <TextField className={classes.textField} variant="outlined" onChange={this.handleChange} name="investorInfo.address" label="Address"/>
-          </div>
-          <div id="boardOfDirectors">
-            <h2>Board of Directors</h2>
-            {[...Array(this.state.directors).keys()].map((_, i) => <Director key={i} index={i} classes={this.props.classes} funcs={this.directorFuncs}/>)}
-            {removeButton}
-            <Button className={classes.button} onClick={this.addDirector} variant="contained" color="secondary">Add Director</Button>
-          </div>
-          <div id='submit'>
-            <Button className={classes.button} onClick={this.createForm} variant="contained" color="primary">Submit</Button>
-          </div>
+          <Button className={classes.button} variant='contained' onClick={sendForm}>Submit</Button>
+        </Paper>
       </div>
     )
-  }
 }
 
 export default withStyles(styles)(Form)

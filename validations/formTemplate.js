@@ -2,11 +2,16 @@ const joi = require('joi')
 
 module.exports = {
     validateCreate: body => {
+
+        // Making sure that there is a capital field in the form
+        if(!(body && body.fields && body.fields.find(field => field.nameEnglish === 'Capital'))){
+            return {error: 'Capital not found'}
+        }
         const schema = joi.object({
             formNameArabic: joi.string().required(),
             formNameEnglish: joi.string().required(),
             fields: joi.array().items(joi.object({
-                type: joi.string().allow(['string', 'number', 'date']).required(),
+                fieldType: joi.string().allow(['string', 'number', 'date']).required(),
                 nameArabic: joi.string().required(),
                 nameEnglish: joi.string().required(),
                 required: joi.boolean().required(),
