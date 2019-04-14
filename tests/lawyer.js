@@ -11,6 +11,7 @@ class LawyerTest extends AbstractTests {
           birth_date: null,
           gender: null,
           nationality: null,
+          ID: null,
           typeOfID: null,
           mobile_number: null,
           fax_number: null,
@@ -69,14 +70,15 @@ class LawyerTest extends AbstractTests {
     postRequestIndependently() {
         const requestBody = {
           name: "Test_name",
-          birth_date: 2000,
+          birth_date: "2017-02-08T12:10:40.787",
           gender: "Test_gender",
           nationality: "Test_nationality",
+          ID: "asd2132ada",
           typeOfID: "Test_typeOfID",
           mobile_number: "25109920",
           fax_number: 2000,
           email_address: "Test_email_address",
-            // username: "Test_username",
+          username: "Test_username",
           password: "Test_password",
         }
 
@@ -88,7 +90,7 @@ class LawyerTest extends AbstractTests {
               })
               const jsonResponse = await response.json()
               console.log(jsonResponse)
-              expect(Object.keys(jsonResponse)).toEqual(['data'])
+              expect(Object.keys(jsonResponse)).toEqual(['msg', 'data'])
 
               const lawyerElement = await Lawyer.findById(jsonResponse.data._id).exec()
               expect(lawyerElement).toMatchObject(requestBody)
@@ -97,11 +99,12 @@ class LawyerTest extends AbstractTests {
               this.sharedState.birth_date = lawyerElement.birth_date
               this.sharedState.gender = lawyerElement.gender
               this.sharedState.nationality = lawyerElement.nationality
+              this.sharedState.ID = lawyerElement.ID
               this.sharedState.typeOfID = lawyerElement.typeOfID
               this.sharedState.mobile_number = lawyerElement.mobile_number
               this.sharedState.fax_number = lawyerElement.fax_number
               this.sharedState.email_address = lawyerElement.email_address
-              // this.sharedState.username = lawyerElement.username
+              this.sharedState.username = lawyerElement.username
               this.sharedState.password = lawyerElement.password
         },100000)
     }
@@ -120,6 +123,7 @@ class LawyerTest extends AbstractTests {
             expect(jsonResponse.data.birth_date).toEqual(this.sharedState.birth_date)
             expect(jsonResponse.data.gender).toEqual(this.sharedState.gender)
             expect(jsonResponse.data.nationality).toEqual(this.sharedState.nationality)
+            expect(jsonResponse.data.ID).toEqual(this.sharedState.ID)
             expect(jsonResponse.data.typeOfID).toEqual( this.sharedState.typeOfID)
             expect(jsonResponse.data.mobile_number).toEqual(this.sharedState.mobile_number)
             expect(jsonResponse.data.fax_number).toEqual(this.sharedState.fax_number)
