@@ -6,6 +6,7 @@ var investorSchema = new Schema({
   email: { type: mongoose.SchemaTypes.Email },
   username: { type: String, required: true, unique: true },
   password: String,
+  ID: String,
   typeOfID: String,
   name: String,
   nationality: String,

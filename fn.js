@@ -1,45 +1,33 @@
 
 const functions = {
     sortTaskById : async () => {
-        console.log("Entered sortID func")
-        const Task = require('./models/Task')
-        var Tasks = await Task.find()
-        for(var i = Task.length - 1; i >= 0; i--){
-            var maxTask = Tasks[0]
-            var ind = 0
-            for(var j = 1; j<=i ; j++){
-                var currentTask = Tasks[j] 
-                if(currentTask.id > maxTask.id){
-                    maskTask = currentTask
-                    ind = j
-                }
-            }
-            var temp = Tasks[i];
-            Tasks[i] = maxTask
-            Tasks[ind] = temp
-        }
-        return Tasks
+        
+        const Task = require('./models/Case')
+        var Cases = await Task.find()
+        Cases.sort((a,b) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
+        return Cases
     },
 
     sortTaskByCreationDate : async () => {
-        console.log("Entered sortCD func")
-        const Task = require('./models/Task')
-        const Tasks = await Task.find()
-        for(var i = Task.length - 1; i >= 0; i--){
-            var maxTask = Tasks[0]
+        const cases = require('./models/Case')
+        const Cases = await cases.find()
+        for(var i = Cases.length - 1; i >= 0; i--){
+            var maxTask = Cases[0]
             var ind = 0
             for(var j = 1; j<=i ; j++){
-                var currentTask = Tasks[j] 
+                var currentTask = Cases[j]
+                
                 if(currentTask.created_at > maxTask.created_at){
+                    console.log("ayhaga")
                     maskTask = currentTask
                     ind = j
                 }
             }
-            var temp = Tasks[i]
-            Tasks[i] = maxTask
-            Tasks[ind] = temp
+            var temp = Cases[i]
+            Cases[i] = maxTask
+            Cases[ind] = temp
         }
-        return Tasks
+        return Cases
     }
 
    /*createReviewer : async (req) => {

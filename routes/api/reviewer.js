@@ -3,6 +3,7 @@ const Joi = require('joi');
 //const uuid = require('uuid');
 const router = express.Router();
 const functions = require('../../fn')
+const Case = require('../../models/Case')
 
 const Reviewer = require('../../models/Reviewer');
 const validator = require('../../validations/reviewerValidations')
@@ -21,7 +22,7 @@ router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
     try{
         const tasks = await functions.sortTaskById()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -32,7 +33,7 @@ router.get('/sortTaskByID', async (req,res) => {
 router.get('/sortTaskByCreationDate', async (req,res) => {
     try{
         const tasks = await functions.sortTaskByCreationDate()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -42,7 +43,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
 
 //search using /api/reviewer/getCases/
 router.get('/getCases', async (req, res)=>{
-    res.redirect('../../cases/')
+    res.redirect('./../cases/')
 })
 
 router.get('/getCases/:reviewer', async (req, res)=>{
@@ -63,7 +64,7 @@ router.get('/:id', async (req,res) => {
 router.post('/', async (req,res) => {
     try{
         const isValidated = validator.createValidation(req.body)
-        if(isValidated.error) return res.status(404).send({error: isValidated.error.details[0].message})
+        if(isValidated.error) return res.status(400).send({error: isValidated.error.details[0].message})
         const newReviewer = await Reviewer.create(req.body)
         res.json({msg: 'Reviewer created succcessfully', data: newReviewer})
     }
@@ -177,6 +178,9 @@ router.put('/assigncasestomyselfthereviewer/:id/', async (req, res) => {
       const caseElement = await Case.findById(caseId)
       if (!caseElement) {
         res.status(404).send({ error: 'We can not find what you are looking for' })
+      }
+      if (caseElement.reviewer !== '-') {
+        res.status(400).send({ error: 'case is already taken' })
       }
       const isValidated = validator.assigncasesreviewerValidation(req.body)
       if (isValidated.error) {

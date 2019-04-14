@@ -7,7 +7,7 @@ const router = express.Router()
 const Admin = require('../../models/admin')
 const validator = require('../../validations/adminValidations')
 const Case = require('../../models/Case')
-const Task = require('../../models/Task')
+// const Task = require('../../models/Task')
 /* const EntityEmployees = [
   new EntityEmployee('Amr', 'Ahmed', 'ElNahas', new Date(1998, 6, 7), 'male', 'Egyptian', 'Passport', 6969696969, 'lawyer', 8675309, 213432532, 'amrtea.edu@gmail.com', 'Cairo'),
   new EntityEmployee('Marven', 'Waitforit', 'Eriksen', new Date(2012, 5, 14), 'male', 'American', 'Passport', 73621823, 'Reviewer', 50005000, 74283446, 'MarvinEriksen@gmail.com', 'US'),
@@ -21,7 +21,6 @@ router.get('/', async (req, res) => {
     res.status(400).send(err)
   })
 })
-
 
 /* router.post('/', (req, res) => {
   const firstName = req.body.firstName
@@ -97,18 +96,14 @@ router.post('/', async (req, res) => {
   }
 }) */
 
-
-router.get('/getCompanys', async (req, res)=>{
-  res.redirect('../../company/')
+router.get('/getCompanys', async (req, res) => {
+  res.redirect('./../company/')
 })
-
-
 
 //  search using /api/admin/getCases/
 router.get('/getCases', async (req, res) => {
-  res.redirect('../../cases/')
+  res.redirect('./../cases/')
 })
-
 
 router.get('/:id', async (req, res) => {
   try {
@@ -269,7 +264,7 @@ router.delete('/:id', async (req, res) => {
   EntityEmployees.splice(EntityEmployeeIndex, 1)
   return res.send('Deleted!')
 }) */
-/*router.put('/assigncaseslawyer/:id/', async (req, res) => {
+/* router.put('/assigncaseslawyer/:id/', async (req, res) => {
   try {
     const caseId = req.params.id
     const caseElement = await Case.findById(caseId)
@@ -319,7 +314,7 @@ router.put('/assigntasks/:id/', async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: 'Something went wrong' })
   }
-})*/
+}) */
 router.post('/createlawyer', async (req, res) => {
   res.redirect(307, './../Lawyer')
 })

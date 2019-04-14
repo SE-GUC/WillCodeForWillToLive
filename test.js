@@ -1,6 +1,6 @@
 const dotenv = require('dotenv')
 dotenv.config()
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 3001
 const mongoose = require('mongoose')
 const db = process.env.mongoURI
 const AdminsTest = require('./tests/admin')
@@ -10,7 +10,6 @@ const lawyerTest = require('./tests/lawyer')
 const TasksTest = require("./tests/task")
 const externalEntityTest = require('./tests/externalEntity')
 const investorTest = require('./tests/investor')
-const FormTest = require('./tests/form')
 const CompanyTest = require('./tests/Company')
 
 mongoose.connect(db, {useNewUrlParser: true}).then(() => console.log('Connected to Database')).catch(err => console.log(err))
@@ -22,7 +21,6 @@ const lawyer = new lawyerTest(port,'lawyer')
 const investor = new investorTest(port,'investor')
 const externalEntity = new externalEntityTest(port,'externalEntitys')
 const form = new FormTest(port, 'form')
-const Company = new CompanyTest(port,'company')
 
 Promise.all([admins.runIndependently()]).then(result => {})
 Promise.all([cases.runIndependently()]).then(result => {})
@@ -31,5 +29,4 @@ Promise.all([reviewer.runIndependently()]).then(result => {})
 Promise.all([lawyer.runIndependently()]).then(result => {})
 Promise.all([investor.runIndependently()]).then(result => {})
 Promise.all([externalEntity.runIndependently()]).then(result => {})
-Promise.all([form.runIndependently()]).then(result => {})
 Promise.all([Company.runIndependently()]).then(result => {})

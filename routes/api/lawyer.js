@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const validator = require('../../validations/lawyerValidation');
 const functions = require('../../fn');
+const Case = require('../../models/Case')
 
 // Models
 const Lawyer = require('../../models/lawyer');
@@ -18,7 +19,7 @@ router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
     try{
         const tasks = await functions.sortTaskById()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -29,7 +30,7 @@ router.get('/sortTaskByID', async (req,res) => {
 router.get('/sortTaskByCreationDate', async (req,res) => {
     try{
         const tasks = await functions.sortTaskByCreationDate()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -39,7 +40,7 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
 })
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
-    res.redirect('../../cases/')
+    res.redirect('./../cases/')
 })
 
 router.get('/getCases/:lawyer', async (req, res)=>{
@@ -116,7 +117,8 @@ router.post('/', async (req,res) => {
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
         const newLawyer = await Lawyer.create(req.body)
-        res.json({ data: newLawyer})
+        
+        res.json({msg: 'Lawyer created succcessfully', data: newLawyer})
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
@@ -147,6 +149,9 @@ router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
     const caseElement = await Case.findById(caseId)
     if (!caseElement) {
       res.status(404).send({ error: 'We can not find what you are looking for' })
+    }
+    if (caseElement.lawyer !== '-') {
+      res.status(400).send({ error: 'case is already taken' })
     }
     const isValidated = validator.assigncaseslawyerValidation(req.body)
     if (isValidated.error) {

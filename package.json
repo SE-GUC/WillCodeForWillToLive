@@ -6,7 +6,8 @@
   "scripts": {
     "test": "concurrently \"node index.js\" \"jest --detectOpenHandles test.js\"",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "both": "concurrently \"npm run dev\" \"cd client && npm start\""
   },
   "nodemonConfig": {
     "ignore": [
@@ -25,21 +26,41 @@
   },
   "homepage": "https://github.com/SE-GUC/willcodeforwilltolive#readme",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
     "concurrently": "^4.1.0",
+    "create-react-context": "^0.2.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "jest": "^24.5.0",
     "jest-cli": "^24.5.0",
     "joi": "^14.3.1",
+    "material-ui": "^0.20.2",
+    "minimatch": "^3.0.4",
+    "minimist": "0.0.8",
+    "minipass": "^2.2.4",
+    "mkdirp": "^0.5.1",
+    "make": "^0.8.1",
     "mocha": "^6.0.2",
     "mongoose": "^5.4.19",
     "mongoose-type-email": "^1.0.10",
     "node-fetch": "^2.3.0",
     "nodemon": "^1.18.10",
+    "pdf": "^0.1.0",
+    "pdfmake": "^0.1.54",
+    "react": "^16.8.6",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^2.1.8",
+    "reactstrap": "^8.0.0",
     "standard": "^12.0.1",
-    "uuid": "^3.3.2"
+    "typescript": "^3.4.3",
+    "uuid": "^3.3.2",
+    "yallist": "^3.0.2"
   },
   "directories": {
     "doc": "docs"
