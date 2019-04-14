@@ -7,7 +7,8 @@
 
   class lawyer extends Component {
       state={
-          cases :[]
+          cases :[],
+          username: ""
       }
       
       componentDidMount(){
@@ -22,6 +23,7 @@
            <React.Fragment>
            <LawyerDistribution cases = {this.state.cases}
            payFees = {this.payFees}
+           assigncase = {this.assigncase}
        />
            </React.Fragment>
         </div>
@@ -44,7 +46,22 @@
               return cas
             })
           })
-       } 
+       }
+       
+       assigncase = (id) =>{
+        this.setState({
+          cases: this.state.cases.map(cas => {
+            if(cas._id === id){
+              let URL = `http://localhost:3002/api/cases/${id}`
+              axios.put(URL,{
+                lawyer: this.state.username
+              })
+              cas.lawyer = this.state.username
+            }
+            return cas
+          })
+        })
+      }
   
   }
   

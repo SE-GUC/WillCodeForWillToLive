@@ -36,7 +36,8 @@ export class LawyerItem extends Component {
         <p>
             {lawyer}
             <ButtonGroup style = {btnStyle1}>
-            <Button style = {btnStyle2} onClick={this.props.payFees.bind(this, _id)}>Pay Fees</Button>
+            <Button style = {btnStyle2} onClick={this.props.payFees.bind(this, _id)}>Pay Fees</Button>{'  '}
+            <Button style = {btnStyle3} onClick={this.props.assigncase.bind(this, _id)}>Assign me this case</Button>{' '}
             </ButtonGroup>
         <Collapse isOpen={this.state.collapse}>
           <Card>
@@ -64,7 +65,7 @@ const btnStyle2 = {
 }
 const btnStyle3 = {
     float: 'right',
-    margin: '0px 80px'   
+    margin: '0px 40px'   
 }
 const textfieldstyle = {
   margin: '0px 60px',
