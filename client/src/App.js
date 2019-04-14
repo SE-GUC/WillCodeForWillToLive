@@ -16,6 +16,9 @@ import lawyerprofile from './components/profiles/lawyerprofile'
 import reviewerprofile from './components/profiles/reviewerprofile'
 import adminprofile from './components/profiles/adminprofile'
 import UnregisteredUser from './components/unregisteredUser'
+import AllForms from './components/form/AllForms'
+import RegisterAdmin from './components/pages/RegisterAdmin'
+import RegisterInvestor from './components/pages/RegisterInvestor'
 
 class App extends Component {
   render() {
@@ -45,7 +48,9 @@ class App extends Component {
             <Route path = "/reviewerassign" component = {reviewerassign} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
-
+            <Route path="/allForms" component={AllForms} /> 
+            <Route path="/registerAdmin" component = {RegisterAdmin}/>
+            <Route path="/signup" component = {RegisterInvestor} />
           </Switch>
         </Router>
       </div>
