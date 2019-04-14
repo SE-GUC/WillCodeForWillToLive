@@ -6,10 +6,11 @@ class investorTest extends AbstractTests {
     constructor (PORT, ROUTE) {
         super(PORT, ROUTE)
         this.sharedState = {
-            id: null, 
+            id: null,
             email: null,
             username: null,
             password: null,
+            ID: null,
             TypeOfId: null,
             name: null,
             nationality: null,
@@ -102,6 +103,7 @@ class investorTest extends AbstractTests {
             email: 'whatever@gsgduy.v',
             username: "hadilee",
             password: '3456udgus',
+            ID: 'asd12da2332',
             typeOfID: 'id',
             name: 'hadile',
             nationality: 'French',
@@ -129,6 +131,7 @@ class investorTest extends AbstractTests {
               this.sharedState.email = investorElement.email
               this.sharedState.username = investorElement.username
               this.sharedState.password = investorElement.password
+              this.sharedState.ID = investorElement.ID
               this.sharedState.typeOfID = investorElement.typeOfID
               this.sharedState.name = investorElement.name
               this.sharedState.nationality = investorElement.nationality
@@ -154,7 +157,8 @@ class investorTest extends AbstractTests {
             expect(jsonResponse.data.DOB).toEqual(this.sharedState.DOB)
             expect(jsonResponse.data.gender).toEqual(this.sharedState.gender)
             expect(jsonResponse.data.nationality).toEqual(this.sharedState.nationality)
-            expect(jsonResponse.data.typeOfID).toEqual( this.sharedState.typeOfID)
+            expect(jsonResponse.data.ID).toEqual(this.sharedState.ID)
+            expect(jsonResponse.data.typeOfID).toEqual(this.sharedState.typeOfID)
             expect(jsonResponse.data.mobileNumber).toEqual(this.sharedState.mobileNumber)
             expect(jsonResponse.data.faxNumber).toEqual(this.sharedState.faxNumber)
             expect(jsonResponse.data.email).toEqual(this.sharedState.email)
@@ -215,7 +219,7 @@ class investorTest extends AbstractTests {
     putRequestIndependently () {
         const requestBody = {
           gender: 'Female',
-          nationality: 'French',
+          nationality: 'French'
         }
 
         test(`Updating the data of that random investor,\t[=> PUT\t\t${this.base_url}/:id\t`, async () => {

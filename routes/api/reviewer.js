@@ -3,6 +3,7 @@ const Joi = require('joi');
 //const uuid = require('uuid');
 const router = express.Router();
 const functions = require('../../fn')
+const Case = require('../../models/Case')
 
 const Reviewer = require('../../models/Reviewer');
 const validator = require('../../validations/reviewerValidations')
@@ -42,12 +43,12 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
 
 //search using /api/reviewer/getCases/
 router.get('/getCases', async (req, res)=>{
-    res.redirect('../../cases/')
+    res.redirect('./../cases/')
 })
 
 router.get('/getCases/:reviewer', async (req, res)=>{
     const reviewer = req.params.reviewer
-    res.redirect('../../cases/reviewerCases/' + reviewer)
+    res.redirect('./../cases/reviewerCases/' + reviewer)
 })
 
 
@@ -177,6 +178,9 @@ router.put('/assigncasestomyselfthereviewer/:id/', async (req, res) => {
       const caseElement = await Case.findById(caseId)
       if (!caseElement) {
         res.status(404).send({ error: 'We can not find what you are looking for' })
+      }
+      if (caseElement.reviewer !== '-') {
+        res.status(400).send({ error: 'case is already taken' })
       }
       const isValidated = validator.assigncasesreviewerValidation(req.body)
       if (isValidated.error) {

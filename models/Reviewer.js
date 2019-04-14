@@ -48,6 +48,12 @@ const ReviewerSchema = new Schema({
     nationallity: {
         type: String,
         required: true
+    }, 
+
+    ID: {
+        type: String,
+        required: true,
+        unique: true
     },
 
     type_of_ID: {
