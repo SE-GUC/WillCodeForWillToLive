@@ -10,6 +10,7 @@ import RegisterReviewer from './components/pages/RegisterReviewer';
 import Companies from './components/Companies';
 import Cases from './components/Cases'
 import lawyer from './components/lawyer'
+import ReviewerSearch from './components/ReviewerSearch'
 
 
 class App extends Component {
@@ -74,6 +75,8 @@ reject = (id) => {
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} />
+            <Route path="/ReviewerSearch" component={ReviewerSearch} />
+
           </Switch>
         </Router>
       </div>
