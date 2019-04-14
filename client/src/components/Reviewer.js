@@ -41,7 +41,7 @@ class Reviewer extends Component {
        <Header />
          <React.Fragment>
            <ReviewerDistribution cases = {this.state.cases}
-            addreview  = {this.addreview}
+            addreview  = {this.addreview} 
             accept = {this.accept}
             reject = {this.reject} />
 
@@ -52,12 +52,12 @@ class Reviewer extends Component {
       </div>
 
       /*this.props.reviewers.map((reviewer) => (
-        <ReviewerItem
-        key = {reviewer.id}
-        reviewer = {reviewer}
-        markComplete = {this.props.markComplete}
+        <ReviewerItem 
+        key = {reviewer.id} 
+        reviewer = {reviewer} 
+        markComplete = {this.props.markComplete} 
         accept = {this.props.accept}
-        reject = {this.props.reject} />
+        reject = {this.props.reject} /> 
       )*/
       )
       }
@@ -77,7 +77,7 @@ class Reviewer extends Component {
       return cas
     })})
   }
-
+  
   reject = (id) => {
     this.setState({cases: this.state.cases.map(cas => {
       if(cas._id === id){
@@ -108,7 +108,7 @@ class Reviewer extends Component {
 }
 
 }
-
+  
 
 // Reviewer.propTypes = {
 //   cases: PropTypes.array.isRequired
