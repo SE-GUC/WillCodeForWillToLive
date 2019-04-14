@@ -20,6 +20,7 @@ import UnregisteredUser from './components/unregisteredUser'
 import AllForms from './components/form/AllForms'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
+import DisplayForm from '/components/form/DisplayForm'
 
 class App extends Component {
   render() {
@@ -46,6 +47,7 @@ class App extends Component {
             <Route path="/allForms" component={AllForms} /> 
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />
+			<Route path="/DisplayForm/:id" component={DisplayForm} />
           </Switch>
         </Router>
       </div>
