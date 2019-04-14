@@ -255,6 +255,7 @@ class RegisterAdmin extends React.Component {
       <AlertDialogAdminRegister  stateadmin={this.state}/>
      
       </div>
+      
       </div>
     );
   }

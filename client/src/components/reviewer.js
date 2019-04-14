@@ -8,7 +8,6 @@ import writeReview from './WriteReview'
 import axios from 'axios'
 import ReviewerDistribution from './ReviewerDistribution';
 
-
 //import styles from '../style.css'
 
 // const mongoose = require('mongoose')
@@ -37,12 +36,12 @@ class Reviewer extends Component {
   render() {
       console.log("hi3");
       return (
-      <div>
       <div className = "container">
+      <div >
        <Header />
          <React.Fragment>
            <ReviewerDistribution cases = {this.state.cases}
-            addreview  = {this.addreview}
+            addreview  = {this.addreview} 
             accept = {this.accept}
             reject = {this.reject} />
 
@@ -53,12 +52,12 @@ class Reviewer extends Component {
       </div>
 
       /*this.props.reviewers.map((reviewer) => (
-        <ReviewerItem
-        key = {reviewer.id}
-        reviewer = {reviewer}
-        markComplete = {this.props.markComplete}
+        <ReviewerItem 
+        key = {reviewer.id} 
+        reviewer = {reviewer} 
+        markComplete = {this.props.markComplete} 
         accept = {this.props.accept}
-        reject = {this.props.reject} />
+        reject = {this.props.reject} /> 
       )*/
       )
       }
@@ -71,22 +70,26 @@ class Reviewer extends Component {
         let URL = `http://localhost:3002/api/cases/${id}`
         console.log('URL: ' + URL);
         axios.put(URL, {
-          reviewed_by_reviewer: true
+          reviewed_by_reviewer: true,
+          assignee : "reviewed by reviewer"
         })
         cas.reviewed_by_reviewer = true
+        cas.assignee = "reviewed by reviewer"
       }
       return cas
     })})
   }
-
+  
   reject = (id) => {
     this.setState({cases: this.state.cases.map(cas => {
       if(cas._id === id){
         let URL = `http://localhost:3002/api/cases/${id}`
         axios.put(URL, {
-          reviewed_by_reviewer: false
+          reviewed_by_reviewer: false,
+          assignee: "lawyer"
         })
         cas.reviewed_by_reviewer = false
+        cas.assignee = "lawyer"
       }
       return cas
     })})
@@ -109,10 +112,7 @@ class Reviewer extends Component {
 }
 
 }
+  
 
-
-// Reviewer.propTypes = {
-//   cases: PropTypes.array.isRequired
-// }
 
 export default Reviewer;

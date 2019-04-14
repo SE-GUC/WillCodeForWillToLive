@@ -81,6 +81,10 @@ const caseSchema = new Schema({
     dueDate: {
         type: String,
         required: true
+    },
+    assignee: {
+        type: String,
+        required: false
     }
 })
 module.exports = Case = mongoose.model('Case',caseSchema)
