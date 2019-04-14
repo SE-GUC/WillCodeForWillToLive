@@ -72,7 +72,6 @@ reject = (id) => {
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
-
           </Switch>
         </Router>
       </div>
