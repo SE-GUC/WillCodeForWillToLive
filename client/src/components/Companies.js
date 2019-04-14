@@ -5,12 +5,12 @@ import nfetch from 'node-fetch'
 import axios from 'axios';
 class Companies extends Component {
     state={
-      username:"investor",
+      id:"5cb1c84c7a390e1a972f5a61",
         Companies:[]
     }
     
     componentDidMount(){
-     axios.get('http://localhost:3002/api/comapny/:'+this.state.username).then(res => Object.values(res)[0]).then(fuck => this.setState({Companies:fuck.data}))
+     axios.get('http://localhost:3002/api/investor/comapny/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({Companies:element.data}))
     }
   /*  onSubmit = (e) =>{
       e.preventDefault()

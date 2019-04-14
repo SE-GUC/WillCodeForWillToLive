@@ -9,7 +9,7 @@
           cases :[],
           username: ""
       }
-      
+
       componentDidMount(){
        axios.get('http://localhost:3002/api/cases').then(res => Object.values(res)[0]).then(element => this.setState({cases :element.data}))
        console.log('State: '+ this.state.cases)
@@ -49,7 +49,7 @@
             })
           })
        }
-       
+
        assigncase = (id) =>{
         this.setState({
           cases: this.state.cases.map(cas => {
@@ -111,6 +111,5 @@
 }
   
   }
-  
+
   export default lawyer;
-    

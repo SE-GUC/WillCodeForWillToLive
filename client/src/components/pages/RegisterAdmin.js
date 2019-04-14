@@ -62,7 +62,7 @@ class RegisterAdmin extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className = "container">
+      <div className="container">
         <div>
             <Header />
       <form  noValidate autoComplete="off">
@@ -79,6 +79,7 @@ class RegisterAdmin extends React.Component {
           variant="outlined"
         />
         <TextField
+        required
           id="emailAddress"
           placeholder = "Email"
           label="Email"
@@ -92,6 +93,7 @@ class RegisterAdmin extends React.Component {
           variant="outlined"
         />
         <TextField
+        required
           id="outlined-adornment-password"
           className={classes.textField}
           variant="outlined"
@@ -113,7 +115,7 @@ class RegisterAdmin extends React.Component {
             ),
           }}
         />
-        <br/>
+          <br/>
         <TextField
           required
           id="firstName"
@@ -127,7 +129,9 @@ class RegisterAdmin extends React.Component {
           variant="outlined"
         />
         
+      
         <TextField
+        required
           id="middleName"
           name="middleName"
           label="Middle Name"
@@ -150,7 +154,6 @@ class RegisterAdmin extends React.Component {
           margin="normal"
           variant="outlined"
         />
-        <br/>
         <TextField
           required
           id="DOB"
@@ -187,6 +190,8 @@ class RegisterAdmin extends React.Component {
             </option>
           ))}
         </TextField>
+        
+        <br/>
         <TextField
           required
           id="nationality"
@@ -199,7 +204,7 @@ class RegisterAdmin extends React.Component {
           margin="normal"
           variant="outlined"
         />
-        <br/>
+       
         <TextField
           required
           id="mobileNumber"
@@ -217,6 +222,7 @@ class RegisterAdmin extends React.Component {
           variant="outlined"
         />
         <TextField
+        required
           id="faxNumber"
           name = "faxNumber"
           label="Fax Number"
@@ -233,6 +239,7 @@ class RegisterAdmin extends React.Component {
         />
         
         <TextField
+        required
           id="address"
           name="address"
           label="Address"
@@ -244,8 +251,11 @@ class RegisterAdmin extends React.Component {
           variant="outlined"
         />
       </form>
-      <AlertDialogAdminRegister styles={{marginLeft:100}} stateadmin={this.state}/>
+      <br/>
+      <AlertDialogAdminRegister  stateadmin={this.state}/>
+     
       </div>
+      
       </div>
     );
   }
