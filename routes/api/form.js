@@ -30,7 +30,8 @@ router.post('/', async (req, res) => {
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {
-      const data = await Model.create(req.body)
+      const modelData = [Objet.keys(req.body).map(key => ({name: key, value: req.body[key]}))]
+      const data = await Model.create(modelData)
       createNewCase(req.body)
       res.json(data)
     }
@@ -68,7 +69,8 @@ router.put('/:id', async (req, res) => {
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {
-      const data = await Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
+      const modelData = [Objet.keys(req.body).map(key => ({name: key, value: req.body[key]}))]
+      const data = await Model.findByIdAndUpdate(req.params.id, modelData, {new: true})
       if(!data) {
         res.status(404).json({error: 'Page not found.'})
       } else {
