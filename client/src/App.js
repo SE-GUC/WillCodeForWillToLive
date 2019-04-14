@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import lawyerCases from './components/lawyerCases'
 import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
-import Reviewer from './components/Reviewer';
+import Reviewer from './components/reviewer';
 import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
@@ -22,8 +22,9 @@ import UnregisteredUser from './components/unregisteredUser'
 import AllForms from './components/form/AllForms'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
+import lawyerSearch from './components/lawyerSearch'
+import ReviewerSearch from './components/ReviewerSearch'
 import DisplayForm from './components/form/DisplayForm'
-
 
 class App extends Component {
   render() {
@@ -50,9 +51,11 @@ class App extends Component {
             <Route path="/lawyerCases" component={lawyerCases} /> 
             <Route path="/reviewerCases" component={reviewerCases}/>
             <Route path="/formTemplate" component={FormTemplate} />
-            <Route path="/allForms" component={AllForms} /> 
+            <Route path="/allForms" component={AllForms} />
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />
+            <Route path="/LawyerSearch" component = {lawyerSearch} />
+            <Route path="/ReviewerSearch" component={ReviewerSearch} />
 			<Route path="/DisplayForm/:id" component={DisplayForm} />
           </Switch>
         </Router>
