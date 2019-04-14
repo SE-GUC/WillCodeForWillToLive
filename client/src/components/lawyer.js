@@ -16,13 +16,16 @@
       }
       render() {
         return (
-        <div>
         <div className = "container">
+        <div>
          <Header />
            <React.Fragment>
            <LawyerDistribution cases = {this.state.cases}
            payFees = {this.payFees}
            assigncase = {this.assigncase}
+           accept = {this.accept}
+           reject = {this.reject}
+           addreview = {this.addreview}
        />
            </React.Fragment>
         </div>
@@ -61,6 +64,51 @@
           })
         })
       }
+      accept = (id) => {
+        console.log('Inside super accept ' + id)
+        this.setState({cases: this.state.cases.map( cas => {
+          console.log('Inside map')
+          if(cas._id === id){
+            let URL = `http://localhost:3002/api/cases/${id}`
+            console.log('URL: ' + URL);
+            axios.put(URL, {
+              reviewed_by_lawyer: true,
+              assignee: "reviewer"
+            })
+            cas.reviewed_by_lawyer = true
+            cas.assignee = "reviewer"
+          }
+          return cas
+        })})
+      }
+      
+      reject = (id) => {
+        this.setState({cases: this.state.cases.map(cas => {
+          if(cas._id === id){
+            let URL = `http://localhost:3002/api/cases/${id}`
+            axios.put(URL, {
+              reviewed_by_lawyer: false,
+              assignee: "investor"
+            })
+            cas.reviewed_by_lawyer = false
+            cas.assignee = "reviewer"
+          }
+          return cas
+        })})
+      }
+      addreview = (_id, review_comment_by_lawyer) => {
+        console.log(review_comment_by_lawyer)
+        this.setState({cases: this.state.cases.map( cas => {
+            if(cas._id === _id){
+              let URL = `http://localhost:3002/api/cases/${_id}`
+              axios.put(URL, {
+                review_comment_by_lawyer:  review_comment_by_lawyer
+              })
+              cas.review_comment_by_lawyer =  review_comment_by_lawyer
+            }
+            return cas
+          })})
+}
   
   }
   

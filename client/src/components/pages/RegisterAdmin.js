@@ -62,6 +62,7 @@ class RegisterAdmin extends React.Component {
     const { classes } = this.props;
 
     return (
+      <div className = "container">
         <div>
             <Header />
       <form  noValidate autoComplete="off">
@@ -244,6 +245,7 @@ class RegisterAdmin extends React.Component {
         />
       </form>
       <AlertDialogAdminRegister styles={{marginLeft:100}} stateadmin={this.state}/>
+      </div>
       </div>
     );
   }

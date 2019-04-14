@@ -23,7 +23,7 @@ export class Revieweritem extends Component {
     getStyle = () => {
         return {
             background: '#f4f4f4',
-            padding: '10px',
+            padding: '15px',
             borderBottom: '1px #ccc dotted',
             textDecoration: this.props.caseVar.reviewed_by_reviewer ? 'none' : 'line-through'
         }
@@ -51,7 +51,25 @@ export class Revieweritem extends Component {
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
-            the case info
+              <h3>Case Information</h3> 
+            <div>Status : {this.props.caseVar.status}</div>
+            <div>Investor : {this.props.caseVar.investor}</div>
+            <div>Reviewer : {this.props.caseVar.reviewer}</div>
+            <div>Lawyer : {this.props.caseVar.lawyer}</div>
+            <div>Company Name : {this.props.caseVar.company_name}</div>
+            <div>Was it reviewed by lawyer? : {this.props.caseVar.reviewed_by_lawyer}</div>
+            <div>Was it reviewed by reviewer? : {this.props.caseVar.reviewed_by_reviewer}</div> 
+            <div>Reviewer's Comment : {this.props.caseVar.review_comment_by_reviewer}</div>
+            <div>Lawyer's Comment : {this.props.caseVar.review_comment_by_lawyer}</div>
+            <div>Fees : {this.props.caseVar.fees}</div>
+            <div>Amount Paid : {this.props.caseVar.paid}</div>
+            <div>Assignee : {this.props.caseVar.assignee}</div>
+            <div>Created at : {this.props.caseVar.created_at}</div>
+            <div>isDone : {this.props.caseVar.isDone}</div>
+            <div>DueDate : {this.props.caseVar.dueDate}</div>
+            <div>Description : {this.props.caseVar.description}</div>
+            <div>Priority : {this.props.caseVar.priority}</div>
+            
             </CardBody>
           </Card>
         </Collapse>
@@ -77,8 +95,7 @@ const btnStyle3 = {
     margin: '0px 80px'   
 }
 const textfieldstyle = {
-  margin: '0px 60px',
-  float: 'left'  
+  margin: '0px 60px',  
 }
 const floatingleft = {
   float: 'left'

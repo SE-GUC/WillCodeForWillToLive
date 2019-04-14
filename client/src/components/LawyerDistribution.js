@@ -8,7 +8,8 @@ class LawyerDistribution extends Component {
     
     render(){
         return this.props.cases.map((caseVar) => (
-            <LawyerItem key={caseVar.id} caseVar = {caseVar} payFees = {this.props.payFees} assigncase = {this.props.assigncase}/>
+            <LawyerItem key={caseVar.id} caseVar = {caseVar} payFees = {this.props.payFees} assigncase = {this.props.assigncase}
+            accept = {this.props.accept} reject = {this.props.reject} addreview={this.props.addreview}/>
         ));
     }
 }
