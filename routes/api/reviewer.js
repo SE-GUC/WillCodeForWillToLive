@@ -22,7 +22,7 @@ router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
     try{
         const tasks = await functions.sortTaskById()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -33,7 +33,7 @@ router.get('/sortTaskByID', async (req,res) => {
 router.get('/sortTaskByCreationDate', async (req,res) => {
     try{
         const tasks = await functions.sortTaskByCreationDate()
-        console.log({data: tasks})
+        
         res.json({data: tasks})
     }
     catch(error){
@@ -48,7 +48,7 @@ router.get('/getCases', async (req, res)=>{
 
 router.get('/getCases/:reviewer', async (req, res)=>{
     const reviewer = req.params.reviewer
-    res.redirect('./../cases/reviewerCases/' + reviewer)
+    res.redirect('../../cases/reviewerCases/' + reviewer)
 })
 
 
