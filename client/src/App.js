@@ -10,6 +10,7 @@ import RegisterReviewer from './components/pages/RegisterReviewer';
 import Companies from './components/Companies';
 import Cases from './components/Cases'
 import lawyer from './components/lawyer'
+import FormTemplate from './components/formTemplate/FormTemplate'
 import reviewerassign from './components/reviewerassign'
 import investorprofile from './components/profiles/investorprofile'
 import lawyerprofile from './components/profiles/lawyerprofile'
@@ -32,13 +33,6 @@ class App extends Component {
           <Route path="/reviewerprofile" component={reviewerprofile} />
           <Route path="/adminprofile" component={adminprofile} />
           <Route path="/unregisteredUser" component={UnregisteredUser} />
-
-
-
-
-
-
-
             <Route path="/Companies" component={Companies} />
             <Route path="/Form" component={Form} />
             <Route path="/registerLawyer" component={RegisterLawyer} /> -->
@@ -48,6 +42,7 @@ class App extends Component {
             <Route path = "/reviewerassign" component = {reviewerassign} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
+            <Route path="/formTemplate" component={FormTemplate} />
             <Route path="/allForms" component={AllForms} /> 
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />

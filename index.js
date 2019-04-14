@@ -11,6 +11,7 @@ const reviewers = require('./routes/api/reviewer')
 const tasks = require('./routes/api/task')
 const investors = require('./routes/api/investor')
 const form = require('./routes/api/form')
+const formTemplate = require('./routes/api/formTemplate')
 const externalEntitys = require('./routes/api/externalEntitys')
 const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
@@ -45,6 +46,7 @@ app.use('/api/externalEntitys', externalEntitys)
 app.use('/api/form', form)
 app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)
+app.use('/api/formTemplate', formTemplate)
 
 // app.use(function(req,res,next){
 //   res.header("Access-Control-Allow-Origin","*");
