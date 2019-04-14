@@ -11,12 +11,10 @@ const caseSchema = new Schema({
         required: true
     },
     reviewer:{
-        type: String,
-        required: true
+        type: String
     },
     lawyer:{
-        type: String,
-        required: true
+        type: String
     },
     company_name:{
         type: String,

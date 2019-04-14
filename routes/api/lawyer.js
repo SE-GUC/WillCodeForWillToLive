@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const validator = require('../../validations/lawyerValidation');
 const functions = require('../../fn');
+const Case = require('../../models/Case')
 
 // Models
 const Lawyer = require('../../models/lawyer');
@@ -39,12 +40,12 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
 })
 //search using /api/lawyer/getCases/
 router.get('/getCases', async (req, res)=>{
-    res.redirect('../../cases/')
+    res.redirect('./../cases/')
 })
 
 router.get('/getCases/:lawyer', async (req, res)=>{
     const lawyer = req.params.lawyer
-    res.redirect('../../cases/lawyerCases/' + lawyer)
+    res.redirect('./../cases/lawyerCases/' + lawyer)
 })
 
 router.get('/:id', async (req, res)=>{
@@ -148,6 +149,9 @@ router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
     const caseElement = await Case.findById(caseId)
     if (!caseElement) {
       res.status(404).send({ error: 'We can not find what you are looking for' })
+    }
+    if (caseElement.lawyer !== '-') {
+      res.status(400).send({ error: 'case is already taken' })
     }
     const isValidated = validator.assigncaseslawyerValidation(req.body)
     if (isValidated.error) {

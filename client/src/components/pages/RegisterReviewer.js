@@ -15,7 +15,8 @@ class RegisterReviewer extends Component {
       mobile:'',
       fax: '',
       email: '',
-      address: ''
+      address: '',
+      ID:''
     }
     
   onSubmit = (e) =>{
@@ -31,7 +32,8 @@ class RegisterReviewer extends Component {
       email: this.state.email,
       username: this.state.username,
       password: this.state.password,
-      address: this.state.address
+      address: this.state.address,
+      ID: this.state.ID
     }
     const response =nfetch(`http://localhost:3002/api/admin/createreviewer`,{
           method: 'POST',
@@ -55,6 +57,7 @@ class RegisterReviewer extends Component {
             <p>Date of Birth </p><InputField nameofInput = {"dob"} typeofInput = {"date"} placeholderofInput={"Date"} changeState = {this.changeState}/>
             <p>Gender </p><InputField nameofInput = {"gender"} typeofInput = {"text"} placeholderofInput={"Gender"} changeState = {this.changeState}/>
             <p>Nationality </p><InputField nameofInput = {"nationality"} typeofInput = {"text"} placeholderofInput={"Nationality"} changeState = {this.changeState}/>
+            <p>ID </p><InputField nameofInput = {"ID"} typeofInput = {"text"} placeholderofInput={"ID"} changeState = {this.changeState}/>
             <p>Type of ID </p><InputField nameofInput = {"typeofid"} typeofInput = {"text"} placeholderofInput={"Type of ID"} changeState = {this.changeState}/>
             <p>Mobile Number </p><InputField nameofInput = {"mobile"} typeofInput = {"text"} placeholderofInput={"Mobile Number"} changeState = {this.changeState}/>
             <p>Fax Number </p><InputField nameofInput = {"fax"} typeofInput = {"text"} placeholderofInput={"Fax Number"} changeState = {this.changeState}/>

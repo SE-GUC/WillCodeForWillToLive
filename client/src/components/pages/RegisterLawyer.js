@@ -11,6 +11,7 @@ class RegisterLawyer extends Component {
     dob: '',
     gender: '',
     nationality: '',
+    ID:'',
     typeofid: '',
     mobile:'',
     fax: '',
@@ -29,7 +30,8 @@ onSubmit = (e) =>{
     fax_number: this.state.fax,
     email_address: this.state.email,
     username: this.state.username,
-    password: this.state.password
+    password: this.state.password,
+    ID: this.state.ID
   }
   const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
         method: 'POST',
@@ -53,6 +55,7 @@ onSubmit = (e) =>{
           <p>Date of Birth </p><InputField nameofInput = {"dob"} typeofInput = {"date"} placeholderofInput={"Date"} changeState = {this.changeState}/>
           <p>Gender </p><InputField nameofInput = {"gender"} typeofInput = {"text"} placeholderofInput={"Gender"} changeState = {this.changeState}/>
           <p>Nationality </p><InputField nameofInput = {"nationality"} typeofInput = {"text"} placeholderofInput={"Nationality"} changeState = {this.changeState}/>
+          <p>OD </p><InputField nameofInput = {"ID"} typeofInput = {"text"} placeholderofInput={"ID"} changeState = {this.changeState}/>
           <p>Type of ID </p><InputField nameofInput = {"typeofid"} typeofInput = {"text"} placeholderofInput={"Type of ID"} changeState = {this.changeState}/>
           <p>Mobile Number </p><InputField nameofInput = {"mobile"} typeofInput = {"text"} placeholderofInput={"Mobile Number"} changeState = {this.changeState}/>
           <p>Fax Number </p><InputField nameofInput = {"fax"} typeofInput = {"text"} placeholderofInput={"Fax Number"} changeState = {this.changeState}/>
