@@ -3,23 +3,9 @@ const functions = {
     sortTaskById : async () => {
         
         const Task = require('./models/Case')
-        var Tasks = await Task.find()
-        for(var i = Tasks.length - 1; i >= 0; i--){
-            var maxTask = Tasks[0]
-            var ind = 0
-            console.log(Tasks[i]);
-            for(var j = 1; j<=i ; j++){
-                var currentTask = Tasks[j] 
-                if(currentTask._id < maxTask._id){
-                    maskTask = currentTask
-                    ind = j
-                }
-            }
-            var temp = Tasks[i];
-            Tasks[i] = maxTask
-            Tasks[ind] = temp
-        }
-        return Tasks
+        var Cases = await Task.find()
+        Cases.sort((a,b) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
+        return Cases
     },
 
     sortTaskByCreationDate : async () => {

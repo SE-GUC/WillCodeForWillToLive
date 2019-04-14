@@ -48,7 +48,7 @@ router.get('/getCases', async (req, res)=>{
 
 router.get('/getCases/:reviewer', async (req, res)=>{
     const reviewer = req.params.reviewer
-    res.redirect('./../cases/reviewerCases/' + reviewer)
+    res.redirect('../../cases/reviewerCases/' + reviewer)
 })
 
 

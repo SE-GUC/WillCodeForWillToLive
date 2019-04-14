@@ -6,21 +6,11 @@ import React, { Component } from 'react';
   class reviewerCases extends Component {
       state={
           reviewerCases:[],
-          sortedByID: [],
-          sortedByCreationDate: [],
-          username: "revv"
+          username: "hadilee"
       }
 
       handleClick1 = () => {
        
-        // for(var i = 0; i < this.state.sortedByID.length; i++){
-        
-        //   if(this.state.sortedByID[i].reviewer !== this.state.username){
-        //     this.state.sortedByID.splice(i, 1);
-        //     i--
-           
-        //   }
-        // }
          
         this.state.reviewerCases.sort((a,b) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
 
@@ -29,26 +19,17 @@ import React, { Component } from 'react';
       }
       handleClick2 = () => {
 
-        // for(var i = 0; i < this.state.sortedByCreationDate.length; i++){
-        
-        //   if(this.state.sortedByCreationDate[i].reviewer !== this.state.username){
-        //     this.state.sortedByCreationDate.splice(i, 1);
-        //     i--
-           
-        //   }
-        // }
-        this.state.reviewerCases.sort((b,a) => (a._id > b._id) ? 1 : ((b._id > a._id) ? -1 : 0)); 
+        this.state.reviewerCases.sort((a,b) => (a.created_at > b.created_at) ? 1 : ((b.created_at > a.created_at) ? -1 : 0)); 
 
         this.setState({ reviewerCases: this.state.reviewerCases })
-        // this.setState({ reviewerCases: this.state.sortedByCreationDate })
+       
        
     }
 
 
       componentDidMount(){
        axios.get('http://localhost:3002/api/reviewer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({reviewerCases:element.data}))
-       //axios.get('http://localhost:3002/api/reviewer/sortTaskByID/').then(res => Object.values(res)[0]).then(element => this.setState({sortedByID:element.data}))
-       //axios.get('http://localhost:3002/api/reviewer/sortTaskByCreationDate/' ).then(res =>Object.values(res)[0]).then(element=> this.setState({sortedByCreationDate:element.data}))
+       
       }
 
     render() {
@@ -68,7 +49,26 @@ import React, { Component } from 'react';
               return(
                 
                 <tr>
-                <td>{<h5><div class='test'>CaseID: {reviewerCases._id}</div><div> Case Status: {reviewerCases.status}</div><div> Investor: {reviewerCases.investor}</div><div> Reviewer:  {reviewerCases.reviewer}</div><div> Lawyer: {reviewerCases.lawyer}</div><div>Company Name: {reviewerCases.company_name}</div><div> reviewed by lawyer:  {reviewerCases.reviewed_by_lawyer}</div><div> Lawyer Comment: {reviewerCases.review_comment_by_lawyer}</div><div> lawyer comment date: {reviewerCases.review_date_by_lawyer}</div><div> reviewed by reviewer: {reviewerCases.reviewed_by_reviewer}</div><div> reviewer comment:  {reviewerCases.review_comment_by_reviewer}</div><div>reviewer comment date:  {reviewerCases.review_date_by_reviewer}</div></h5>}</td>
+                <td>{<h5><div>CaseID: {reviewerCases._id}</div>
+                <div> Case Status: {reviewerCases.status}</div>
+                <div> Investor: {reviewerCases.investor}</div>
+                <div> Reviewer:  {reviewerCases.reviewer}</div>
+                <div> Lawyer: {reviewerCases.lawyer}</div>
+                <div>Company Name: {reviewerCases.company_name}</div>
+                <div> reviewed by lawyer:  {reviewerCases.reviewed_by_lawyer}</div>
+                <div> Lawyer Comment: {reviewerCases.review_comment_by_lawyer}</div>
+                <div> lawyer comment date: {reviewerCases.review_date_by_lawyer}</div>
+                <div> reviewed by reviewer: {reviewerCases.reviewed_by_reviewer}</div>
+                <div> reviewer comment:  {reviewerCases.review_comment_by_reviewer}</div>
+                <div>reviewer comment date:  {reviewerCases.review_date_by_reviewer}</div>
+                <div> fees: {reviewerCases.fees}</div><div> paid:  {reviewerCases.paid}</div>
+                <div> currency: {reviewerCases.currency}</div>
+                <div>formID: {reviewerCases.formID}</div>
+                <div> priority:  {reviewerCases.priority}</div>
+                <div> description: {reviewerCases.description}</div>
+                <div> created_at: {reviewerCases.created_at}</div>
+                <div> isDone: {reviewerCases.isDone}</div>
+                <div> dueDate:  {reviewerCases.dueDate}</div></h5>}</td>
                
                 </tr>
                  
@@ -78,10 +78,10 @@ import React, { Component } from 'react';
           }
            </tbody>
               <button onClick={this.handleClick1}>
-               sortByID
+               sort By ID
                 </button>
                 <button onClick={this.handleClick2}>
-               sortByCreationDate
+               sort By Creation Date
                 </button>
             
          

@@ -45,7 +45,7 @@ router.get('/getCases', async (req, res)=>{
 
 router.get('/getCases/:lawyer', async (req, res)=>{
     const lawyer = req.params.lawyer
-    res.redirect('./../cases/lawyerCases/' + lawyer)
+    res.redirect('../../cases/lawyerCases/' + lawyer)
 })
 
 router.get('/:id', async (req, res)=>{
