@@ -2,6 +2,8 @@ const Model = require('../../models/Form')
 const validator = require('../../validations/form')
 const router = require('express').Router()
 const nfetch = require('node-fetch')
+const PdfPrinter = require('pdfmake')
+const fs = require('fs')
 
 const createNewCase = async (body) => {
   try{
@@ -64,6 +66,8 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({error: err})
   }
 })
+
+
 
 router.get('/allForms/:id', async (req, res) => {
   try{
@@ -170,5 +174,45 @@ router.put('/updateFees/:id', async (req, res) => {
     res.status(500).json({error: error})
   }
 })
+
+// PDF STUFF
+const fonts = {
+  Roboto: {
+    normal: 'fonts/Roboto-regular.ttf',
+    bold: 'fonts/Roboto-Medium.ttf',
+    italics: 'fonts/Roboto-Italic.ttf',
+    bolditalics: 'fonts/Roboto-MediumItalic.ttf'
+  }
+}
+
+router.get('/createPdf/:id', async(req, res) => {
+  try{
+    const printer = new PdfPrinter(fonts)
+    const data = await Model.findById(req.params.id)
+    if(!data) {
+      res.status(404).json({error: 'Form not found'})
+    } else {
+      const fields = data.fields
+      const docDefinition = {
+        content: fields.map(field => ({
+          text: [
+            {text: field.name, fontSize: 20, bold: true},
+            {text: ` ${field.value}`, fontSize: 15, bold: false},
+          ]
+        }))
+      }
+      const pdfDoc = printer.createPdfKitDocument(docDefinition)
+      pdfDoc.end()
+      pdfDoc.pipe(fs.createWriteStream('document.pdf'))
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Disposition', 'inline; filename="Document.pdf"')
+      pdfDoc.pipe(res)
+    }
+  } catch(error){
+    console.log(error)
+     res.status(500).send({error: error})
+  }
+})
+
 
 module.exports = router
