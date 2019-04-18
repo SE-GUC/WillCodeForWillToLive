@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, withStyles, Paper, Menu, MenuItem } from '@material-ui/core'
 import axios from 'axios'
+import Dropdown from './Dropdown'
 
 const styles = theme =>  ({
   root: {
@@ -17,7 +18,6 @@ const styles = theme =>  ({
   textField: {
       margin: theme.spacing.unit*0.5,
       width: 200,
-      marginTop: '0.5vw',
   }
 })
 
@@ -60,9 +60,7 @@ function Form ({classes}) {
     setFormData(newFormData)
   }
 
-  const sendForm = _ => {
-    console.log(formData)
-    axios('/api/form', {
+  const sendForm = _ => axios('/api/form', {
       method: 'POST',
       data: formData,
       headers: {'Content-Type': 'application/json'}
@@ -74,7 +72,6 @@ function Form ({classes}) {
         alert('Form created!')
       }
     }).catch(e => console.log(e))
-  }
 
     return (
       <div>
@@ -124,8 +121,11 @@ function Form ({classes}) {
             </Menu>
           </div>
           <div id='form'>
-            {formFields.map(field =>
+            {formFields.map((field, i) =>
+            field.fieldType.toLowerCase() === 'dropdown'?
+            <Dropdown key={i.toString()} fieldName={field.nameEnglish} items={field.constraints.filter(e=>e.name==='item').map(e=>e.value)} handleInput={handleFieldInput} />:
             <TextField 
+              key={i.toString()}
               variant='outlined'
               className={classes.textField}
               type={field.fieldType.toLowerCase()}

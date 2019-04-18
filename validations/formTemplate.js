@@ -11,7 +11,7 @@ module.exports = {
             formNameArabic: joi.string().required(),
             formNameEnglish: joi.string().required(),
             fields: joi.array().items(joi.object({
-                fieldType: joi.string().allow(['string', 'number', 'date']).required(),
+                fieldType: joi.string().allow(['string', 'number', 'date', 'dropdown']).required(),
                 nameArabic: joi.string().required(),
                 nameEnglish: joi.string().required(),
                 required: joi.boolean().required(),
@@ -28,7 +28,7 @@ module.exports = {
             formNameArabic: joi.string(),
             formNameEnglish: joi.string(),
             fields: joi.array().items(joi.object({
-                type: joi.string().allow(['string', 'number', 'date']),
+                type: joi.string().allow(['string', 'number', 'date', 'dropdown']),
                 nameArabic: joi.string(),
                 nameEnglish: joi.string(),
                 required: joi.boolean(),
