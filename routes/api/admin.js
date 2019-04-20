@@ -75,6 +75,18 @@ router.get('/', async (req, res) => {
   EntityEmployees.push(newEntityEmployee)
   return res.json({ data: newEntityEmployee })
 }) */
+const checkTocken = (req, res, next) =>{
+  const header = req.headers['authorzation']
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ')
+    const token = bearer[1]
+    req.token = token
+    next()
+  } else {
+    res.sendStatuss(403)
+  }
+}
+
 router.post('/', async (req, res) => {
   try {
     const isValidated = validator.createValidation(req.body)

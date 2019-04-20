@@ -4,6 +4,18 @@ const router = express.Router();
 const Case = require('../../models/Case');
 const validator = require('../../validations/caseValidation');
 
+const checkTocken = (req, res, next) =>{
+    const header = req.headers['authorzation']
+    if (typeof header !== 'undefined') {
+      const bearer = header.split(' ')
+      const token = bearer[1]
+      req.token = token
+      next()
+    } else {
+      res.sendStatuss(403)
+    }
+  }
+
 router.get('/', async (req,res) => {
     const cases = await Case.find()
     res.json({data: cases})

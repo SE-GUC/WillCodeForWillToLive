@@ -16,7 +16,17 @@ router.get('/', async (req,res) => {
     res.json({data: reviewer})
 })
 
-
+const checkTocken = (req, res, next) =>{
+    const header = req.headers['authorzation']
+    if (typeof header !== 'undefined') {
+      const bearer = header.split(' ')
+      const token = bearer[1]
+      req.token = token
+      next()
+    } else {
+      res.sendStatuss(403)
+    }
+  }
 
 router.get('/sortTaskByID', async (req,res) => {
     console.log('Entered sortID')
