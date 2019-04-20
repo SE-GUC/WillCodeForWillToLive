@@ -57,8 +57,6 @@ class AllForms extends React.Component {
             investoremail = {forms.investorInfo.email}
             investoraddress = {forms.investorInfo.address}
             /></div>)
-           
-        
         })}
         </GridList>
       </div>

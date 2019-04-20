@@ -28,7 +28,7 @@ const createNewCase = async (body) => {
 
 router.post('/', async (req, res) => {
   try {
-    const valid = validator.validateCreate(req.body)
+    const valid = await validator.validateCreate(req.body)
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {
@@ -86,7 +86,7 @@ router.get('/allForms/:id', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const valid = validator.validateUpdate(req.body)
+    const valid = await validator.validateUpdate(req.body)
     if(valid.error) {
       res.status(400).json({error: valid.error})
     } else {

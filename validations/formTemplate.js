@@ -4,8 +4,11 @@ module.exports = {
     validateCreate: body => {
 
         // Making sure that there is a capital field in the form
-        if(!(body && body.fields && body.fields.find(field => field.nameEnglish === 'Capital'))){
+        if(!(body && body.fields && body.fields.find(field => field.nameEnglish.toLowerCase() === 'capital'))){
             return {error: 'Capital not found'}
+        }
+        if(body.fields.find(field => field.nameEnglish.toLowerCase() === 'capital').fieldType !== 'number') {
+            return {error: 'Capital type not a number'}
         }
         const schema = joi.object({
             formNameArabic: joi.string().required(),
@@ -24,6 +27,11 @@ module.exports = {
         return joi.validate(body, schema)
     },
     validateUpdate: body => {
+        if(body && body.fields && body.fields.find(field => field.nameEnglish.toLowerCase() === 'capital')){
+            if(body.fields.find(field => field.nameEnglish.toLowerCase() === 'capital').fieldType !== 'number'){
+                return {error: 'Capital type not a number'}
+            }
+        }
         const schema = joi.schema({
             formNameArabic: joi.string(),
             formNameEnglish: joi.string(),

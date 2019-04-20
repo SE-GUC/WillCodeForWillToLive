@@ -21,7 +21,7 @@ const styles = theme =>  ({
   }
 })
 
-function Form ({classes}) {
+function CreateForm ({classes}) {
   const [forms, setForms] = useState([])
   const [formData, setFormData] = useState({})
   const [lawDropdownState, setLawDropdownState] = useState(null)
@@ -139,4 +139,4 @@ function Form ({classes}) {
     )
 }
 
-export default withStyles(styles)(Form)
+export default withStyles(styles)(CreateForm)
