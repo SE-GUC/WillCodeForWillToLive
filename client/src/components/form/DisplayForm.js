@@ -12,6 +12,9 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit,
         marginTop: theme.spacing.unit,
     },
+    button: {
+        margin: theme.spacing.unit*0.5,
+    }
 })
 
 const DisplayForm = props => {
@@ -25,17 +28,25 @@ const DisplayForm = props => {
         .catch(error => alert(error))
     },[])
 
+    const deleteForm = _ => {
+        axios.delete(`/api/form/${id}`)
+        .then(_=> props.history.push('/'))
+        .catch(err => alert(err))
+    }
+
     return(
         <Paper className={classes.root}>
             {!form? undefined:
                 <div>
                     {form.map((element, index) => <div key={index}><span><b>{element.name}</b> {element.value} </span><br/></div>)}
                     <Link to={`/EditForm/${id}`} >
-                        <Button variant='contained' aria-label="Edit" className={classes.fab}>
+                        <Button variant='contained' aria-label='Edit' className={classes.button}>
                             Edit
                         </Button>
                     </Link>
-                    
+                    <Button variant='contained' aria-label='Delete' className={classes.button} onClick={deleteForm}>
+                        Delete
+                    </Button>
                 </div>
             }
         </Paper>

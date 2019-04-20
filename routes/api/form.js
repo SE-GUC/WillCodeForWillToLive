@@ -126,42 +126,36 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/calculateFees/:id',async (req,res) =>{
   try{
-      const SpcFormId = req.params.id
-      const SpcFormElement = await Model.findById(SpcFormId)
-      if(!SpcFormElement){
-          res.status(404).send({error: 'can not be Found'});
+    const form = await Model.findById(req.params.id)
+    if(!form) {
+      res.status(404).sendFile('Company not found')
+    }
+    const law = form.fields.find(({name}) => name.toLowerCase() === 'regulatinglaw').value
+    const capital = form.fields.find(({name}) => name.toLowerCase() === 'capital').value
+    if(law.toLowerCase() === 'law159'){
+      const gavi = 1/1000 * capital
+      if(gavi <100){
+          gavi = 100
       }
-      else{
-
-          var law = SpcFormElement.RegulatedLaw
-          var capital = SpcFormElement.Capital
-          if(law==="Law159"){
-              let gavi = 1/1000 * capital
-              if(gavi <100){
-                  gavi = 100
-              }
-              if(gavi>1000){
-                  gavi = 1000
-              }
-              let notary = 0.25/100 * capital
-              if(notary <10){
-                  notary = 10
-              }
-              if(notary>1000){
-                  notary = 1000
-              }
-              let Commercial = 56
-              let fees = Commercial + gavi + notary
-              res.json({data: fees})
-          }else{
-              let fees = 610
-              res.json({data: fees})
-          }
+      if(gavi>1000){
+          gavi = 1000
       }
-      const newForm = await new Model(res.body).save()
-      return res.json({data: newForm})
+      const notary = 0.25/100 * capital
+      if(notary <10){
+          notary = 10
+      }
+      if(notary>1000){
+          notary = 1000
+      }
+      const Commercial = 56
+      const fees = Commercial + gavi + notary
+      res.json({fees: fees})
+    }else{
+      const fees = 610
+      res.json({fees: fees})
+    }
   } catch (err) {
-      return res.status(404).json({error: err})
+      return res.status(404).send(error)
   }
 })
 
@@ -179,7 +173,7 @@ router.put('/updateFees/:id', async (req, res) => {
       }
     }
   } catch (error) {
-    res.status(500).json({error: error})
+    res.status(500).send(error)
   }
 })
 

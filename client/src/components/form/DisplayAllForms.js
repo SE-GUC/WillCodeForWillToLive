@@ -46,7 +46,6 @@ class DisplayForms extends Component {
                   </Typography>
                 </Paper>
               </Link>
-              {/* <span><b>{element.name}</b> {element.value} </span><br/> */}
             </div>
           </div>
         )}
