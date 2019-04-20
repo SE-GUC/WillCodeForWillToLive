@@ -55,7 +55,7 @@ router.get('/', async (_, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-  try {lc
+  try {
     const data = await Model.findById(req.params.id)
     if(!data){
       res.status(404).json({error: 'Page not found.'})
@@ -63,6 +63,7 @@ router.get('/:id', async (req, res) => {
       res.json(data.fields)
     }
   } catch(err) {
+    console.log(err)
     res.status(500).json({error: err})
   }
 })
@@ -72,13 +73,20 @@ router.get('/:id', async (req, res) => {
 router.get('/allForms/:id', async (req, res) => {
   try{
     const data = await Model.find({userId: req.params.id})
-    const getResult = data.map(form => form.fields)
-    res.json(getResult)
     if(!data) {
       res.status(404).json({error: 'No data found'})
-    } else {
-      res.json(data)
     }
+    const getResult = data.map(form => {
+      let nameArabic = form.fields.filter(({name}) => name.toLowerCase() === 'company name arabic')
+      nameArabic = nameArabic.length === 0? undefined:nameArabic[0]
+      let nameEnglish = form.fields.filter(({name}) => name.toLowerCase() === 'company name english')
+      nameEnglish = nameEnglish.length === 0? undefined:nameEnglish[0]
+      return {
+      _id: form._id,
+      nameArabic: nameArabic,
+      nameEnglish: nameEnglish
+    }})
+    res.json(getResult)
   }catch (error) {
     res.status(500).json({error: error})
   }

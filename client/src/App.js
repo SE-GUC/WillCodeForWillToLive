@@ -4,7 +4,6 @@ import lawyerCases from './components/lawyerCases'
 import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
 import Reviewer from './components/reviewer';
-import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
@@ -23,7 +22,10 @@ import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
 import lawyerSearch from './components/lawyerSearch'
 import ReviewerSearch from './components/ReviewerSearch'
+import EditForm from './components/form/EditForm'
+import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
+import DisplayAllForms from './components/form/DisplayAllForms'
 
 class App extends Component {
   render() {
@@ -39,7 +41,10 @@ class App extends Component {
           <Route path="/adminprofile" component={adminprofile} />
           <Route path="/unregisteredUser" component={UnregisteredUser} />
             <Route path="/Companies" component={Companies} />
-            <Route path="/Form" component={Form} />
+            <Route path="/createForm" component={CreateForm} />
+            <Route path="/displayForm/:id" component={DisplayForm} />
+            <Route path="/editForm/:id" component={EditForm} />
+            <Route path="/displayAllForms/:id" component={DisplayAllForms} />
             <Route path="/registerLawyer" component={RegisterLawyer} /> 
             <Route path="/registerReviewer" component={RegisterReviewer} />
             <Route path="/cases" component={Cases} />
@@ -54,7 +59,6 @@ class App extends Component {
             <Route path="/signup" component = {RegisterInvestor} />
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
-			<Route path="/DisplayForm/:id" component={DisplayForm} />
           </Switch>
         </Router>
       </div>

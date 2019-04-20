@@ -1,37 +1,45 @@
-import React, { Component } from 'react';
-import nfetch from 'node-fetch'
-//import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import {Link} from 'react-router-dom'
+import { Paper, withStyles, Button } from '@material-ui/core'
+import axios from 'axios'
 
-import axios from 'axios';
-class DisplayForm extends Component {
-    constructor(props) {
-      console.log(props)
-        super(props)
-        this.state = {
-            id: props.match.params.id,
-            DisplayForms:[]
-        }
-    }
-    
-    
-    componentDidMount(){
-      axios.get('/api/form/AllForms/'+this.state.id)
-      .then(res => this.setState({DisplayForms:res.data}))
-      .catch(error => console.log(error))
-    }
+const styles = theme => ({
+    root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit*2,
+        paddingBottom: theme.spacing.unit*2,
+        background: '#e3e3e3',
+        marginBottom: theme.spacing.unit,
+        marginTop: theme.spacing.unit,
+    },
+})
 
-    render() {
-      return(
-        <div className="DisplayForm">
-        <h1>Display a Form depending on ID</h1>
-        { this.state.DisplayForms.map(form => 
-            <div>
-                {form.map(element => <div><span><b>{element.name}</b> {element.value} </span><br/></div>)}
-            </div>
-        )}
-       </div>
-    );
-  }
+const DisplayForm = props => {
+
+    const [form, setForm] = useState(null)
+    const {classes} = props
+    const id = props.match.params.id
+    useEffect(_=>{
+        axios.get(`/api/form/${id}`)
+        .then(res => setForm(res.data))
+        .catch(error => alert(error))
+    },[])
+
+    return(
+        <Paper className={classes.root}>
+            {!form? undefined:
+                <div>
+                    {form.map((element, index) => <div key={index}><span><b>{element.name}</b> {element.value} </span><br/></div>)}
+                    <Link to={`/EditForm/${id}`} >
+                        <Button variant='contained' aria-label="Edit" className={classes.fab}>
+                            Edit
+                        </Button>
+                    </Link>
+                    
+                </div>
+            }
+        </Paper>
+    )
 }
 
-export default DisplayForm;
+export default withStyles(styles)(DisplayForm)

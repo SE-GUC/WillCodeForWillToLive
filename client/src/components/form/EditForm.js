@@ -61,7 +61,7 @@ function CreateForm ({classes}) {
   }
 
   const sendForm = _ => axios('/api/form', {
-      method: 'POST',
+      method: 'PUT',
       data: formData,
       headers: {'Content-Type': 'application/json'}
     })
