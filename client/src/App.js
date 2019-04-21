@@ -4,6 +4,7 @@ import lawyerCases from './components/lawyerCases'
 import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
 import Reviewer from './components/reviewer';
+import ReviewerA from './components/reviewerA';
 import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
@@ -44,6 +45,7 @@ class App extends Component {
             <Route path="/registerReviewer" component={RegisterReviewer} />
             <Route path="/cases" component={Cases} />
             <Route path = "/Reviewer" component = {Reviewer} />
+            <Route path = "/ReviewerA" component = {ReviewerA} />
             <Route path = "/reviewerassign" component = {reviewerassign} />
             <Route path="/Lawyer" component = {lawyer} />
             <Route path="/investor" component={investor} /> 
