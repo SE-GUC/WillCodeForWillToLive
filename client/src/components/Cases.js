@@ -14,8 +14,10 @@ class Cases extends Component {
     }else{
       alert(element.msg)
     }
+
       }).catch(err => {alert('please make sure you are logged in');
       document.location.href = '/loginemployee'})
+
     }
   render() {
     return(

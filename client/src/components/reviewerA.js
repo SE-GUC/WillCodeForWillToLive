@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import ReviewerItem from './ReviewerItem'
+import ReviewerItemA from './ReviewerItemA'
 import PropTypes from 'prop-types'
 import nfetch from 'node-fetch'
 import Header from './layout/ReviewerHeader'
 import axios from 'axios'
-import ReviewerDistribution from './ReviewerDistribution';
+import ReviewerDistributionA from './ReviewerDistributionA';
 
 //import styles from '../style.css'
 
@@ -17,7 +17,7 @@ import ReviewerDistribution from './ReviewerDistribution';
 
 
 
-class Reviewer extends Component {
+class ReviewerA extends Component {
 
   state = {
     cases: [
@@ -26,16 +26,10 @@ class Reviewer extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:3002/api/reviewer/getCases/',{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
+    axios.get('http://localhost:3002/api/cases')
     .then(res => Object.values(res)[0])
-    .then(element => {
-      if(element.msg===undefined){ 
-      this.setState({cases:element.data})}
-    else{
-      alert(element.msg)
-    }
-    }).catch(err => {alert('please make sure you are logged in');
-    document.location.href = '/loginemployee'})
+    .then(element => this.setState({cases:element.data}))
+    .catch(err => console.log(err))
   }
 
   render() {
@@ -46,7 +40,7 @@ class Reviewer extends Component {
        <Header />
        <Route path="/" render= {props => (
          <React.Fragment>
-         <ReviewerDistribution cases = {this.state.cases}
+         <ReviewerDistributionA cases = {this.state.cases}
           addreview  = {this.addreview} 
           accept = {this.accept}
           reject = {this.reject} />
@@ -79,7 +73,7 @@ class Reviewer extends Component {
         axios.put(URL, {
           reviewed_by_reviewer: true,
           assignee : "reviewed by reviewer"
-        },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
+        })
         cas.reviewed_by_reviewer = true
         cas.assignee = "reviewed by reviewer"
       }
@@ -94,7 +88,7 @@ class Reviewer extends Component {
         axios.put(URL, {
           reviewed_by_reviewer: false,
           assignee: "lawyer"
-        },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
+        })
         cas.reviewed_by_reviewer = false
         cas.assignee = "lawyer"
       }
@@ -111,7 +105,7 @@ class Reviewer extends Component {
               let URL = `http://localhost:3002/api/cases/${_id}`
               axios.put(URL, {
                 review_comment_by_reviewer:  review_comment_by_reviewer
-              },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
+              })
               cas.review_comment_by_reviewer =  review_comment_by_reviewer
             }
             return cas
@@ -122,4 +116,4 @@ class Reviewer extends Component {
   
 
 
-export default Reviewer;
+export default ReviewerA;

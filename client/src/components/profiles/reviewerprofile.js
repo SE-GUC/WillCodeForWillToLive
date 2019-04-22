@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+
 class reviewerprofile extends Component {
   state={
     details:[],
@@ -26,6 +27,7 @@ class reviewerprofile extends Component {
       if(err){
         alert('please make sure you are logged in')
         document.location.href = '/loginemployee'
+
       }
       else{
         const id= payload.id
@@ -35,7 +37,9 @@ class reviewerprofile extends Component {
           }
           else{
             alert(element.msg)
+
             document.location.href = '/loginemployee'
+
           }
         }).catch(er => alert("something went wrong"))
       }

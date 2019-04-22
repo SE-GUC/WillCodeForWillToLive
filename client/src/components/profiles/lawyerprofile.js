@@ -4,8 +4,10 @@ import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
 
+
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+
 class lawyerprofile extends Component {
   state={
     details:[],
@@ -25,8 +27,10 @@ class lawyerprofile extends Component {
   componentDidMount(){
     jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
       if(err){
+
         alert('please make sure you are logged in')
         document.location.href = '/loginemployee'
+
       }
       else{
         const id= payload.id
@@ -35,9 +39,11 @@ class lawyerprofile extends Component {
         this.setState({details:element.data})
           }
           else{
+
             console.log('hereee')
             alert(element.msg)
             document.location.href = '/loginemployee'
+
           }
         }).catch(er => alert("something went wrong"))
       }

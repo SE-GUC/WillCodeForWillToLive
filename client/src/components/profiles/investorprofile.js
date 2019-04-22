@@ -30,6 +30,7 @@ class investorprofile extends Component {
       if(err){
         alert('please make sure you are logged in')
         document.location.href = '/loginemployee'
+
       }
       else{
         const id= payload.id
@@ -38,7 +39,9 @@ class investorprofile extends Component {
         this.setState({details:element.data})
       }else{
         alert(element.msg)
+
         document.location.href = '/loginemployee'
+
       }
         }
           ).catch(er => alert("something went wrong"))

@@ -15,9 +15,11 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import nfetch from 'node-fetch'
+
 import jwt from 'jsonwebtoken';
 import tokenkey from '../../config/keys'
 import  { Redirect } from 'react-router-dom'
+
 
 const styles = theme => ({
   main: {
@@ -66,6 +68,7 @@ class LoginEmployee extends React.Component{
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {'Content-Type': 'application/json'}
+
     }).then(res => res.json()).then(json =>{
       localStorage.clear()
       localStorage.setItem('token',Object.values(json)) 
@@ -85,6 +88,7 @@ class LoginEmployee extends React.Component{
       }
       })
     }).catch(err => console.log(err))
+
     }
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));

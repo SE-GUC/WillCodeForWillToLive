@@ -3,9 +3,9 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
+
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 
 class adminprofile extends Component {
   state={
@@ -27,8 +27,10 @@ class adminprofile extends Component {
   componentDidMount(){
     jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
       if(err){
+
         alert('please make sure you are logged in')
         document.location.href = '/loginemployee'
+
       }
       else{
         const id= payload.id
@@ -38,7 +40,9 @@ class adminprofile extends Component {
         }
         else{
           alert(element.msg)
+
          document.location.href = '/loginemployee'
+
         }       
         }).catch(er => alert("something went wrong"))
       }
