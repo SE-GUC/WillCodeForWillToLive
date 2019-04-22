@@ -37,6 +37,8 @@ import RegisterInvestorA from './components/pages/RegisterInvestorA'
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
 import Homepage from './components/WelcomePage/Main'
+import HomepageA from './components/WelcomePage/MainA'
+import LoginEmployeeA from './components/pages/LoginEmployeeA';
 
 
 class App extends Component {
@@ -75,6 +77,7 @@ class App extends Component {
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
 
       <Route path="/loginEmployee" component={LoginEmployee}/>
+      <Route path="/loginEmployeeA" component={LoginEmployeeA}/>
  
 			      <Route path="/DisplayForm/:id" component={DisplayForm} />
             <Route path="/LawyerA" component={LawyerA} />
@@ -83,6 +86,7 @@ class App extends Component {
             <Route path = "/RegisterLawyerA" component = {RegisterLawyerA} />
             <Route path = "/RegisterAdminA" component = {RegisterAdminA} />
             <Route path = "/signupA" component = {RegisterInvestorA} />
+     <Route path="/HomepageA" component={HomepageA}/>
      <Route path="/" component={Homepage}/>
           </Switch>
         </Router>
