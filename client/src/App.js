@@ -26,14 +26,17 @@ import ReviewerSearch from './components/ReviewerSearch'
 import EditForm from './components/form/EditForm'
 import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
+
 import LawyerA from './components/lawyerA'
 import InvestorA from './components/investorA'
 import RegisterReviewerA from './components/pages/RegisterReviewerA'
 import RegisterLawyerA from './components/pages/RegisterLawyerA'
 import RegisterAdminA from './components/pages/RegisterAdminA'
 import RegisterInvestorA from './components/pages/RegisterInvestorA'
+
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
+import Homepage from './components/WelcomePage/Main'
 
 
 class App extends Component {
@@ -44,6 +47,7 @@ class App extends Component {
       <div className={classes.root}>
         <Router>
           <Switch>
+            
           <Route path="/investorprofile" component={investorprofile} />
           <Route path="/lawyerprofile" component={lawyerprofile} />
           <Route path="/reviewerprofile" component={reviewerprofile} />
@@ -69,6 +73,9 @@ class App extends Component {
             <Route path="/signup" component = {RegisterInvestor} />
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
+
+      <Route path="/loginEmployee" component={LoginEmployee}/>
+ 
 			      <Route path="/DisplayForm/:id" component={DisplayForm} />
             <Route path="/LawyerA" component={LawyerA} />
             <Route path = "/InvestorA" component = {InvestorA} />
@@ -76,7 +83,7 @@ class App extends Component {
             <Route path = "/RegisterLawyerA" component = {RegisterLawyerA} />
             <Route path = "/RegisterAdminA" component = {RegisterAdminA} />
             <Route path = "/signupA" component = {RegisterInvestorA} />
-      <Route path="/loginEmployee" component={LoginEmployee}/>
+     <Route path="/" component={Homepage}/>
           </Switch>
         </Router>
       </div>
