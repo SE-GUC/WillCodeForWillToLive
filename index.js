@@ -24,7 +24,7 @@ const app = express()
 const db = process.env.mongoURI
 
 
-console.log(`============================================================DB: ${db}`)
+
 
 mongoose.connect(db, {useNewUrlParser: true})
   .then(() => console.log('Connected to Database'))
