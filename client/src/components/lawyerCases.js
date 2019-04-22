@@ -78,7 +78,7 @@ import React, { Component } from 'react';
                     <div> created_at: {lawyerCases.created_at}</div>
                     <div> isDone: {lawyerCases.isDone}</div>
                     <div> dueDate:  {lawyerCases.dueDate}</div></h5>}
-                    <button onClick={_=>payFees(lawyerCases._id)}>Pay Fees</button>
+                    <button onClick={_=>this.payFees(lawyerCases._id)}>Pay Fees</button>
                   </td>
                 </tr>
               )
