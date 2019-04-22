@@ -6,6 +6,7 @@ class UnregisteredUser extends Component {
         details:[]
     }
     componentDidMount(){
+        
         axios.get('http://localhost:3002/api/company').then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
     }
     render() {

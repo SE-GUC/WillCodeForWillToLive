@@ -27,9 +27,15 @@ class Reviewer extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:3002/api/cases')
+    axios.get('http://localhost:3002/api/reviewer/getCases/',{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
     .then(res => Object.values(res)[0])
-    .then(element => this.setState({cases:element.data}))
+    .then(element => {
+      if(element.msg===undefined){ 
+      this.setState({cases:element.data})}
+    else{
+      alert(element.msg)
+    }
+    })
     .catch(err => console.log(err))
   }
 
@@ -72,7 +78,7 @@ class Reviewer extends Component {
         axios.put(URL, {
           reviewed_by_reviewer: true,
           assignee : "reviewed by reviewer"
-        })
+        },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
         cas.reviewed_by_reviewer = true
         cas.assignee = "reviewed by reviewer"
       }
@@ -87,7 +93,7 @@ class Reviewer extends Component {
         axios.put(URL, {
           reviewed_by_reviewer: false,
           assignee: "lawyer"
-        })
+        },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
         cas.reviewed_by_reviewer = false
         cas.assignee = "lawyer"
       }
@@ -104,7 +110,7 @@ class Reviewer extends Component {
               let URL = `http://localhost:3002/api/cases/${_id}`
               axios.put(URL, {
                 review_comment_by_reviewer:  review_comment_by_reviewer
-              })
+              },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
               cas.review_comment_by_reviewer =  review_comment_by_reviewer
             }
             return cas

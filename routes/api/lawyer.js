@@ -86,7 +86,7 @@ router.get('/getCases',checkTocken, async (req, res)=>{
           res.status(403).send(err);
         }else{
           if(payload.type === 'lawyer'){
-    res.redirect('./../cases/')
+    res.redirect('../../cases/')
 }
 else{res.json({msg: 'You shall not pass'})}
 }

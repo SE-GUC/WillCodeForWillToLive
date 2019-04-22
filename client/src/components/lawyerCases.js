@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
   import axios from 'axios';
-
+  import jwt from 'jsonwebtoken';
+  import tokenkey from '../config/keys'
   class lawyerCases extends Component {
       state={
           lawyerCases:[],
          
-          username: "omarr"
+          username: ''
       }
 
       handleClick1 = () => {
@@ -26,9 +27,21 @@ import React, { Component } from 'react';
 
       
       componentDidMount(){
-       
-       axios.get('http://localhost:3002/api/lawyer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({lawyerCases:element.data}))
-       
+        jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
+          if(err){
+         console.log(err);
+        }else{
+          console.log(payload.type)
+       axios.get('http://localhost:3002/api/lawyer/getCases/'+payload.username,{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element =>
+       { 
+        if(element.msg===undefined){ 
+         this.setState({lawyerCases:element.data})
+        }
+        else{
+          alert(element.msg)
+        }
+      })
+      }})
       }
     render() {
 

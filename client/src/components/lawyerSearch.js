@@ -62,9 +62,15 @@
 
 
       componentDidMount(){
-         axios.get('http://localhost:3002/api/cases').then(
+         axios.get('http://localhost:3002/api/lawyer/getCases/',{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(
            res => Object.values(res)[0]).then(
-             element => this.setState({cases:element.data, originalCases: element.data})
+             element => {
+              if(element.msg===undefined){ 
+              this.setState({cases:element.data, originalCases: element.data})
+            }else{
+              alert(element.msg)
+            }
+          }
            )
       };
 
