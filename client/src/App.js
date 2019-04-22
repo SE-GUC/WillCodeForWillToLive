@@ -24,6 +24,8 @@ import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
 import lawyerSearch from './components/lawyerSearch'
 import ReviewerSearch from './components/ReviewerSearch'
+import EditForm from './components/form/EditForm'
+import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
 import LawyerA from './components/lawyerA'
 import InvestorA from './components/investorA'
@@ -31,6 +33,8 @@ import RegisterReviewerA from './components/pages/RegisterReviewerA'
 import RegisterLawyerA from './components/pages/RegisterLawyerA'
 import RegisterAdminA from './components/pages/RegisterAdminA'
 import RegisterInvestorA from './components/pages/RegisterInvestorA'
+import DisplayAllForms from './components/form/DisplayAllForms'
+
 
 class App extends Component {
   render() {
@@ -46,7 +50,10 @@ class App extends Component {
           <Route path="/adminprofile" component={adminprofile} />
           <Route path="/unregisteredUser" component={UnregisteredUser} />
             <Route path="/Companies" component={Companies} />
-            <Route path="/Form" component={Form} />
+            <Route path="/createForm" component={CreateForm} />
+            <Route path="/displayForm/:id" component={DisplayForm} />
+            <Route path="/editForm/:id" component={EditForm} />
+            <Route path="/displayAllForms/:id" component={DisplayAllForms} />
             <Route path="/registerLawyer" component={RegisterLawyer} /> 
             <Route path="/registerReviewer" component={RegisterReviewer} />
             <Route path="/cases" component={Cases} />
