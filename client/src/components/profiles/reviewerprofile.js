@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
 class reviewerprofile extends Component {
   state={
     details:[],
-    id:"5cb206b069b2276fc3564814",
+    //id:"5cb206b069b2276fc3564814",
     updateName:'',
     updateUsername:'',
     updatePassword:'',
@@ -18,10 +20,25 @@ class reviewerprofile extends Component {
     updateFaxNumber:''
   }
   componentDidMount(){
-    axios.get('http://localhost:3002/api/reviewer/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+        alert(err)
+      }
+      else{
+        const id= payload.id
+        axios.get('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+          if(element.msg===undefined){   
+        this.setState({details:element.data})
+          }
+          else{
+            alert(element.msg)
+          }
+        }).catch(er => alert("something went wrong"))
+      }
+    })
    }
    updateprofile =(id) =>{
-    axios.put('http://localhost:3002/api/reviewer/'+id, {
+    axios.put('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}, {
       username: this.state.updateUsername!==''?this.state.updateUsername:this.state.details.username,
       password: this.state.updatePassword!==''?this.state.updatePassword:this.state.details.password,
       name: this.state.updateName!==''?this.state.updateName:this.state.details.name,
@@ -39,7 +56,7 @@ class reviewerprofile extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
    deleteprofile =(id) =>{
-    axios.delete('http://localhost:3002/api/reviewer/'+id).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
+    axios.delete('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
   }
     render() {
       return (
