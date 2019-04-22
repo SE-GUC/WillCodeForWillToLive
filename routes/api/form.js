@@ -200,11 +200,10 @@ router.get('/createPdf/:id', async(req, res) => {
         }))
       }
       const pdfDoc = printer.createPdfKitDocument(docDefinition)
-      pdfDoc.end()
-      pdfDoc.pipe(fs.createWriteStream('document.pdf'))
       res.setHeader('Content-Type', 'application/pdf')
       res.setHeader('Content-Disposition', 'inline; filename="Document.pdf"')
       pdfDoc.pipe(res)
+      pdfDoc.end()
     }
   } catch(error){
      res.status(500).send({error: error})

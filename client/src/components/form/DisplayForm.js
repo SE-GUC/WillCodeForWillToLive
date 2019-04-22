@@ -18,7 +18,6 @@ const styles = theme => ({
 })
 
 const DisplayForm = props => {
-
     const [form, setForm] = useState(null)
     const {classes} = props
     const id = props.match.params.id
@@ -27,6 +26,19 @@ const DisplayForm = props => {
         .then(res => setForm(res.data))
         .catch(error => alert(error))
     },[])
+
+    const generatePdf = _ => {
+        axios(`/api/form/createPdf/${id}`, {
+            method: 'GET',
+            responseType: `blob`
+        })
+        .then(res => {
+            const blob = new Blob([res.data], {type: 'application/pdf'})
+            const url = URL.createObjectURL(blob)
+            window.open(url)
+        })
+        .catch(error => alert(`Error generating PDF: ${error}`))
+    }
 
     const deleteForm = _ => {
         axios.delete(`/api/form/${id}`)
@@ -46,6 +58,9 @@ const DisplayForm = props => {
                     </Link>
                     <Button variant='contained' aria-label='Delete' className={classes.button} onClick={deleteForm}>
                         Delete
+                    </Button>
+                    <Button variant='contained' aria-label='Edit' className={classes.button} onClick={generatePdf}>
+                        Generate PDF
                     </Button>
                 </div>
             }
