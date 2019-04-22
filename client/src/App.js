@@ -22,7 +22,7 @@ import UnregisteredUser from './components/unregisteredUser'
 import AllForms from './components/form/AllForms'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
-
+import About from './components/About'
 
 class App extends Component {
   render() {
@@ -52,6 +52,7 @@ class App extends Component {
             <Route path="/allForms" component={AllForms} /> 
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />
+            <Route path="/About" component={About}/>
           </Switch>
         </Router>
       </div>
