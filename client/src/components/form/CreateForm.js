@@ -27,6 +27,7 @@ function CreateForm ({classes}) {
   const [lawDropdownState, setLawDropdownState] = useState(null)
   const [formDropdownState, setFormDropdownState] = useState(null)
   const [formFields, setformFields] = useState([])
+  const [locale, setLocale] = useState('en')
   useEffect(_=>{
     axios('/api/formTemplate', {method: 'GET'})
     .then(res => {
@@ -84,7 +85,7 @@ function CreateForm ({classes}) {
               aria-haspopup='true'
               onClick={e => setLawDropdownState(e.currentTarget)}
             >
-              {formData.regulatingLaw || 'Choose Regulating Law'}
+              {formData.regulatingLaw || (locale === 'en'?'Regulating Law':'القانون المنظم')}
             </Button>
             <Menu
             id='regulatingLawMenu'
@@ -102,7 +103,7 @@ function CreateForm ({classes}) {
               aria-haspopup='true'
               onClick={e => setFormDropdownState(e.currentTarget)}
             >
-              {formData.formNameEnglish || 'Choose Form Type'}
+              {formData.formNameEnglish || (locale === 'en'? 'Form Type':'شكل الشركة القانونى')}
             </Button>
             <Menu
             id='FormType'
@@ -115,7 +116,7 @@ function CreateForm ({classes}) {
                   key={i.toString()}
                   onClick={_ => handleFormDropdown(form.formNameEnglish)}
                 >
-                  {form.formNameEnglish}
+                  {locale === 'en'? form.formNameEnglish:form.formNameArabic}
                 </MenuItem>
               )}
             </Menu>

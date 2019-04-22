@@ -1,28 +1,25 @@
 const Model = require('../../models/Form')
 const validator = require('../../validations/form')
 const router = require('express').Router()
-const nfetch = require('node-fetch')
+const axios = require('axios')
 const PdfPrinter = require('pdfmake')
 const fs = require('fs')
 
-const createNewCase = async (body) => {
+const createNewCase = async (username, companyName) => {
   try{
-    const investor = body.investorInfo.name
-    const company = body.companyName.arabic
     const requestBody = {
         status: 'pending',
-        investor: investor,
+        investor: username,
         reviewer: '-',
         lawyer: '-',
-        company_name: company
+        company_name: companyName
     }
-    await nfetch(`http://localhost:${process.env.PORT}/api/cases/`,{
+    await axios(`/api/cases/`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: { 'Content-Type': 'application/json' }
     })
   } catch(error) {
-    console.log(`Error creating case: ${error}`)
   }
 }
 
@@ -35,11 +32,11 @@ router.post('/', async (req, res) => {
       const modelData = {fields: Object.keys(req.body).map(key => ({name: key, value: req.body[key]}))}
       modelData.userId='1'
       const data = await Model.create(modelData)
-      // createNewCase(req.body)
+      const companyName = req.body['Company Name Arabic']
+      createNewCase(userId, companyName)
       res.json(data)
     }
   } catch(err) {
-    console.log(err)
     res.status(500).json({error: err})
   }
 })
@@ -63,7 +60,6 @@ router.get('/:id', async (req, res) => {
       res.json(data.fields)
     }
   } catch(err) {
-    console.log(err)
     res.status(500).json({error: err})
   }
 })
@@ -211,10 +207,8 @@ router.get('/createPdf/:id', async(req, res) => {
       pdfDoc.pipe(res)
     }
   } catch(error){
-    console.log(error)
      res.status(500).send({error: error})
   }
 })
-
 
 module.exports = router
