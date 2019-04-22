@@ -3,11 +3,11 @@ const validator = require('../../validations/form')
 const router = require('express').Router()
 const axios = require('axios')
 const PdfPrinter = require('pdfmake')
-const fs = require('fs')
 
-const createNewCase = async (username, companyName) => {
+const createNewCase = async (username, companyName, fees) => {
   try{
     const requestBody = {
+        fees: fees,
         status: 'pending',
         investor: username,
         reviewer: '-',
@@ -23,6 +23,42 @@ const createNewCase = async (username, companyName) => {
   }
 }
 
+const calculateFees = form => {
+  const law = form.fields.find(({name}) => name.toLowerCase() === 'regulatinglaw').value
+  const capital = form.fields.find(({name}) => name.toLowerCase() === 'capital').value
+  if(law.toLowerCase() === 'law159'){
+    const gavi = 1/1000 * capital
+    if(gavi <100){
+      gavi = 100
+    }
+    if(gavi>1000){
+      gavi = 1000
+    }
+    const notary = 0.25/100 * capital
+    if(notary <10){
+      notary = 10
+    }
+    if(notary>1000){
+      notary = 1000
+    }
+    const Commercial = 56
+    const fees = Commercial + gavi + notary
+    res.json({fees: fees})
+  }else{
+    const fees = 610
+    res.json({fees: fees})
+  }
+}
+
+const updateFees = (newFees, companyName) => {
+  axios.put(`/api/cases/updateByCompanyName/${companyName}`, {
+    headers: {'Content-Type': 'application/json'},
+    data: {fees: newFees}
+  })
+  .then(_=>{})
+  .catch(error => console.log(error))
+}
+
 router.post('/', async (req, res) => {
   try {
     const valid = await validator.validateCreate(req.body)
@@ -33,7 +69,7 @@ router.post('/', async (req, res) => {
       modelData.userId='1'
       const data = await Model.create(modelData)
       const companyName = req.body['Company Name Arabic']
-      createNewCase(userId, companyName)
+      createNewCase(userId, companyName, calculateFees(req.body))
       res.json(data)
     }
   } catch(err) {
@@ -89,6 +125,7 @@ router.get('/allForms/:id', async (req, res) => {
 })
 
 router.put('/:id', async (req, res) => {
+  const userId = '1'
   try {
     const valid = await validator.validateUpdate(req.body)
     if(valid.error) {
@@ -100,6 +137,8 @@ router.put('/:id', async (req, res) => {
         res.status(404).json({error: 'Page not found.'})
       } else {
         res.json(data)
+        const companyName = req.body['Company Name Arabic']
+        updateFees(calculateFees(data), companyName)
       }
     }
   } catch(err) {
@@ -117,59 +156,6 @@ router.delete('/:id', async (req, res) => {
     }
   } catch(err) {
     res.status(500).json({error: err})
-  }
-})
-
-router.get('/calculateFees/:id',async (req,res) =>{
-  try{
-    const form = await Model.findById(req.params.id)
-    if(!form) {
-      res.status(404).sendFile('Company not found')
-    }
-    const law = form.fields.find(({name}) => name.toLowerCase() === 'regulatinglaw').value
-    const capital = form.fields.find(({name}) => name.toLowerCase() === 'capital').value
-    if(law.toLowerCase() === 'law159'){
-      const gavi = 1/1000 * capital
-      if(gavi <100){
-          gavi = 100
-      }
-      if(gavi>1000){
-          gavi = 1000
-      }
-      const notary = 0.25/100 * capital
-      if(notary <10){
-          notary = 10
-      }
-      if(notary>1000){
-          notary = 1000
-      }
-      const Commercial = 56
-      const fees = Commercial + gavi + notary
-      res.json({fees: fees})
-    }else{
-      const fees = 610
-      res.json({fees: fees})
-    }
-  } catch (err) {
-      return res.status(404).send(error)
-  }
-})
-
-router.put('/updateFees/:id', async (req, res) => {
-  try{
-    const valid = validator.validateFees(req.body)
-    if(valid.error) {
-      res.status(400).json({error: valid.error})
-    } else {
-      const model = Model.findByIdAndUpdate(req.params.id, req.body, {new: true})
-      if(model === null) {
-        res.status(404).json({error: 'Page not found'})
-      } else {
-        res.json(model)
-      }
-    }
-  } catch (error) {
-    res.status(500).send(error)
   }
 })
 
