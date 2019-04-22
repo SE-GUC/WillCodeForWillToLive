@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios';
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
 class investorprofile extends Component {
   state={
     details:[],
-    id:"5cb1c8bd7a390e1a972f5a62",
+    //id:"5cb1c8bd7a390e1a972f5a62",
     updateName:'',
     updateUsername:'',
     updatePassword:'',
@@ -20,7 +22,15 @@ class investorprofile extends Component {
     updateFaxNumber:''
   }
   componentDidMount(){
-    axios.get('http://localhost:3002/api/investor/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+        alert(err)
+      }
+      else{
+        const id= payload.id
+        axios.get('http://localhost:3002/api/investor/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data})).catch(er => alert("something went wrong"))
+      }
+    })
    }
    updateprofile =(id) =>{
     axios.put('http://localhost:3002/api/investor/'+id, {
