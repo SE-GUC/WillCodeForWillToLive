@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import ReviewerItem from './ReviewerItem'
+import ReviewerItemA from './ReviewerItemA'
 import PropTypes from 'prop-types'
 import nfetch from 'node-fetch'
 import Header from './layout/ReviewerHeader'
 import axios from 'axios'
-import ReviewerDistribution from './ReviewerDistribution';
+import ReviewerDistributionA from './ReviewerDistributionA';
 
 //import styles from '../style.css'
 
@@ -17,7 +17,7 @@ import ReviewerDistribution from './ReviewerDistribution';
 
 
 
-class Reviewer extends Component {
+class ReviewerA extends Component {
 
   state = {
     cases: [
@@ -40,7 +40,7 @@ class Reviewer extends Component {
        <Header />
        <Route path="/" render= {props => (
          <React.Fragment>
-         <ReviewerDistribution cases = {this.state.cases}
+         <ReviewerDistributionA cases = {this.state.cases}
           addreview  = {this.addreview} 
           accept = {this.accept}
           reject = {this.reject} />
@@ -116,4 +116,4 @@ class Reviewer extends Component {
   
 
 
-export default Reviewer;
+export default ReviewerA;

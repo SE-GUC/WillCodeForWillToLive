@@ -8,29 +8,30 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import nfetch from 'node-fetch'
 
-class AlertDialogLawyerRegister extends React.Component {
+class AlertDialogAdminRegisterA extends React.Component {
   state = {
     open: false,
     msg:''
   };
   handleClickOpen = () => {
     const requestBody = {
-        name: this.props.lawyeradmin.name,
-        username: this.props.lawyeradmin.username,
-        password: this.props.lawyeradmin.password,
-        birth_date: this.props.lawyeradmin.dob,
-        nationality: this.props.lawyeradmin.nationality,
-        gender: this.props.lawyeradmin.gender,
-        ID: this.props.lawyeradmin.ID,
-        typeOfID: this.props.lawyeradmin.typeofid,
-        mobile_number: this.props.lawyeradmin.mobile,
-        fax_number: this.props.lawyeradmin.fax,
-        email_address: this.props.lawyeradmin.email
+        username: this.props.stateadmin.username,
+        firstName: this.props.stateadmin.firstName,
+        middleName: this.props.stateadmin.middleName,
+        lastName: this.props.stateadmin.lastName,
+        DOB: this.props.stateadmin.DOB,
+        gender: this.props.stateadmin.gender,
+        nationality: this.props.stateadmin.nationality,
+        mobileNumber: this.props.stateadmin.mobileNumber,
+        faxNumber: this.props.stateadmin.faxNumber,
+        emailAddress: this.props.stateadmin.emailAddress,
+        address: this.props.stateadmin.address,
+        password: this.props.stateadmin.password
       }
-      const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
+      const response =nfetch(`http://localhost:3002/api/admin`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
+        headers: {'Content-Type': 'application/json' }
     }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
@@ -43,7 +44,7 @@ class AlertDialogLawyerRegister extends React.Component {
     return (
       <div>
         <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Submit 
+          ارسال 
         </Button>
         <Dialog
           open={this.state.open}
@@ -59,7 +60,7 @@ class AlertDialogLawyerRegister extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
-              OK
+              حسنا
             </Button>
           </DialogActions>
         </Dialog>
@@ -68,4 +69,4 @@ class AlertDialogLawyerRegister extends React.Component {
   }
 }
 
-export default AlertDialogLawyerRegister;
+export default AlertDialogAdminRegisterA;

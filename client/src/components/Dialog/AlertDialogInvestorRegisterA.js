@@ -8,29 +8,31 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import nfetch from 'node-fetch'
 
-class AlertDialogLawyerRegister extends React.Component {
+class AlertDialogInvestorRegisterA extends React.Component {
   state = {
     open: false,
     msg:''
   };
   handleClickOpen = () => {
     const requestBody = {
-        name: this.props.lawyeradmin.name,
-        username: this.props.lawyeradmin.username,
-        password: this.props.lawyeradmin.password,
-        birth_date: this.props.lawyeradmin.dob,
-        nationality: this.props.lawyeradmin.nationality,
-        gender: this.props.lawyeradmin.gender,
-        ID: this.props.lawyeradmin.ID,
-        typeOfID: this.props.lawyeradmin.typeofid,
-        mobile_number: this.props.lawyeradmin.mobile,
-        fax_number: this.props.lawyeradmin.fax,
-        email_address: this.props.lawyeradmin.email
+        username: this.props.stateinvestor.username,
+        name: this.props.stateinvestor.name,
+        DOB: this.props.stateinvestor.DOB,
+        gender: this.props.stateinvestor.gender,
+        nationality: this.props.stateinvestor.nationality,
+        mobileNumber: this.props.stateinvestor.mobileNumber,
+        faxNumber: this.props.stateinvestor.faxNumber,
+        email: this.props.stateinvestor.email,
+        address: this.props.stateinvestor.address,
+        password: this.props.stateinvestor.password,
+        ID: this.props.stateinvestor.ID,
+        typeOfID: this.props.stateinvestor.typeOfID,
+        capital: this.props.stateinvestor.capital
       }
-      const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
+      const response =nfetch(`http://localhost:3002/api/investor`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
+        headers: {'Content-Type': 'application/json' }
     }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
@@ -43,7 +45,7 @@ class AlertDialogLawyerRegister extends React.Component {
     return (
       <div>
         <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Submit 
+          سجل 
         </Button>
         <Dialog
           open={this.state.open}
@@ -58,8 +60,8 @@ class AlertDialogLawyerRegister extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              OK
+            <Button onClick={this.handleClose} variant="outlined" color="primary" autoFocus>
+              حسنا
             </Button>
           </DialogActions>
         </Dialog>
@@ -68,4 +70,4 @@ class AlertDialogLawyerRegister extends React.Component {
   }
 }
 
-export default AlertDialogLawyerRegister;
+export default AlertDialogInvestorRegisterA;
