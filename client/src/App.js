@@ -25,6 +25,12 @@ import RegisterInvestor from './components/pages/RegisterInvestor'
 import lawyerSearch from './components/lawyerSearch'
 import ReviewerSearch from './components/ReviewerSearch'
 import DisplayForm from './components/form/DisplayForm'
+import LawyerA from './components/lawyerA'
+import InvestorA from './components/investorA'
+import RegisterReviewerA from './components/pages/RegisterReviewerA'
+import RegisterLawyerA from './components/pages/RegisterLawyerA'
+import RegisterAdminA from './components/pages/RegisterAdminA'
+import RegisterInvestorA from './components/pages/RegisterInvestorA'
 
 class App extends Component {
   render() {
@@ -56,7 +62,13 @@ class App extends Component {
             <Route path="/signup" component = {RegisterInvestor} />
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
-			<Route path="/DisplayForm/:id" component={DisplayForm} />
+			      <Route path="/DisplayForm/:id" component={DisplayForm} />
+            <Route path="/LawyerA" component={LawyerA} />
+            <Route path = "/InvestorA" component = {InvestorA} />
+            <Route path = "/RegisterReviewerA" component = {RegisterReviewerA} />
+            <Route path = "/RegisterLawyerA" component = {RegisterLawyerA} />
+            <Route path = "/RegisterAdminA" component = {RegisterAdminA} />
+            <Route path = "/signupA" component = {RegisterInvestorA} />
           </Switch>
         </Router>
       </div>

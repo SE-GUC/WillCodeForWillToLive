@@ -3,9 +3,9 @@
   import axios from 'axios';
   import Header from './layout/InvestorHeader'
   import { Link } from 'react-router-dom';
-  import InvestorDistribution from './InvestorDistribution'
+  import InvestorDistributionA from './InvestorDistributionA'
 
-  class investor extends Component {
+  class investorA extends Component {
       state={
           cases :[]
       }
@@ -20,7 +20,7 @@
         <div className = "container">
          <Header />
            <React.Fragment>
-           <InvestorDistribution cases = {this.state.cases}
+           <InvestorDistributionA cases = {this.state.cases}
            payFees = {this.payFees}
        />
            </React.Fragment>
@@ -48,5 +48,5 @@
   
   }
   
-  export default investor;
+  export default investorA;
     
