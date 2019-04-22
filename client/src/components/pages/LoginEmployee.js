@@ -16,6 +16,11 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import nfetch from 'node-fetch'
 
+import jwt from 'jsonwebtoken';
+import tokenkey from '../../config/keys'
+import  { Redirect } from 'react-router-dom'
+
+
 const styles = theme => ({
   main: {
     width: 'auto',
@@ -63,7 +68,27 @@ class LoginEmployee extends React.Component{
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {'Content-Type': 'application/json'}
-    }).then(res => res.json()).then(json =>{localStorage.clear();localStorage.setItem('token',Object.values(json)); console.log(localStorage.getItem('token'))}).catch(err => console.log(err))
+
+    }).then(res => res.json()).then(json =>{
+      localStorage.clear()
+      localStorage.setItem('token',Object.values(json)) 
+      jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
+      if(err){
+        alert(err)
+      }else{
+        if(payload.type === 'admin'){
+          document.location.href = '/adminprofile'
+        }
+        if(payload.type === 'reviewer'){
+          document.location.href = '/reviewerprofile'
+        }
+        if(payload.type === 'lawyer'){
+          document.location.href = '/lawyerprofile'
+        }
+      }
+      })
+    }).catch(err => console.log(err))
+
     }
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));

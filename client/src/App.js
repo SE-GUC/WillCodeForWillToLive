@@ -22,6 +22,7 @@ import UnregisteredUser from './components/unregisteredUser'
 import UnregisteredUserA from './components/unregisteredUserA'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
+import About from './components/About'
 import lawyerSearch from './components/lawyerSearch'
 import lawyerSearchA from './components/lawyerSearchA'
 import ReviewerSearch from './components/ReviewerSearch'
@@ -38,7 +39,7 @@ import RegisterAdminA from './components/pages/RegisterAdminA'
 import RegisterInvestorA from './components/pages/RegisterInvestorA'
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
-import loginInvestor from './components/loginInvestor'
+import Homepage from './components/WelcomePage/Main'
 
 class App extends Component {
   render() {
@@ -48,6 +49,7 @@ class App extends Component {
       <div className={classes.root}>
         <Router>
           <Switch>
+            
           <Route path="/investorprofile" component={investorprofile} />
           <Route path="/lawyerprofile" component={lawyerprofile} />
           <Route path="/reviewerprofile" component={reviewerprofile} />
@@ -92,8 +94,12 @@ class App extends Component {
             <Route path="/formTemplate" component={FormTemplate} />
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />
+            <Route path="/About" component={About}/>
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
+
+      <Route path="/loginEmployee" component={LoginEmployee}/>
+ 
 			      <Route path="/DisplayForm/:id" component={DisplayForm} />
             <Route path="/LawyerA" component={LawyerA} />
             <Route path = "/InvestorA" component = {InvestorA} />
@@ -101,7 +107,7 @@ class App extends Component {
             <Route path = "/RegisterLawyerA" component = {RegisterLawyerA} />
             <Route path = "/RegisterAdminA" component = {RegisterAdminA} />
             <Route path = "/signupA" component = {RegisterInvestorA} />
-      <Route path="/loginEmployee" component={LoginEmployee}/>
+     <Route path="/" component={Homepage}/>
           </Switch>
         </Router>
       </div>

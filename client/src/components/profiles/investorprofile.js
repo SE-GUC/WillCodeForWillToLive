@@ -3,6 +3,10 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios';
 import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
+
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 class investorprofile extends Component {
   state={
     details:[],
@@ -24,7 +28,9 @@ class investorprofile extends Component {
   componentDidMount(){
     jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
       if(err){
-        alert(err)
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
       }
       else{
         const id= payload.id
@@ -33,6 +39,9 @@ class investorprofile extends Component {
         this.setState({details:element.data})
       }else{
         alert(element.msg)
+
+        document.location.href = '/loginemployee'
+
       }
         }
           ).catch(er => alert("something went wrong"))
@@ -76,7 +85,10 @@ class investorprofile extends Component {
           <table>
         <thead>
       <tr>
-      <td>{<h5><div><button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div><div> Email: {this.state.details.email}</div><div> Username:  {this.state.details.username}</div><div> ID: {this.state.details.ID}</div><div>Type Of ID: {this.state.details.typeOfID}</div><div> name:  {this.state.details.name}</div><div> nationality: {this.state.details.nationality}</div><div> capital: {this.state.details.capital}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
+      <td>{<h5><div><Button variant="contained" color="secondary" onClick={this.deleteprofile.bind(this,this.state.details._id)}>
+        Delete Profile
+        <DeleteIcon/>
+      </Button>{/*<button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button>*/}</div><div> Email: {this.state.details.email}</div><div> Username:  {this.state.details.username}</div><div> ID: {this.state.details.ID}</div><div>Type Of ID: {this.state.details.typeOfID}</div><div> name:  {this.state.details.name}</div><div> nationality: {this.state.details.nationality}</div><div> capital: {this.state.details.capital}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
       </tr>
         </thead>
         <tbody>    
@@ -103,7 +115,42 @@ class investorprofile extends Component {
               <option value="Male"></option>
               <option value="Female"></option>
             </datalist>
-            <div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button></div>
+            <div><p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
+        Update Profile
+      </Button></div>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}
+            <div> <p>  </p><Button variant="contained" color="primary"  onClick ={() =>{
+               document.location.href = '/createform'
+            }} fullWidth>
+        Create a Form
+      </Button><p>  </p><Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/companies'
+            }} fullWidth>
+        View Companies
+      </Button> 
+        <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/investor'
+            }}fullWidth>
+        View Cases
+      </Button><p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+              jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+                if(err){
+                  alert(err)
+
+                }
+                else{
+               document.location.href = '/displayAllForms/' + payload.id
+            }})}}fullWidth>
+        View Forms
+      </Button><p> </p>
+      <Button variant="contained" color="secondary" onClick ={() =>{
+              localStorage.removeItem('token')
+               document.location.href = '/loginemployee'
+            }}fullWidth>
+        Sign Out
+      </Button>
+      </div>
           </div>
         </div>
       );

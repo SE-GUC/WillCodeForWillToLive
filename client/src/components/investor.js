@@ -17,7 +17,10 @@
         }else{
           alert(element.msg)
         }
-        })
+
+        }).catch(err => {alert('please make sure you are logged in');
+        document.location.href = '/loginemployee'})
+
        console.log('State: '+ this.state.cases)
       }
       render() {
@@ -36,22 +39,17 @@
         }
 
        payFees = (id) => {
-          this.setState({
-            cases: this.state.cases.map(cas => {
-              if(cas._id === id){
-                let URL = `http://localhost:3002/api/investor/getCases/${id}`
-                axios.put(URL,{
-                  fees: "0",
-                  paid: true
-                },{headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}})
-                cas.fees = 0
-                cas.paid = true
-              }
-              return cas
-            })
-          })
-       }
-
+        let _case = null
+        axios.get(`/api/cases/${id}`)
+        .then(({case2}) => _case = case2)
+        .catch(error => alert(error))
+        if(!_case) {
+          return
+        }
+        const newState = this.state.cases
+        newState.splice(newState.findIndex(({_id})=>_id === id), 1, _case)
+        this.setState({cases: newState})       } 
+ 
   }
 
   export default investor;
