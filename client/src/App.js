@@ -5,7 +5,6 @@ import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
 import Reviewer from './components/reviewer';
 import ReviewerA from './components/reviewerA';
-import Form from './components/form/Form'
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
