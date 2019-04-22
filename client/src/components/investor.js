@@ -11,7 +11,7 @@
       }
       
       componentDidMount(){
-       axios.get('http://localhost:3002/api/investor/getCases').then(res => Object.values(res)[0]).then(element => {
+       axios.get('http://localhost:3002/api/investor/getCases', {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
         if(element.msg===undefined){  
        this.setState({cases :element.data})
         }else{
@@ -43,7 +43,7 @@
                 axios.put(URL,{
                   fees: "0",
                   paid: true
-                })
+                },{headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}})
                 cas.fees = 0
                 cas.paid = true
               }
