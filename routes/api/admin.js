@@ -2,11 +2,13 @@ const express = require('express')
 // const Joi = require('joi')
 // const uuid = require('uuid')
 const router = express.Router()
+const jwt = require('jsonwebtoken')
 // const mongoose = require('mongoose')
 
 const Admin = require('../../models/admin')
 const validator = require('../../validations/adminValidations')
 const Case = require('../../models/Case')
+const tokenkey = require('../../config/keys').secretkey
 // const Task = require('../../models/Task')
 /* const EntityEmployees = [
   new EntityEmployee('Amr', 'Ahmed', 'ElNahas', new Date(1998, 6, 7), 'male', 'Egyptian', 'Passport', 6969696969, 'lawyer', 8675309, 213432532, 'amrtea.edu@gmail.com', 'Cairo'),
@@ -14,11 +16,31 @@ const Case = require('../../models/Case')
   new EntityEmployee('Ron', 'redacted', 'Swanson', new Date(1978, 8, 2), 'male', 'American', 'Passport', 7438903803, 'lawyer', 8675309, 2314839220, 'redacted@gmail.com', 'Pawnee')
 ] */
 // router.get('/', (req, res) => res.json({ data: EntityEmployees }))
-router.get('/', async (req, res) => {
-  Admin.find().then((admins) => {
-    res.send({ admins })
-  }, (err) => {
-    res.status(400).send(err)
+const checkTocken = (req, res, next) =>{
+  const header = req.headers['authorization']
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ')
+    const token = bearer[1]
+    req.token = token
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+}
+router.get('/',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'admin'){
+      Admin.find().then((admins) => {
+        res.send({ admins })
+      }, (err) => {
+        res.status(400).send(err)
+      })}else{
+        res.json({msg: 'You shall not pass'})
+      }
+    }
   })
 })
 
@@ -75,16 +97,31 @@ router.get('/', async (req, res) => {
   EntityEmployees.push(newEntityEmployee)
   return res.json({ data: newEntityEmployee })
 }) */
-router.post('/', async (req, res) => {
-  try {
-    const isValidated = validator.createValidation(req.body)
-    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
-    Admin.create(req.body).then((newAdmin) => {
-      res.json({ message: 'Admin was created successfully', data: newAdmin })
-    }, (err) => { res.status(400).send(err) })
-  } catch (error) {
-    res.status(400).send({ error: 'Error' })
-  }
+
+
+router.post('/',checkTocken ,async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    console.log(req.token)
+    console.log(tokenkey)
+    if(err){
+      console.log('error hereeee')
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'admin'){
+      try {
+      const isValidated = validator.createValidation(req.body)
+      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
+      Admin.create(req.body).then((newAdmin) => {
+        res.json({ message: 'Admin was created successfully', data: newAdmin })
+      }, (err) => { res.status(400).send(err) })
+    } catch (error) {
+      res.status(400).send({ error: 'Error' })
+    }}
+    else{
+        res.json({msg: 'You shall not pass'})
+      }
+    }
+  })
 })
 /* router.get('/:id', (req, res) => {
   const EntityEmployeeId = req.params.id
@@ -96,18 +133,45 @@ router.post('/', async (req, res) => {
   }
 }) */
 
-router.get('/getCompanys', async (req, res) => {
-  res.redirect('./../company/')
+router.get('/getCompanys',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'admin'){
+  res.redirect('./../company/')}
+  else{
+    res.json({msg: 'You shall not pass'})
+  }
+    }
+  })
 })
 
 //  search using /api/admin/getCases/
-router.get('/getCases', async (req, res) => {
-  res.redirect('./../cases/')
+router.get('/getCases',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'admin'){
+         res.redirect('./../cases/')
+        }
+      else{
+          res.json({msg: 'You shall not pass'})
+        }
+      }
+  })
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
   try {
-    const adminId = req.params.id
+    const adminId = payload.id
     const adminInstance = await Admin.findById(adminId)
     if (!adminInstance) {
       res.status(400).send({ error: 'not found' })
@@ -116,11 +180,20 @@ router.get('/:id', async (req, res) => {
     }
   } catch (error) {
     res.status(400).send({ error: 'error' })
-  }
+  }}
+  else{res.json({msg: 'You shall not pass'})}
+}  
 })
-router.put('/:id', async (req, res) => {
-  try {
-    const adminId = req.params.id
+})
+router.put('/:id',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
+    try {
+    const adminId = payload.id
     const adminInstance = await Admin.findById(adminId)
     if (!adminInstance) {
       res.status(404).send({ error: 'not found' })
@@ -133,10 +206,21 @@ router.put('/:id', async (req, res) => {
     res.json({ message: 'updated successfuly' })
   } catch (error) {
     res.status(400).send({ error: 'error' })
+      }
+    }
+    else{res.json({msg: 'You shall not pass'})}
   }
+
+  })
 })
 
-router.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {
+router.put('/assigncasestomyselftheadmin/:id/',checkTocken ,async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
   try {
     const caseId = req.params.id
     const caseElement = await Case.findById(caseId)
@@ -152,6 +236,10 @@ router.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: 'Something went wrong' })
   }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 /* router.put('/:id', (req, res) => {
@@ -236,14 +324,24 @@ router.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {
     res.json({ data: EntityEmployees })
   }
 }) */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',checkTocken,async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
   try {
-    const adminId = req.params.id
+    const adminId = payload.id
     await Admin.findByIdAndRemove(adminId)
     res.json({ message: 'Deleted successfully' })
   } catch (error) {
     res.status(404).send({ error: 'error' })
   }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 // router.delete('/:id', (req, res) => {
 /* const EntityEmployeeId = req.params.id
@@ -315,10 +413,30 @@ router.put('/assigntasks/:id/', async (req, res) => {
     res.status(400).send({ error: 'Something went wrong' })
   }
 }) */
-router.post('/createlawyer', async (req, res) => {
+router.post('/createlawyer',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
   res.redirect(307, './../Lawyer')
+}
+else{res.json({msg: 'You shall not pass'})}
+}
 })
-router.post('/createreviewer', async (req, res) => {
+})
+router.post('/createreviewer',checkTocken , async (req, res) => {
+  jwt.verify(req.token,tokenkey, async (err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }
+    else{
+      if(payload.type === 'admin'){
   res.redirect(307, './../reviewer')
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 module.exports = router

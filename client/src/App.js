@@ -25,6 +25,7 @@ import ReviewerSearch from './components/ReviewerSearch'
 import EditForm from './components/form/EditForm'
 import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
+import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
 
 class App extends Component {
@@ -59,6 +60,8 @@ class App extends Component {
             <Route path="/signup" component = {RegisterInvestor} />
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
+			<Route path="/DisplayForm/:id" component={DisplayForm} />
+      <Route path="/loginEmployee" component={LoginEmployee}/>
           </Switch>
         </Router>
       </div>
