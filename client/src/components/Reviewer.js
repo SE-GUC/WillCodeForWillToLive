@@ -36,8 +36,8 @@ class Reviewer extends Component {
   render() {
       console.log("hi3");
       return (
-      <div>
       <div className = "container">
+      <div >
        <Header />
          <React.Fragment>
            <ReviewerDistribution cases = {this.state.cases}
@@ -70,9 +70,11 @@ class Reviewer extends Component {
         let URL = `http://localhost:3002/api/cases/${id}`
         console.log('URL: ' + URL);
         axios.put(URL, {
-          reviewed_by_reviewer: true
+          reviewed_by_reviewer: true,
+          assignee : "reviewed by reviewer"
         })
         cas.reviewed_by_reviewer = true
+        cas.assignee = "reviewed by reviewer"
       }
       return cas
     })})
@@ -83,9 +85,11 @@ class Reviewer extends Component {
       if(cas._id === id){
         let URL = `http://localhost:3002/api/cases/${id}`
         axios.put(URL, {
-          reviewed_by_reviewer: false
+          reviewed_by_reviewer: false,
+          assignee: "lawyer"
         })
         cas.reviewed_by_reviewer = false
+        cas.assignee = "lawyer"
       }
       return cas
     })})
@@ -110,8 +114,5 @@ class Reviewer extends Component {
 }
   
 
-// Reviewer.propTypes = {
-//   cases: PropTypes.array.isRequired
-// }
 
 export default Reviewer;

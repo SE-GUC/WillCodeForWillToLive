@@ -28,11 +28,12 @@ class AlertDialogAdminRegister extends React.Component {
         address: this.props.stateadmin.address,
         password: this.props.stateadmin.password
       }
+     
       const response =nfetch(`http://localhost:3002/api/admin`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' }
-    }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
+        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
+    }).then(res => res.json()).then(json => {this.setState({msg:Object.values(json)[0]})}).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
 
@@ -43,7 +44,7 @@ class AlertDialogAdminRegister extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
           Submit 
         </Button>
         <Dialog

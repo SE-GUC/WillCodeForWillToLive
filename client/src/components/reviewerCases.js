@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
   import axios from 'axios';
+  import jwt from 'jsonwebtoken';
+  import tokenkey from '../config/keys'
 
 
   
   class reviewerCases extends Component {
       state={
           reviewerCases:[],
-          username: "hadilee"
+          username: ''
       }
 
       handleClick1 = () => {
@@ -28,7 +30,23 @@ import React, { Component } from 'react';
 
 
       componentDidMount(){
-       axios.get('http://localhost:3002/api/reviewer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({reviewerCases:element.data}))
+        jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
+          if(err){alert('please make sure you are logged in')
+          document.location.href = '/loginemployee'
+        }else{
+          const usernamepay = payload.username
+          axios.get('http://localhost:3002/api/reviewer/getCases/'+usernamepay,{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+          if(element.msg===undefined){  
+          this.setState({reviewerCases:element.data})}
+        else{
+          alert(element.msg)
+        }
+        }
+        )
+        }
+      }
+        )
+       
        
       }
 

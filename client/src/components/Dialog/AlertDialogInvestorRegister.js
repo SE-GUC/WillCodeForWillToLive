@@ -32,7 +32,7 @@ class AlertDialogInvestorRegister extends React.Component {
       const response =nfetch(`http://localhost:3002/api/investor`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' }
+        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
     }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
@@ -44,7 +44,7 @@ class AlertDialogInvestorRegister extends React.Component {
   render() {
     return (
       <div>
-        <Button fullWidth variant="outlined" color="primary" onClick={this.handleClickOpen}>
+        <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
           Sign Up 
         </Button>
         <Dialog
@@ -60,7 +60,7 @@ class AlertDialogInvestorRegister extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            <Button onClick={this.handleClose} variant="outlined" color="primary" autoFocus>
               OK
             </Button>
           </DialogActions>

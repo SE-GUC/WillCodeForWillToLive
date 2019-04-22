@@ -4,7 +4,8 @@
 This is an implementation of the Sumerge project for the Software Engineering course 'CSEN601'
 
 -----
-## Important: heroku Deployment link:https://sumerge-se.herokuapp.com/
+## Important:Server heroku Deployment link:https://sumerge-se.herokuapp.com/
+## Important:Client heroku Deployment link:https://sumerge-portal.herokuapp.com/
 ## Contribution
 - Clone the repo.
 - Check out to your branch ```git checkout <branchname>```.
