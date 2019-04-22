@@ -19,6 +19,7 @@ import investorprofile from './components/profiles/investorprofile'
 import lawyerprofile from './components/profiles/lawyerprofile'
 import reviewerprofile from './components/profiles/reviewerprofile'
 import adminprofile from './components/profiles/adminprofile'
+import adminprofileA from './components/profiles/adminprofileA'
 import UnregisteredUser from './components/unregisteredUser'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
@@ -38,6 +39,7 @@ class App extends Component {
           <Route path="/lawyerprofile" component={lawyerprofile} />
           <Route path="/reviewerprofile" component={reviewerprofile} />
           <Route path="/adminprofile" component={adminprofile} />
+          <Route path="/adminprofileA" component={adminprofileA} />
           <Route path="/unregisteredUser" component={UnregisteredUser} />
             <Route path="/Companies" component={Companies} />
             <Route path="/Form" component={Form} />
