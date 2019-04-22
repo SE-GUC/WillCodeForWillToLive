@@ -17,6 +17,7 @@ const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
 const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
+const Login = require('./middleware/login')
 
 /** * global constants ***/
 const app = express()
@@ -35,14 +36,14 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 });
 
 app.use(function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
   next();
 });
 
@@ -58,6 +59,7 @@ app.use('/api/form', form)
 app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)
 app.use('/api/formTemplate', formTemplate)
+app.use('/login',Login)
 
 // app.use(function(req,res,next){
 //   res.header("Access-Control-Allow-Origin","*");

@@ -4,18 +4,46 @@ const router = express.Router();
 const validator = require('../../validations/lawyerValidation');
 const functions = require('../../fn');
 const Case = require('../../models/Case')
+const jwt = require('jsonwebtoken')
+const tokenkey = require('../../config/keys').secretkey
 
 // Models
 const Lawyer = require('../../models/lawyer');
 
-router.get('/', async (req,res) => {
+const checkTocken = (req, res, next) =>{
+    const header = req.headers['authorization']
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ')
+    const token = bearer[1]
+    req.token = token
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+  }
+
+router.get('/',checkTocken, async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     const lawyers = await Lawyer.find()
     res.json({data: lawyers})
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 
 
-router.get('/sortTaskByID', async (req,res) => {
+router.get('/sortTaskByID', checkTocken,async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     console.log('Entered sortID')
     try{
         const tasks = await functions.sortTaskById()
@@ -25,9 +53,18 @@ router.get('/sortTaskByID', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
  })
 
-router.get('/sortTaskByCreationDate', async (req,res) => {
+router.get('/sortTaskByCreationDate',checkTocken, async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
         const tasks = await functions.sortTaskByCreationDate()
         
@@ -36,21 +73,48 @@ router.get('/sortTaskByCreationDate', async (req,res) => {
     catch(error){
         console.log({error: 'Error in sort Task has occurred'})
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 
 })
-//search using /api/lawyer/getCases/
-router.get('/getCases', async (req, res)=>{
+//search using /api/lawyer/get/
+router.get('/getCases',checkTocken, async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     res.redirect('./../cases/')
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
-router.get('/getCases/:lawyer', async (req, res)=>{
-    const lawyer = req.params.lawyer
+router.get('/getCases/:lawyer', checkTocken,async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
+    const lawyer =payload.username
     res.redirect('../../cases/lawyerCases/' + lawyer)
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
-router.get('/:id', async (req, res)=>{
+router.get('/:id',checkTocken ,async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
-        const lawyer = await Lawyer.findById(req.params.id)
+        const lawyer = await Lawyer.findById(payload.id)
         if(!lawyer){
             res.status(404).send({error: 'We can not find what you are looking for'});
         }else{
@@ -60,9 +124,18 @@ router.get('/:id', async (req, res)=>{
     catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 //as a lawyer, assign task to investor
-router.put("/task/:username/:taskID", async (req, res) => {
+router.put("/task/:username/:taskID", checkTocken,async (req, res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try {
         Task.findByIdAndUpdate(req.params.taskID, {
             username: req.body.assignee
@@ -84,11 +157,20 @@ router.put("/task/:username/:taskID", async (req, res) => {
             msg: error.message
         });
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 });
 module.exports = router;
 
 
-router.post('/api/spcForm', async (req,res) => {
+router.post('/api/spcForm',  checkTocken,async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -97,10 +179,19 @@ router.post('/api/spcForm', async (req,res) => {
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 
-router.post('/api/sscForm', async (req,res) => {
+router.post('/api/sscForm', checkTocken,async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -109,10 +200,19 @@ router.post('/api/sscForm', async (req,res) => {
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 
-router.post('/', async (req,res) => {
+router.post('/', checkTocken,async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'admin'){
     try{
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -122,12 +222,21 @@ router.post('/', async (req,res) => {
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', checkTocken,async (req, res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
-        const lawyer = await Lawyer.findById(req.params.id)
+        const lawyer = await Lawyer.findById(payload.id)
         if(!lawyer){
             res.status(404).send({error: 'We can not find what you are looking for'});
         }
@@ -141,10 +250,19 @@ router.put('/:id', async (req, res) => {
     catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
-router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
-  try {
+router.put('/assigncasestomyselfthelawyer/:id/', checkTocken,async (req, res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
+    try {
     const caseId = req.params.id
     const caseElement = await Case.findById(caseId)
     if (!caseElement) {
@@ -162,12 +280,21 @@ router.put('/assigncasestomyselfthelawyer/:id/', async (req, res) => {
   } catch (error) {
     res.status(400).send({ error: 'Something went wrong' })
   }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 //UPDATE SPcFORM STATUS
 
-router.put('/spcForm/:id',async (req,res) =>{
-  try{
+router.put('/spcForm/:id',checkTocken,async (req,res) =>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
+    try{
       const form = await SpcForm.findById(req.params.id)
       if(!form){
           res.status(404).send({error: 'We can not find what you are looking for'});
@@ -186,12 +313,20 @@ router.put('/spcForm/:id',async (req,res) =>{
   catch(error){
       res.status(404).send({error: 'Something went wrong'});
 }
-
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 //UPDATE SscFORM STATUS
 
-router.put('/sscform/:id',async (req,res) =>{
+router.put('/sscform/:id',checkTocken,async (req,res) =>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
   try{
       const form = await SscForm.findById(req.params.id)
       if(!form){
@@ -211,12 +346,20 @@ router.put('/sscform/:id',async (req,res) =>{
   catch(error){
       res.status(404).send({error: 'Something went wrong'});
 }
-
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 //ADD A REVIEW
 
-router.post('/cases', async (req,res) => {
+router.post('/cases',checkTocken, async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
         const isValidated = validator.createValidation(req.body)
         if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })
@@ -225,9 +368,18 @@ router.post('/cases', async (req,res) => {
     }catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
-router.delete('/:id', async (req,res) => {
+router.delete('/:id', checkTocken,async (req,res) => {
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     try{
         const deletedLawyer = await Lawyer.findByIdAndRemove(req.params.id)
         res.json({msg: 'Done'})
@@ -235,20 +387,60 @@ router.delete('/:id', async (req,res) => {
     catch(error){
         res.status(404).send({error: 'Something went wrong'});
     }
+}
+else{res.json({msg: 'You shall not pass'})}
+}
 })
-router.post('/createsscform', async (req, res)=>{
+})
+router.post('/createsscform', checkTocken,async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     res.redirect(307,'./../sscform')
+}
+else{res.json({msg: 'You shall not pass'})}
+}
 })
-router.post('/createspcform', async (req, res)=>{
+})
+router.post('/createspcform', checkTocken,async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
     res.redirect(307,'./../spcform')
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 router.put('/updatesscform/:id', async (req, res)=>{
-    const formid=req.params.id
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
+    const formid=payload.id
     res.redirect(307,'./../sscform/'+formid)
+}
+else{res.json({msg: 'You shall not pass'})}
+}
 })
-router.put('/updatespcform/:id', async (req, res)=>{
-    const formid=req.params.id
+})
+router.put('/updatespcform/:id',checkTocken ,async (req, res)=>{
+    jwt.verify(req.token,tokenkey,async (err,payload) =>{
+        if(err){
+          res.status(403).send(err);
+        }else{
+          if(payload.type === 'lawyer'){
+    const formid=payload.id
     res.redirect(307,'./../spcform/'+formid)
+}
+else{res.json({msg: 'You shall not pass'})}
+}
+})
 })
 
 module.exports = router;

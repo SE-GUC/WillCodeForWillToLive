@@ -1,0 +1,341 @@
+[1mdiff --git a/client/src/components/Reviewer.js b/client/src/components/Reviewer.js[m
+[1mindex 6a97efe..6f0bbfd 100644[m
+[1m--- a/client/src/components/Reviewer.js[m
+[1m+++ b/client/src/components/Reviewer.js[m
+[36m@@ -8,6 +8,7 @@[m [mimport writeReview from './WriteReview'[m
+ import axios from 'axios'[m
+ import ReviewerDistribution from './ReviewerDistribution';[m
+ [m
+[32m+[m
+ //import styles from '../style.css'[m
+ [m
+ // const mongoose = require('mongoose')[m
+[36m@@ -41,7 +42,7 @@[m [mclass Reviewer extends Component {[m
+        <Header />[m
+          <React.Fragment>[m
+            <ReviewerDistribution cases = {this.state.cases}[m
+[31m-            addreview  = {this.addreview} [m
+[32m+[m[32m            addreview  = {this.addreview}[m
+             accept = {this.accept}[m
+             reject = {this.reject} />[m
+ [m
+[36m@@ -52,12 +53,12 @@[m [mclass Reviewer extends Component {[m
+       </div>[m
+ [m
+       /*this.props.reviewers.map((reviewer) => ([m
+[31m-        <ReviewerItem [m
+[31m-        key = {reviewer.id} [m
+[31m-        reviewer = {reviewer} [m
+[31m-        markComplete = {this.props.markComplete} [m
+[32m+[m[32m        <ReviewerItem[m
+[32m+[m[32m        key = {reviewer.id}[m
+[32m+[m[32m        reviewer = {reviewer}[m
+[32m+[m[32m        markComplete = {this.props.markComplete}[m
+         accept = {this.props.accept}[m
+[31m-        reject = {this.props.reject} /> [m
+[32m+[m[32m        reject = {this.props.reject} />[m
+       )*/[m
+       )[m
+       }[m
+[36m@@ -77,7 +78,7 @@[m [mclass Reviewer extends Component {[m
+       return cas[m
+     })})[m
+   }[m
+[31m-  [m
+[32m+[m
+   reject = (id) => {[m
+     this.setState({cases: this.state.cases.map(cas => {[m
+       if(cas._id === id){[m
+[36m@@ -108,10 +109,10 @@[m [mclass Reviewer extends Component {[m
+ }[m
+ [m
+ }[m
+[31m-  [m
+[32m+[m
+ [m
+ // Reviewer.propTypes = {[m
+ //   cases: PropTypes.array.isRequired[m
+ // }[m
+ [m
+[31m-export default Reviewer;[m
+\ No newline at end of file[m
+[32m+[m[32mexport default Reviewer;[m
+[1mdiff --git a/routes/api/admin.js b/routes/api/admin.js[m
+[1mindex e72ddf5..27dcbf3 100644[m
+[1m--- a/routes/api/admin.js[m
+[1m+++ b/routes/api/admin.js[m
+[36m@@ -2,11 +2,13 @@[m [mconst express = require('express')[m
+ // const Joi = require('joi')[m
+ // const uuid = require('uuid')[m
+ const router = express.Router()[m
+[32m+[m[32mconst jwt = require('jsonwebtoken')[m
+ // const mongoose = require('mongoose')[m
+ [m
+ const Admin = require('../../models/admin')[m
+ const validator = require('../../validations/adminValidations')[m
+ const Case = require('../../models/Case')[m
+[32m+[m[32mconst tokenkey = require('../../config/keys').secretkey[m
+ // const Task = require('../../models/Task')[m
+ /* const EntityEmployees = [[m
+   new EntityEmployee('Amr', 'Ahmed', 'ElNahas', new Date(1998, 6, 7), 'male', 'Egyptian', 'Passport', 6969696969, 'lawyer', 8675309, 213432532, 'amrtea.edu@gmail.com', 'Cairo'),[m
+[36m@@ -14,11 +16,31 @@[m [mconst Case = require('../../models/Case')[m
+   new EntityEmployee('Ron', 'redacted', 'Swanson', new Date(1978, 8, 2), 'male', 'American', 'Passport', 7438903803, 'lawyer', 8675309, 2314839220, 'redacted@gmail.com', 'Pawnee')[m
+ ] */[m
+ // router.get('/', (req, res) => res.json({ data: EntityEmployees }))[m
+[31m-router.get('/', async (req, res) => {[m
+[31m-  Admin.find().then((admins) => {[m
+[31m-    res.send({ admins })[m
+[31m-  }, (err) => {[m
+[31m-    res.status(400).send(err)[m
+[32m+[m[32mconst checkTocken = (req, res, next) =>{[m
+[32m+[m[32m  const header = req.headers['authorization'][m
+[32m+[m[32m  if (typeof header !== 'undefined') {[m
+[32m+[m[32m    const bearer = header.split(' ')[m
+[32m+[m[32m    const token = bearer[1][m
+[32m+[m[32m    req.token = token[m
+[32m+[m[32m    next()[m
+[32m+[m[32m  } else {[m
+[32m+[m[32m    res.sendStatus(403)[m
+[32m+[m[32m  }[m
+[32m+[m[32m}[m
+[32m+[m[32mrouter.get('/',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey,(err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+[32m+[m[32m      Admin.find().then((admins) => {[m
+[32m+[m[32m        res.send({ admins })[m
+[32m+[m[32m      }, (err) => {[m
+[32m+[m[32m        res.status(400).send(err)[m
+[32m+[m[32m      })}else{[m
+[32m+[m[32m        res.json({msg: 'You shall not pass'})[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+   })[m
+ })[m
+ [m
+[36m@@ -75,16 +97,28 @@[m [mrouter.get('/', async (req, res) => {[m
+   EntityEmployees.push(newEntityEmployee)[m
+   return res.json({ data: newEntityEmployee })[m
+ }) */[m
+[31m-router.post('/', async (req, res) => {[m
+[31m-  try {[m
+[31m-    const isValidated = validator.createValidation(req.body)[m
+[31m-    if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })[m
+[31m-    Admin.create(req.body).then((newAdmin) => {[m
+[31m-      res.json({ message: 'Admin was created successfully', data: newAdmin })[m
+[31m-    }, (err) => { res.status(400).send(err) })[m
+[31m-  } catch (error) {[m
+[31m-    res.status(400).send({ error: 'Error' })[m
+[31m-  }[m
+[32m+[m
+[32m+[m
+[32m+[m[32mrouter.post('/',checkTocken ,async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey,(err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+[32m+[m[32m      try {[m
+[32m+[m[32m      const isValidated = validator.createValidation(req.body)[m
+[32m+[m[32m      if (isValidated.error) return res.status(400).send({ error: isValidated.error.details[0].message })[m
+[32m+[m[32m      Admin.create(req.body).then((newAdmin) => {[m
+[32m+[m[32m        res.json({ message: 'Admin was created successfully', data: newAdmin })[m
+[32m+[m[32m      }, (err) => { res.status(400).send(err) })[m
+[32m+[m[32m    } catch (error) {[m
+[32m+[m[32m      res.status(400).send({ error: 'Error' })[m
+[32m+[m[32m    }}[m
+[32m+[m[32m    else{[m
+[32m+[m[32m        res.json({msg: 'You shall not pass'})[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  })[m
+ })[m
+ /* router.get('/:id', (req, res) => {[m
+   const EntityEmployeeId = req.params.id[m
+[36m@@ -96,18 +130,45 @@[m [mrouter.post('/', async (req, res) => {[m
+   }[m
+ }) */[m
+ [m
+[31m-router.get('/getCompanys', async (req, res) => {[m
+[31m-  res.redirect('./../company/')[m
+[32m+[m[32mrouter.get('/getCompanys',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey,(err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+[32m+[m[32m  res.redirect('./../company/')}[m
+[32m+[m[32m  else{[m
+[32m+[m[32m    res.json({msg: 'You shall not pass'})[m
+[32m+[m[32m  }[m
+[32m+[m[32m    }[m
+[32m+[m[32m  })[m
+ })[m
+ [m
+ //  search using /api/admin/getCases/[m
+[31m-router.get('/getCases', async (req, res) => {[m
+[31m-  res.redirect('./../cases/')[m
+[32m+[m[32mrouter.get('/getCases',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey,(err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+[32m+[m[32m         res.redirect('./../cases/')[m
+[32m+[m[32m        }[m
+[32m+[m[32m      else{[m
+[32m+[m[32m          res.json({msg: 'You shall not pass'})[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m  })[m
+ })[m
+ [m
+[31m-router.get('/:id', async (req, res) => {[m
+[32m+[m[32mrouter.get('/:id',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+   try {[m
+[31m-    const adminId = req.params.id[m
+[32m+[m[32m    const adminId = payload.id[m
+     const adminInstance = await Admin.findById(adminId)[m
+     if (!adminInstance) {[m
+       res.status(400).send({ error: 'not found' })[m
+[36m@@ -116,11 +177,20 @@[m [mrouter.get('/:id', async (req, res) => {[m
+     }[m
+   } catch (error) {[m
+     res.status(400).send({ error: 'error' })[m
+[31m-  }[m
+[32m+[m[32m  }}[m
+[32m+[m[32m  else{res.json({msg: 'You shall not pass'})}[m
+[32m+[m[32m}[m[41m  [m
+ })[m
+[31m-router.put('/:id', async (req, res) => {[m
+[31m-  try {[m
+[31m-    const adminId = req.params.id[m
+[32m+[m[32m})[m
+[32m+[m[32mrouter.put('/:id',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+[32m+[m[32m    try {[m
+[32m+[m[32m    const adminId = payload.id[m
+     const adminInstance = await Admin.findById(adminId)[m
+     if (!adminInstance) {[m
+       res.status(404).send({ error: 'not found' })[m
+[36m@@ -133,10 +203,21 @@[m [mrouter.put('/:id', async (req, res) => {[m
+     res.json({ message: 'updated successfuly' })[m
+   } catch (error) {[m
+     res.status(400).send({ error: 'error' })[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{res.json({msg: 'You shall not pass'})}[m
+   }[m
+[32m+[m
+[32m+[m[32m  })[m
+ })[m
+ [m
+[31m-router.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {[m
+[32m+[m[32mrouter.put('/assigncasestomyselftheadmin/:id/',checkTocken ,async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+   try {[m
+     const caseId = req.params.id[m
+     const caseElement = await Case.findById(caseId)[m
+[36m@@ -152,6 +233,10 @@[m [mrouter.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {[m
+   } catch (error) {[m
+     res.status(400).send({ error: 'Something went wrong' })[m
+   }[m
+[32m+[m[32m}[m
+[32m+[m[32melse{res.json({msg: 'You shall not pass'})}[m
+[32m+[m[32m}[m
+[32m+[m[32m})[m
+ })[m
+ [m
+ /* router.put('/:id', (req, res) => {[m
+[36m@@ -236,14 +321,24 @@[m [mrouter.put('/assigncasestomyselftheadmin/:id/', async (req, res) => {[m
+     res.json({ data: EntityEmployees })[m
+   }[m
+ }) */[m
+[31m-router.delete('/:id', async (req, res) => {[m
+[32m+[m[32mrouter.delete('/:id',checkTocken,async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+   try {[m
+[31m-    const adminId = req.params.id[m
+[32m+[m[32m    const adminId = payload.id[m
+     await Admin.findByIdAndRemove(adminId)[m
+     res.json({ message: 'Deleted successfully' })[m
+   } catch (error) {[m
+     res.status(404).send({ error: 'error' })[m
+   }[m
+[32m+[m[32m}[m
+[32m+[m[32melse{res.json({msg: 'You shall not pass'})}[m
+[32m+[m[32m}[m
+[32m+[m[32m})[m
+ })[m
+ // router.delete('/:id', (req, res) => {[m
+ /* const EntityEmployeeId = req.params.id[m
+[36m@@ -315,10 +410,30 @@[m [mrouter.put('/assigntasks/:id/', async (req, res) => {[m
+     res.status(400).send({ error: 'Something went wrong' })[m
+   }[m
+ }) */[m
+[31m-router.post('/createlawyer', async (req, res) => {[m
+[32m+[m[32mrouter.post('/createlawyer',checkTocken, async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+   res.redirect(307, './../Lawyer')[m
+[32m+[m[32m}[m
+[32m+[m[32melse{res.json({msg: 'You shall not pass'})}[m
+[32m+[m[32m}[m
+ })[m
+[31m-router.post('/createreviewer', async (req, res) => {[m
+[32m+[m[32m})[m
+[32m+[m[32mrouter.post('/createreviewer',checkTocken , async (req, res) => {[m
+[32m+[m[32m  jwt.verify(req.token,tokenkey, async (err,payload) =>{[m
+[32m+[m[32m    if(err){[m
+[32m+[m[32m      res.status(403).send(err);[m
+[32m+[m[32m    }[m
+[32m+[m[32m    else{[m
+[32m+[m[32m      if(payload.type === 'admin'){[m
+   res.redirect(307, './../reviewer')[m
+[32m+[m[32m}[m
+[32m+[m[32melse{res.json({msg: 'You shall not pass'})}[m
+[32m+[m[32m}[m
+[32m+[m[32m})[m
+ })[m
+ module.exports = router[m
+[1mdiff --git a/routes/api/reviewer.js b/routes/api/reviewer.js[m
+[1mindex 062a0c4..c205c0e 100644[m
+[1m--- a/routes/api/reviewer.js[m
+[1m+++ b/routes/api/reviewer.js[m
+[36m@@ -7,7 +7,8 @@[m [mconst Case = require('../../models/Case')[m
+ [m
+ const Reviewer = require('../../models/Reviewer');[m
+ const validator = require('../../validations/reviewerValidations')[m
+[31m-[m
+[32m+[m[32mconst tokenkey = require('../../config/keys').secretkey[m
+[32m+[m[32mconst jwt = require('jsonwebtoken')[m
+ //const reviewers = [new Reviewer('Pablo Escobar','1/1/1999','Male','Colombian','UUID','02091998','09021998','abulletinthedark@gmail.com','21 Medillin Street'),[m
+   //                  new Reviewer('Tata Escobar','4/3/1999','Female','Colombian','UUID','02091998','09021998','faithfulwife@gmail.com','21 Medillin Street')][m
+ [m
