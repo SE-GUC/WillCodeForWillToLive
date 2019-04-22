@@ -101,7 +101,10 @@ router.get('/',checkTocken, async (req, res) => {
 
 router.post('/',checkTocken ,async (req, res) => {
   jwt.verify(req.token,tokenkey,(err,payload) =>{
+    console.log(req.token)
+    console.log(tokenkey)
     if(err){
+      console.log('error hereeee')
       res.status(403).send(err);
     }else{
       if(payload.type === 'admin'){

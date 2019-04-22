@@ -63,7 +63,7 @@ class LoginEmployee extends React.Component{
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {'Content-Type': 'application/json'}
-    }).then(res => res.json()).then(json => console.log(json)).catch(err => console.log(err))
+    }).then(res => res.json()).then(json =>{localStorage.clear();localStorage.setItem('token',Object.values(json)); console.log(localStorage.getItem('token'))}).catch(err => console.log(err))
     }
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));

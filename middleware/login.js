@@ -10,18 +10,16 @@ const tokenkey = require('../config/keys').secretkey
 router.post('/', async (req, res) => {
   try {
     const { username, password } = req.body
-    console.log(username)
+    
     const admin = await Admin.findOne({ username: username })
-    console.log(admin)
+   
     if (admin) {
       if (admin.password === password) {
-        console.log('here')
         const payload = {
           id: admin._id,
           username: admin.username,
           type: 'admin'
         }
-        console.log(tokenkey)
         jwt.sign(payload, tokenkey, { expiresIn: '9999999h' },(err,token)=>{
           return res.json({ token })
           // return res.json({ token: `Bearer ${token}` })
@@ -31,7 +29,7 @@ router.post('/', async (req, res) => {
         res.status(400).send({ error: 'wrong password' })
       }
     } else {
-      const lawyer = await Lawyer.findOne({ username })
+      const lawyer = await Lawyer.findOne({ username})
       if (lawyer) {
         if (lawyer.password === password) {
           const payload = {
@@ -39,8 +37,10 @@ router.post('/', async (req, res) => {
             username: lawyer.username,
             type: 'lawyer'
           }
-          const token = jwt.sign(payload, tokenkey, { expiresIn: '9999999h' })
-          return res.json({ token: `Bearer ${token}` })
+          jwt.sign(payload, tokenkey, { expiresIn: '9999999h' },(err,token)=>{
+            return res.json({ token })
+            // return res.json({ token: `Bearer ${token}` })
+          })
         } else {
           res.status(400).send({ error: 'wrong password' })
         }
@@ -53,9 +53,12 @@ router.post('/', async (req, res) => {
               username: reviewer.username,
               type: 'reviewer'
             }
-            const token = jwt.sign(payload, tokenkey, { expiresIn: '9999999h' })
-            return res.json({ token: `Bearer ${token}` })
-          } else {
+             jwt.sign(payload, tokenkey, { expiresIn: '9999999h' },(err,token)=>{
+              return res.json({ token })
+              // return res.json({ token: `Bearer ${token}` })
+            })
+          }
+            else {
             res.status(400).send({ error: 'wrong password' })
           }
         } else {
@@ -67,8 +70,10 @@ router.post('/', async (req, res) => {
                 username: investor.username,
                 type: 'investor'
               }
-              const token = jwt.sign(payload, tokenkey, { expiresIn: '9999999h' })
-              return res.json({ token: `Bearer ${token}` })
+               jwt.sign(payload, tokenkey, { expiresIn: '9999999h' },(err,token)=>{
+                return res.json({ token })
+                // return res.json({ token: `Bearer ${token}` })
+              })
             } else {
               res.status(400).send({ error: 'wrong password' })
             }
