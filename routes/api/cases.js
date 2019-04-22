@@ -107,6 +107,25 @@ router.put('/:id', async (req, res) => {
     }
 })
 
+router.put('/updateByCompanyName/:id', async (req, res) => {
+    try{
+        const caseId = req.params.id
+        const caseElement = await Case.findOne({companyName: caseId})
+        if(!caseElement){
+            res.status(404).send({error: 'We can not find what you are looking for'});
+        }
+        const isValidated = validator.updateValidation(req.body)
+        if (isValidated.error) {
+            res.status(400).send({ error: isValidated.error.details[0].message })
+        }
+        const updatedCase = await Case.findOneAndUpdate({companyName: caseId}, req.body)
+        res.json({msg: 'update done'})
+    }
+    catch(error){
+        res.status(404).send({error: 'Something went wrong'});
+    }
+})
+
 
 
 router.delete('/:id', async (req,res) => {

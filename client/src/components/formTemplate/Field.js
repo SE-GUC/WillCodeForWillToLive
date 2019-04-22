@@ -5,6 +5,7 @@ import useFieldState from './useFieldState'
 import StringConstraint from './StringConstraint'
 import NumberConstraint from './NumberConstraint'
 import DateConstraint from './DateConstraint'
+import DropdownItems from './DropdownItems'
 
 const styles = theme =>  ({
     root: {
@@ -61,7 +62,7 @@ const Field = ({index, classes, deleteField, updateField}) => {
         <h3>Field {index+1}</h3>
         <div id='common-props'>
             <TextField
-                required={true} className={classes.textField} variant="outlined"
+                required={true} className={classes.textField} 
                 onChange={e => {
                     setAttribute(e.target.name, e.target.value)
                     updateField(index, attributes)
@@ -70,7 +71,7 @@ const Field = ({index, classes, deleteField, updateField}) => {
                 name='nameArabic' label='Name Arabic'
             />
             <TextField
-                required={true} className={classes.textField} variant="outlined"
+                required={true} className={classes.textField} 
                 onChange={e => setAttribute(e.target.name, e.target.value)}
                 name='nameEnglish' label='Name English'
             />
@@ -100,12 +101,15 @@ const Field = ({index, classes, deleteField, updateField}) => {
                 <MenuItem onClick={_ => handleDropdownClick('fieldType', 'text')}>Text</MenuItem>
                 <MenuItem onClick={_ => handleDropdownClick('fieldType', 'number')}>Number</MenuItem>
                 <MenuItem onClick={_ => handleDropdownClick('fieldType', 'date')}>Date</MenuItem>
+                <MenuItem onClick={_ => handleDropdownClick('fieldType', 'dropdown')}>Dropdown</MenuItem>
             </Menu>
             </div>
             <div id='constraints'>
             {constraints.map((e, i) => getConstraintTag(e, i))}
             </div>
-            <Button className={classes.button} variant='contained' onClick={addConstraint}>Add Constraint</Button>
+            {attributes.fieldType !== 'dropdown'? undefined:<DropdownItems 
+                constraints={constraints} addConstraint={addConstraint} updateConstraint={updateConstraint} deleteConstraint={deleteConstraint} />}
+            {attributes.fieldType && attributes.fieldType !== 'dropdown'? <Button className={classes.button} variant='contained' onClick={addConstraint}>Add Constraint</Button>:undefined}
             <Button className={classes.button} variant='contained' onClick={() => deleteField(index)}>Remove field</Button>
             </Paper>
         </div>
