@@ -4,7 +4,6 @@ import ReviewerItem from './ReviewerItem'
 import PropTypes from 'prop-types'
 import nfetch from 'node-fetch'
 import Header from './layout/ReviewerHeader'
-import writeReview from './WriteReview'
 import axios from 'axios'
 import ReviewerDistribution from './ReviewerDistribution';
 
@@ -39,13 +38,15 @@ class Reviewer extends Component {
       <div className = "container">
       <div >
        <Header />
+       <Route path="/" render= {props => (
          <React.Fragment>
-           <ReviewerDistribution cases = {this.state.cases}
-            addreview  = {this.addreview} 
-            accept = {this.accept}
-            reject = {this.reject} />
-
-         </React.Fragment>
+         <ReviewerDistribution cases = {this.state.cases}
+          addreview  = {this.addreview} 
+          accept = {this.accept}
+          reject = {this.reject} />
+       </React.Fragment>
+       )} />
+         
 
       </div>
 

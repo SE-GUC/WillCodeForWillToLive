@@ -4,7 +4,7 @@ import lawyerCases from './components/lawyerCases'
 import reviewerCases from './components/reviewerCases';
 import investor from './components/investor'
 import Reviewer from './components/reviewer';
-import Form from './components/form/Form'
+import ReviewerA from './components/reviewerA';
 import {withStyles} from '@material-ui/core/styles'
 import appStyle from './appStyle.js'
 import RegisterLawyer from './components/pages/RegisterLawyer';
@@ -28,6 +28,18 @@ import ReviewerSearch from './components/ReviewerSearch'
 import ReviewerSearchA from './components/ReviewerSearchA'
 import DisplayForm from './components/form/DisplayForm'
 import loginInvestor from './components/loginInvestor'
+import EditForm from './components/form/EditForm'
+import CreateForm from './components/form/CreateForm'
+import DisplayForm from './components/form/DisplayForm'
+import LawyerA from './components/lawyerA'
+import InvestorA from './components/investorA'
+import RegisterReviewerA from './components/pages/RegisterReviewerA'
+import RegisterLawyerA from './components/pages/RegisterLawyerA'
+import RegisterAdminA from './components/pages/RegisterAdminA'
+import RegisterInvestorA from './components/pages/RegisterInvestorA'
+import LoginEmployee from './components/pages/LoginEmployee';
+import DisplayAllForms from './components/form/DisplayAllForms'
+
 
 class App extends Component {
   render() {
@@ -63,6 +75,34 @@ class App extends Component {
           <Route path="/ReviewerSearch" component={ReviewerSearch} />
           <Route path="/ReviewerSearchA" component={ReviewerSearchA} />
     			<Route path="/DisplayForm/:id" component={DisplayForm} />
+            <Route path="/Companies" component={Companies} />
+            <Route path="/createForm" component={CreateForm} />
+            <Route path="/displayForm/:id" component={DisplayForm} />
+            <Route path="/editForm/:id" component={EditForm} />
+            <Route path="/displayAllForms/:id" component={DisplayAllForms} />
+            <Route path="/registerLawyer" component={RegisterLawyer} />
+            <Route path="/registerReviewer" component={RegisterReviewer} />
+            <Route path="/cases" component={Cases} />
+            <Route path = "/Reviewer" component = {Reviewer} />
+            <Route path = "/ReviewerA" component = {ReviewerA} />
+            <Route path = "/reviewerassign" component = {reviewerassign} />
+            <Route path="/Lawyer" component = {lawyer} />
+            <Route path="/investor" component={investor} />
+            <Route path="/lawyerCases" component={lawyerCases} />
+            <Route path="/reviewerCases" component={reviewerCases}/>
+            <Route path="/formTemplate" component={FormTemplate} />
+            <Route path="/registerAdmin" component = {RegisterAdmin}/>
+            <Route path="/signup" component = {RegisterInvestor} />
+            <Route path="/LawyerSearch" component = {lawyerSearch} />
+            <Route path="/ReviewerSearch" component={ReviewerSearch} />
+			      <Route path="/DisplayForm/:id" component={DisplayForm} />
+            <Route path="/LawyerA" component={LawyerA} />
+            <Route path = "/InvestorA" component = {InvestorA} />
+            <Route path = "/RegisterReviewerA" component = {RegisterReviewerA} />
+            <Route path = "/RegisterLawyerA" component = {RegisterLawyerA} />
+            <Route path = "/RegisterAdminA" component = {RegisterAdminA} />
+            <Route path = "/signupA" component = {RegisterInvestorA} />
+      <Route path="/loginEmployee" component={LoginEmployee}/>
           </Switch>
         </Router>
       </div>
