@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ReviewerHeader() {
+export default function InvestorHeader() {
   return (
     <header style = {headerStyle}>
-        <h1>Reviewer's CasesList</h1>
-        <Link style={linkStyle} to="/Reviewer">English</Link> | <Link style={linkStyle} to="/ReviewerA">Arabic</Link>
+        <h1>Investor's CasesList</h1>
+        <Link style={linkStyle} to="/Investor">English</Link> | <Link style={linkStyle} to="/InvestorA">عربي</Link>
     </header>
   )
 }

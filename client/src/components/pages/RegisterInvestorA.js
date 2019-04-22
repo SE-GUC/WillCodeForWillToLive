@@ -16,7 +16,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
-import AlertDialogInvestorRegister from '../Dialog/AlertDialogInvestorRegister'
+import AlertDialogInvestorRegisterA from '../Dialog/AlertDialogInvestorRegisterA'
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -53,15 +53,15 @@ const styles = theme => ({
 const genders = [
     {
       value: 'MALE',
-      label: 'M',
+      label: 'ر',
     },
     {
       value: 'FEMALE',
-      label: 'F',
+      label: 'م',
     },
   ];
 
-  class RegisterInvestor extends React.Component {
+  class RegisterInvestorA extends React.Component {
     state = {
         email: '',
   username: '',
@@ -93,68 +93,68 @@ const genders = [
 
   return (
     <main className={classes.main}>
-    <Link style={linkStyle} to="/signup">English</Link> | <Link style={linkStyle} to="/signupA">عربي</Link>
+     <Link style={linkStyle} to="/signup">English</Link> | <Link style={linkStyle} to="/signupA">عربي</Link>
       <CssBaseline />
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          تسجيل
         </Typography>
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
+            <InputLabel htmlFor="email">البريد الالكتروني</InputLabel>
             <Input value={this.state.email}
           onChange={this.handleChange('email')} id="email" name="email" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Username</InputLabel>
+            <InputLabel htmlFor="text">اسم المستخدم</InputLabel>
             <Input value={this.state.username}
           onChange={this.handleChange('username')} id="username" name="username"  autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">ID</InputLabel>
+            <InputLabel htmlFor="text">الهوية</InputLabel>
             <Input value={this.state.ID}
           onChange={this.handleChange('ID')} id="ID" name="ID" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Type of ID</InputLabel>
+            <InputLabel htmlFor="text">نوعية الهوية</InputLabel>
             <Input value={this.state.typeOfID}
           onChange={this.handleChange('typeOfID')} id="typeOfID" name="typeOfID" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Name</InputLabel>
+            <InputLabel htmlFor="text">الاسم</InputLabel>
             <Input value={this.state.name}
           onChange={this.handleChange('name')} id="name" name="name" autoComplete="name" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Nationality</InputLabel>
+            <InputLabel htmlFor="text">الموطن</InputLabel>
             <Input value={this.state.nationality}
           onChange={this.handleChange('nationality')} id="nationality" name="nationality" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="number">Capital</InputLabel>
+            <InputLabel htmlFor="number">رأس المال</InputLabel>
             <Input value={this.state.capital}
           onChange={this.handleChange('capital')} type = "number" id="capital" name="capital" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="date">Date fo Birth</InputLabel>
+            <InputLabel htmlFor="date">تاريخ الميلاد</InputLabel>
             <Input value={this.state.DOB}
           onChange={this.handleChange('DOB')} type = "date" id="DOB" name="DOB"  autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="number">Mobile Number</InputLabel>
+            <InputLabel htmlFor="number">رقم الموبايل</InputLabel>
             <Input value={this.state.mobileNumber}
           onChange={this.handleChange('mobileNumber')} type = "number" id="mobileNumber" name="mobileNumber"  autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Address</InputLabel>
+            <InputLabel htmlFor="text">العنوان</InputLabel>
             <Input value={this.state.address}
           onChange={this.handleChange('address')} id="address" name="address" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
-            <InputLabel htmlFor="text">Fax Number</InputLabel>
+            <InputLabel htmlFor="text">رقم الفاكس</InputLabel>
             <Input value={this.state.faxNumber}
           onChange={this.handleChange('faxNumber')} type="number" id="faxNumber" name="faxNumber" autoFocus />
           </FormControl>
@@ -163,7 +163,7 @@ const genders = [
           required
           id="gender"
           select
-          label="Gender"
+          label="الجنس"
           className={classes.textField}
           value={this.state.gender}
           onChange={this.handleChange('gender')}
@@ -173,7 +173,7 @@ const genders = [
               className: classes.menu,
             },
           }}
-          helperText="Please select your gender"
+          helperText="برجاء اختيار الجنس التابع لك"
           margin="normal"
         >
           {genders.map(option => (
@@ -184,7 +184,7 @@ const genders = [
         </TextField>
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-        <InputLabel htmlFor="adornment-password">Password</InputLabel>
+        <InputLabel htmlFor="adornment-password">كلمة السر</InputLabel>
           <Input
             id="adornment-password"
             type={this.state.showPassword ? 'text' : 'password'}
@@ -202,7 +202,7 @@ const genders = [
             }
           />
         </FormControl>
-        <AlertDialogInvestorRegister styles={{marginLeft:100}} stateinvestor={this.state}/>
+        <AlertDialogInvestorRegisterA styles={{marginLeft:100}} stateinvestor={this.state}/>
         </form>
       </Paper>
     </main>
@@ -210,15 +210,15 @@ const genders = [
 }
 }
 
-RegisterInvestor.propTypes = {
+RegisterInvestorA.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 const linkStyle = {
-  color:'#000',
-  float: 'center',
-  align:'center',
-  textDecoration: 'none'
-}
+    color:'#000',
+    float: 'center',
+    align:'center',
+    textDecoration: 'none'
+  }
 
-export default withStyles(styles)(RegisterInvestor);
+export default withStyles(styles)(RegisterInvestorA);

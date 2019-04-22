@@ -1,9 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose')
 
 const Company = require('../../models/Company');
 const validator = require('../../validations/CompanyValidation');
+
+const checkTocken = (req, res, next) =>{
+    const header = req.headers['authorzation']
+    if (typeof header !== 'undefined') {
+      const bearer = header.split(' ')
+      const token = bearer[1]
+      req.token = token
+      next()
+    } else {
+      res.sendStatuss(403)
+    }
+  }
 
 router.get('/', async (req,res) => {
     const Companys = await Company.find()

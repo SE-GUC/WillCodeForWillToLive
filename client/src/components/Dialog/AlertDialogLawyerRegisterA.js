@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import nfetch from 'node-fetch'
 
-class AlertDialogLawyerRegister extends React.Component {
+class AlertDialogLawyerRegisterA extends React.Component {
   state = {
     open: false,
     msg:''
@@ -30,7 +30,7 @@ class AlertDialogLawyerRegister extends React.Component {
       const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
+        headers: {'Content-Type': 'application/json' }
     }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
@@ -43,7 +43,7 @@ class AlertDialogLawyerRegister extends React.Component {
     return (
       <div>
         <Button fullWidth variant="contained" color="primary" onClick={this.handleClickOpen}>
-          Submit 
+          ارسال 
         </Button>
         <Dialog
           open={this.state.open}
@@ -59,7 +59,7 @@ class AlertDialogLawyerRegister extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary" autoFocus>
-              OK
+             حسنا
             </Button>
           </DialogActions>
         </Dialog>
@@ -68,4 +68,4 @@ class AlertDialogLawyerRegister extends React.Component {
   }
 }
 
-export default AlertDialogLawyerRegister;
+export default AlertDialogLawyerRegisterA;
