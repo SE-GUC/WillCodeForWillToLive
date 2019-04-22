@@ -50,7 +50,8 @@ const caseSchema = new Schema({
    },
     paid: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     currency: {
         type: String,
