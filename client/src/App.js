@@ -24,6 +24,7 @@ import RegisterInvestor from './components/pages/RegisterInvestor'
 import lawyerSearch from './components/lawyerSearch'
 import ReviewerSearch from './components/ReviewerSearch'
 import DisplayForm from './components/form/DisplayForm'
+import LoginEmployee from './components/pages/LoginEmployee';
 
 class App extends Component {
   render() {
@@ -55,6 +56,7 @@ class App extends Component {
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
 			<Route path="/DisplayForm/:id" component={DisplayForm} />
+      <Route path="/loginEmployee" component={LoginEmployee}/>
           </Switch>
         </Router>
       </div>
