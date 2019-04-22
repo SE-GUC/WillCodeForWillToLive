@@ -44,9 +44,8 @@
               return cas
             })
           })
-       } 
-  
+       }
+
   }
-  
+
   export default investor;
-    

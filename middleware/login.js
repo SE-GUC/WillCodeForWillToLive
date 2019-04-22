@@ -7,19 +7,26 @@ const Investor = require('../models/Investor')
 const jwt = require('jsonwebtoken')
 const tokenkey = require('../config/keys').secretkey
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { username, password } = req.body
-    const admin = await Admin.findOne({ username })
+    console.log(username)
+    const admin = await Admin.findOne({ username: username })
+    console.log(admin)
     if (admin) {
       if (admin.password === password) {
+        console.log('here')
         const payload = {
           id: admin._id,
           username: admin.username,
           type: 'admin'
         }
-        const token = jwt.sign(payload, tokenkey, { expiresIn: '9999999h' })
-        return res.json({ token: `Bearer ${token}` })
+        console.log(tokenkey)
+        jwt.sign(payload, tokenkey, { expiresIn: '9999999h' },(err,token)=>{
+          return res.json({ token })
+          // return res.json({ token: `Bearer ${token}` })
+        })
+
       } else {
         res.status(400).send({ error: 'wrong password' })
       }
@@ -72,6 +79,8 @@ router.post('/login', async (req, res) => {
       }
     }
   } catch (e) {
+    console.log(e)
     return res.status(400).json({ error: 'something went wrong' })
   }
 })
+module.exports = router

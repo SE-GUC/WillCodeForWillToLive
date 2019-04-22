@@ -17,10 +17,14 @@ const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
 const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
-
+const login = require('./middleware/login')
+const uri = require('./config/keys.js').mongoURI
 /** * global constants ***/
 const app = express()
 const db = process.env.mongoURI
+
+
+console.log(`============================================================DB: ${db}`)
 
 mongoose.connect(db, {useNewUrlParser: true})
   .then(() => console.log('Connected to Database'))
@@ -52,6 +56,7 @@ app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
 app.use('/api/task', tasks)
 app.use('/api/investor', investors)
+app.use('/api/login', login)
 app.use('/api/company', companyRouter)
 app.use('/api/externalEntitys', externalEntitys)
 app.use('/api/form', form)
