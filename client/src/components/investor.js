@@ -11,7 +11,13 @@
       }
       
       componentDidMount(){
-       axios.get('http://localhost:3002/api/cases').then(res => Object.values(res)[0]).then(element => this.setState({cases :element.data}))
+       axios.get('http://localhost:3002/api/investor/getCases').then(res => Object.values(res)[0]).then(element => {
+        if(element.msg===undefined){  
+       this.setState({cases :element.data})
+        }else{
+          alert(element.msg)
+        }
+        })
        console.log('State: '+ this.state.cases)
       }
       render() {
@@ -33,7 +39,7 @@
           this.setState({
             cases: this.state.cases.map(cas => {
               if(cas._id === id){
-                let URL = `http://localhost:3002/api/cases/${id}`
+                let URL = `http://localhost:3002/api/investor/getCases/${id}`
                 axios.put(URL,{
                   fees: "0",
                   paid: true

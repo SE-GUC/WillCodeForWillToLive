@@ -27,7 +27,14 @@ class adminprofile extends Component {
       }
       else{
         const id= payload.id
-        axios.get('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data})).catch(er => alert("something went wrong"))
+        axios.get('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+        if(element.msg===undefined){
+        this.setState({details:element.data})
+        }
+        else{
+          alert(element.msg)
+        }       
+        }).catch(er => alert("something went wrong"))
       }
     })
    }
