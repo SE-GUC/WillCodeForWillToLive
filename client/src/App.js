@@ -21,19 +21,18 @@ import adminprofile from './components/profiles/adminprofile'
 import UnregisteredUser from './components/unregisteredUser'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
+import About from './components/About'
 import lawyerSearch from './components/lawyerSearch'
 import ReviewerSearch from './components/ReviewerSearch'
 import EditForm from './components/form/EditForm'
 import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
-
 import LawyerA from './components/lawyerA'
 import InvestorA from './components/investorA'
 import RegisterReviewerA from './components/pages/RegisterReviewerA'
 import RegisterLawyerA from './components/pages/RegisterLawyerA'
 import RegisterAdminA from './components/pages/RegisterAdminA'
 import RegisterInvestorA from './components/pages/RegisterInvestorA'
-
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
 import Homepage from './components/WelcomePage/Main'
@@ -71,6 +70,7 @@ class App extends Component {
             <Route path="/formTemplate" component={FormTemplate} />
             <Route path="/registerAdmin" component = {RegisterAdmin}/>
             <Route path="/signup" component = {RegisterInvestor} />
+            <Route path="/About" component={About}/>
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
 
