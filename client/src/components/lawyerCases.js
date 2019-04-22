@@ -29,7 +29,8 @@ import React, { Component } from 'react';
       componentDidMount(){
         jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
           if(err){
-         console.log(err);
+            alert('please make sure you are logged in')
+            document.location.href = '/loginemployee'
         }else{
           console.log(payload.type)
        axios.get('http://localhost:3002/api/lawyer/getCases/'+payload.username,{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element =>

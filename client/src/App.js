@@ -27,6 +27,7 @@ import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
+import Homepage from './components/WelcomePage/Main'
 
 class App extends Component {
   render() {
@@ -36,6 +37,7 @@ class App extends Component {
       <div className={classes.root}>
         <Router>
           <Switch>
+            
           <Route path="/investorprofile" component={investorprofile} />
           <Route path="/lawyerprofile" component={lawyerprofile} />
           <Route path="/reviewerprofile" component={reviewerprofile} />
@@ -60,8 +62,8 @@ class App extends Component {
             <Route path="/signup" component = {RegisterInvestor} />
             <Route path="/LawyerSearch" component = {lawyerSearch} />
             <Route path="/ReviewerSearch" component={ReviewerSearch} />
-			<Route path="/DisplayForm/:id" component={DisplayForm} />
       <Route path="/loginEmployee" component={LoginEmployee}/>
+      <Route path="/" component={Homepage}/>
           </Switch>
         </Router>
       </div>

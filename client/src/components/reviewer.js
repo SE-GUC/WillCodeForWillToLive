@@ -35,8 +35,8 @@ class Reviewer extends Component {
     else{
       alert(element.msg)
     }
-    })
-    .catch(err => console.log(err))
+    }).catch(err => {alert('please make sure you are logged in');
+    document.location.href = '/loginemployee'})
   }
 
   render() {

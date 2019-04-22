@@ -3,6 +3,10 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
 class adminprofile extends Component {
   state={
     details:[],
@@ -23,7 +27,8 @@ class adminprofile extends Component {
   componentDidMount(){
     jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
       if(err){
-        alert(err)
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
       }
       else{
         const id= payload.id
@@ -33,6 +38,7 @@ class adminprofile extends Component {
         }
         else{
           alert(element.msg)
+         document.location.href = '/loginemployee'
         }       
         }).catch(er => alert("something went wrong"))
       }
@@ -73,7 +79,11 @@ class adminprofile extends Component {
           <table>
         <thead>
       <tr>
-      <td>{<h5><div><button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div><div> Email: {this.state.details.emailAddress}</div><div> Username:  {this.state.details.username}</div><div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div><div> nationality: {this.state.details.nationality}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
+      <td>{<h5><div> <Button variant="contained" color="secondary" onClick={this.deleteprofile.bind(this,this.state.details._id)}>
+        Delete Profile
+        <DeleteIcon/>
+      </Button></div>
+      {/* <button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div>*/}<div> Email: {this.state.details.emailAddress}</div><div> Username:  {this.state.details.username}</div><div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div><div> nationality: {this.state.details.nationality}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
       </tr>
         </thead>
         <tbody>    
@@ -99,7 +109,40 @@ class adminprofile extends Component {
               <option value="Male"></option>
               <option value="Female"></option>
             </datalist>
-            <div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button></div>
+            <div><p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
+        Update Profile
+       </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
+            <div> <p>  </p><Button variant="contained" color="primary"  onClick ={() =>{
+               document.location.href = '/registerLawyer'
+            }} fullWidth>
+        Register Lawyer
+      </Button><p>  </p><Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerReviewer'
+            }} fullWidth>
+        Register Reviewer
+      </Button> 
+      <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerAdmin'
+            }} fullWidth>
+        Register Admin
+      </Button> <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/cases'
+            }}fullWidth>
+        View Cases
+      </Button><p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/formTemplate'
+            }}fullWidth>
+        New Form Templates
+      </Button> <p> </p>
+      <Button variant="contained" color="secondary" onClick ={() =>{
+              localStorage.removeItem('token')
+               document.location.href = '/loginemployee'
+            }}fullWidth>
+        Sign Out
+      </Button></div>
           </div>
         </div>
       );

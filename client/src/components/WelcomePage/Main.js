@@ -5,15 +5,17 @@ import Tab from './Tab';
 
 import "./styles.css";
 
-function App() {
+function Main() {
   return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+    <div className="Main">
+      {/* <h1>Hello CodeSandbox</h1>
+      <h2>Start editing to see some magic happen!</h2> */}
+      <Tab /><Homepage />
     </div>
   );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
-ReactDOM.render(<div><Tab /><Homepage /></div>, rootElement);
+// const rootElement = document.getElementById("root");
+// ReactDOM.render(<Main />, rootElement);
+// ReactDOM.render(<div><Tab /><Homepage /></div>, rootElement);
+export default (Main);

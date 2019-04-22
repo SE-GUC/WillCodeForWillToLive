@@ -24,7 +24,8 @@ class reviewer extends Component {
       //console.log(id)
       jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
         if(err){
-       console.log(err);
+          alert('please make sure you are logged in')
+          document.location.href = '/loginemployee'
       }else{
       axios.put('http://localhost:3002/api/reviewer/assigncasestomyselfthereviewer/'+id, {
         reviewer: payload.username

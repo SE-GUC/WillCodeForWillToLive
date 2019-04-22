@@ -14,7 +14,8 @@ class Companies extends Component {
     componentDidMount(){
       jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
         if(err){
-          alert(err)
+          alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
         }
         else{
           const id= payload.id

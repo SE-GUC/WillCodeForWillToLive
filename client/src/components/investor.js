@@ -17,7 +17,8 @@
         }else{
           alert(element.msg)
         }
-        })
+        }).catch(err => {alert('please make sure you are logged in');
+        document.location.href = '/loginemployee'})
        console.log('State: '+ this.state.cases)
       }
       render() {
