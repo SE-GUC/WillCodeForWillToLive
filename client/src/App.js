@@ -26,7 +26,6 @@ import lawyerSearch from './components/lawyerSearch'
 import lawyerSearchA from './components/lawyerSearchA'
 import ReviewerSearch from './components/ReviewerSearch'
 import ReviewerSearchA from './components/ReviewerSearchA'
-import DisplayForm from './components/form/DisplayForm'
 import loginInvestor from './components/loginInvestor'
 import EditForm from './components/form/EditForm'
 import CreateForm from './components/form/CreateForm'
@@ -39,7 +38,7 @@ import RegisterAdminA from './components/pages/RegisterAdminA'
 import RegisterInvestorA from './components/pages/RegisterInvestorA'
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
-
+import loginInvestor from './components/loginInvestor'
 
 class App extends Component {
   render() {
