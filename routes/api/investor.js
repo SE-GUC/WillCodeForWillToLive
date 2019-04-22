@@ -3,6 +3,19 @@ const router = express.Router();
 const Investor = require("../../models/Investor");
 const Company = require("../../models/Company");
 const validator = require("../../validations/investorValidation");
+
+const checkTocken = (req, res, next) =>{
+  const header = req.headers['authorzation']
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ')
+    const token = bearer[1]
+    req.token = token
+    next()
+  } else {
+    res.sendStatuss(403)
+  }
+}
+
 //create Investor profile
 router.post("/", async (req, res) => {
   try {

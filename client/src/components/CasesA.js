@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import jwt from 'jsonwebtoken'
+import tokenkey from '../config/keys'
 import axios from 'axios';
 class CasesA extends Component {
     state={
@@ -7,8 +8,17 @@ class CasesA extends Component {
     }
     
     componentDidMount(){
-     axios.get('http://localhost:3002/api/cases').then(res => Object.values(res)[0]).then(element => this.setState({cases:element.data}))
-    }
+      axios.get('http://localhost:3002/api/cases', {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+       if(element.msg===undefined){     
+      this.setState({cases:element.data})
+     }else{
+       alert(element.msg)
+     }
+ 
+       }).catch(err => {alert('please make sure you are logged in');
+       document.location.href = '/loginemployee'})
+ 
+     }
   render() {
     return(
       <div className="Cases">

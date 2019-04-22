@@ -44,10 +44,9 @@ const FormTemplate = (props) => {
                 headers: [{'Content-Type': 'application/json'}],
                 data: body
             })
-            .then( async res => {
-                const resJson = await res.json()
-                if(resJson.error) {
-                    alert(resJson.error)
+            .then( res => {
+                if(res.error) {
+                    alert(res.error)
                 }
             })
             .catch(error => {alert(error)})
@@ -57,12 +56,12 @@ const FormTemplate = (props) => {
             <div className="formMeta">
                 <div className='FormName'>
                     <TextField
-                        required={true} className={classes.textField} variant="outlined"
+                        required={true} className={classes.textField} 
                         onChange={e => updateForm(e.target.name, e.target.value)}
                         name='formNameEnglish' label='Form Name English'
                     />
                     <TextField
-                        required={true} className={classes.textField} variant="outlined"
+                        required={true} className={classes.textField} 
                         onChange={e => updateForm(e.target.name, e.target.value)}
                         name='formNameArabic' label='Form Name Arabic'
                     />

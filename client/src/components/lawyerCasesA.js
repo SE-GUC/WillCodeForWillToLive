@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-  import axios from 'axios';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 
   class lawyerCasesA extends Component {
       state={
@@ -25,11 +30,24 @@ import React, { Component } from 'react';
   
 
       
-      componentDidMount(){
-       
-       axios.get('http://localhost:3002/api/lawyer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({lawyerCases:element.data}))
-       
-      }
+   componentDidMount(){
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
+      if(err){
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+    }else{
+      console.log(payload.type)
+   axios.get('http://localhost:3002/api/lawyer/getCases/'+payload.username,{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element =>
+   { 
+    if(element.msg===undefined){ 
+     this.setState({lawyerCases:element.data})
+    }
+    else{
+      alert(element.msg)
+    }
+  })
+  }})
+  }
     render() {
 
       return(

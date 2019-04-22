@@ -5,6 +5,7 @@ export default function LawyerHeader() {
   return (
     <header style = {headerStyle}>
         <h1>Lawyer's CasesList</h1>
+        <Link style={linkStyle} to="/Lawyer">English</Link> | <Link style={linkStyle} to="/LawyerA">عربي</Link>
     </header>
   )
 }
@@ -16,6 +17,9 @@ const headerStyle = {
   padding: '10px'
 }
 
-
+const linkStyle = {
+  color:'#fff',
+  textDecoration: 'none'
+}
 
 

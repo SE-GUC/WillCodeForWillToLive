@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
+
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 class adminprofile extends Component {
   state={
     details:[],
-    id:"5cb1efd28bc37b62421b18b8",
+    // id:"5cb1efd28bc37b62421b18b8",
     updateFirstName:'',
     updateMiddleName:'',
     updateLastName:'',
@@ -19,10 +25,31 @@ class adminprofile extends Component {
     updateAddress:''
   }
   componentDidMount(){
-    axios.get('http://localhost:3002/api/admin/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
+      }
+      else{
+        const id= payload.id
+        axios.get('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+        if(element.msg===undefined){
+        this.setState({details:element.data})
+        }
+        else{
+          alert(element.msg)
+
+         document.location.href = '/loginemployee'
+
+        }       
+        }).catch(er => alert("something went wrong"))
+      }
+    })
    }
    updateprofile =(id) =>{
-    axios.put('http://localhost:3002/api/admin/'+id, {
+    axios.put('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}, {
       username: this.state.updateUsername!==''?this.state.updateUsername:this.state.details.username,
       password: this.state.updatePassword!==''?this.state.updatePassword:this.state.details.password,
       firstName: this.state.updateFirstName!==''?this.state.updateFirstName:this.state.details.firstName,
@@ -42,7 +69,7 @@ class adminprofile extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
    deleteprofile =(id) =>{
-    axios.delete('http://localhost:3002/api/admin/'+id).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
+    axios.delete('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
   }
     render() {
       return (
@@ -56,16 +83,11 @@ class adminprofile extends Component {
           <table>
         <thead>
       <tr>
-      <td>{<h5><div><button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div>
-      <div> Email: {this.state.details.emailAddress}</div>
-      <div> Username:  {this.state.details.username}</div>
-      <div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div>
-      <div> nationality: {this.state.details.nationality}</div>
-      <div> date of birth: {this.state.details.DOB}</div>
-      <div> Mobile Number:  {this.state.details.mobileNumber}</div>
-      <div>address:  {this.state.details.address}</div>
-      <div>Fax Number:  {this.state.details.faxNumber}</div>
-      <div>gender:  {this.state.details.gender}</div></h5>}</td>
+      <td>{<h5><div> <Button variant="contained" color="secondary" onClick={this.deleteprofile.bind(this,this.state.details._id)}>
+        Delete Profile
+        <DeleteIcon/>
+      </Button></div>
+      {/* <button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div>*/}<div> Email: {this.state.details.emailAddress}</div><div> Username:  {this.state.details.username}</div><div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div><div> nationality: {this.state.details.nationality}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
       </tr>
         </thead>
         <tbody>    
@@ -91,7 +113,40 @@ class adminprofile extends Component {
               <option value="Male"></option>
               <option value="Female"></option>
             </datalist>
-            <div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button></div>
+            <div><p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
+        Update Profile
+       </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
+            <div> <p>  </p><Button variant="contained" color="primary"  onClick ={() =>{
+               document.location.href = '/registerLawyerA'
+            }} fullWidth>
+        Register Lawyer
+      </Button><p>  </p><Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerReviewerA'
+            }} fullWidth>
+        Register Reviewer
+      </Button> 
+      <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerAdminA'
+            }} fullWidth>
+        Register Admin
+      </Button> <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/casesA'
+            }}fullWidth>
+        View Cases
+      </Button><p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/formTemplateA'
+            }}fullWidth>
+        New Form Templates
+      </Button> <p> </p>
+      <Button variant="contained" color="secondary" onClick ={() =>{
+              localStorage.removeItem('token')
+               document.location.href = '/loginemployeeA'
+            }}fullWidth>
+        Sign Out
+      </Button></div>
           </div>
         </div>
       );

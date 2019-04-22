@@ -27,10 +27,26 @@ import React, { Component } from 'react';
     }
 
 
-      componentDidMount(){
-       axios.get('http://localhost:3002/api/reviewer/getCases/'+this.state.username).then(res => Object.values(res)[0]).then(element => this.setState({reviewerCases:element.data}))
-       
+    componentDidMount(){
+      jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload) =>{
+        if(err){alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+      }else{
+        const usernamepay = payload.username
+        axios.get('http://localhost:3002/api/reviewer/getCases/'+usernamepay,{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+        if(element.msg===undefined){  
+        this.setState({reviewerCases:element.data})}
+      else{
+        alert(element.msg)
       }
+      }
+      )
+      }
+    }
+      )
+     
+     
+    }
 
     render() {
       return(

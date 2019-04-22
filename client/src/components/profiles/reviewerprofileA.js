@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 class reviewerprofileA extends Component {
   state={
     details:[],
@@ -18,7 +23,27 @@ class reviewerprofileA extends Component {
     updateFaxNumber:''
   }
   componentDidMount(){
-    axios.get('http://localhost:3002/api/reviewer/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
+      }
+      else{
+        const id= payload.id
+        axios.get('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+          if(element.msg===undefined){   
+        this.setState({details:element.data})
+          }
+          else{
+            alert(element.msg)
+
+            document.location.href = '/loginemployee'
+
+          }
+        }).catch(er => alert("something went wrong"))
+      }
+    })
    }
    updateprofile =(id) =>{
     axios.put('http://localhost:3002/api/reviewer/'+id, {
@@ -90,9 +115,35 @@ class reviewerprofileA extends Component {
               <option value="الذكر"></option>
               <option value="أنثى"></option>
             </datalist>
-            <div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >تحديث الملف</button></div>
+            <p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
+            تحديث الملف
+       </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
+<div>
+      <p>  </p><Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/reviewerCasesA'
+            }} fullWidth>
+        عرض الحالات
+      </Button> 
+      <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/reviewerassignA'
+            }} fullWidth>
+        احالة الحالات
+      </Button> <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/reviewersearchA'
+            }}fullWidth>
+        بحث الحالات
+      </Button>
+      <p> </p>
+      <Button variant="contained" color="secondary" onClick ={() =>{
+              localStorage.removeItem('token')
+               document.location.href = '/loginemployeeA'
+            }}fullWidth>
+        خروج
+      </Button>
           </div>
-        </div>
+      </div>
       );
     }
   }

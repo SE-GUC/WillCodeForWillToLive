@@ -26,10 +26,16 @@ class ReviewerA extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://localhost:3002/api/cases')
+    axios.get('http://localhost:3002/api/reviewer/getCases/',{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
     .then(res => Object.values(res)[0])
-    .then(element => this.setState({cases:element.data}))
-    .catch(err => console.log(err))
+    .then(element => {
+      if(element.msg===undefined){ 
+      this.setState({cases:element.data})}
+    else{
+      alert(element.msg)
+    }
+    }).catch(err => {alert('please make sure you are logged in');
+    document.location.href = '/loginemployee'})
   }
 
   render() {

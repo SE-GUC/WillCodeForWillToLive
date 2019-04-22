@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
+
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 class adminprofileA extends Component {
   state={
     details:[],
@@ -19,7 +25,28 @@ class adminprofileA extends Component {
     updateAddress:''
   }
   componentDidMount(){
-    axios.get('http://localhost:3002/api/admin/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({details:element.data}))
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
+      }
+      else{
+        const id= payload.id
+        axios.get('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+        if(element.msg===undefined){
+        this.setState({details:element.data})
+        }
+        else{
+          alert(element.msg)
+
+         document.location.href = '/loginemployee'
+
+        }       
+        }).catch(er => alert("something went wrong"))
+      }
+    })
    }
    updateprofile =(id) =>{
     axios.put('http://localhost:3002/api/admin/'+id, {
@@ -91,7 +118,40 @@ class adminprofileA extends Component {
               <option value="الذكر"></option>
               <option value="إنثة"></option>
             </datalist>
-            <div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >تحديث الملف</button></div>
+            <div><p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
+            تحديث الملف
+       </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
+            <div> <p>  </p><Button variant="contained" color="primary"  onClick ={() =>{
+               document.location.href = '/registerLawyer'
+            }} fullWidth>
+        تسجيل المحامي
+      </Button><p>  </p><Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerReviewer'
+            }} fullWidth>
+        تسجيل المراجع
+      </Button> 
+      <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/registerAdmin'
+            }} fullWidth>
+        تسجيل المسؤول
+      </Button> <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/cases'
+            }}fullWidth>
+        عرض الحالات
+      </Button><p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/formTemplate'
+            }}fullWidth>
+        قوالب النماذج الجديدة
+      </Button> <p> </p>
+      <Button variant="contained" color="secondary" onClick ={() =>{
+              localStorage.removeItem('token')
+               document.location.href = '/loginemployee'
+            }}fullWidth>
+        خروج
+      </Button></div>
           </div>
         </div>
       );
