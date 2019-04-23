@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios')
 
 const Case = require('../../models/Case');
 const validator = require('../../validations/caseValidation');
@@ -190,7 +191,24 @@ router.put('/updateByCompanyName/:id', async (req, res) => {
     }
 })
 
-
+router.get('/payFees/:id', async (req, res) => {
+    try {
+        const caseInstance = await Case.findByIdAndUpdate(req.params.id, {paid: true}, {new: true})
+        if(!caseInstance) {
+            res.status(400).send('Data not found')
+        } else {
+            axios(`/api/cases`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                data: {formId: caseInstance.formID}
+            })
+            .then(ress => res.json(caseInstance))
+            .catch(error => res.status(500).send(error))
+        }
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 
 router.delete('/:id', checkTocken,async (req,res) => {
     jwt.verify(req.token,tokenkey,async (err,payload) =>{
