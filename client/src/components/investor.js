@@ -49,8 +49,7 @@
         const newState = this.state.cases
         newState.splice(newState.findIndex(({_id})=>_id === id), 1, _case)
         this.setState({cases: newState})       } 
-  
+ 
   }
-  
+
   export default investor;
-    

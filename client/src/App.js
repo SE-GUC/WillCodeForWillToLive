@@ -19,11 +19,15 @@ import lawyerprofile from './components/profiles/lawyerprofile'
 import reviewerprofile from './components/profiles/reviewerprofile'
 import adminprofile from './components/profiles/adminprofile'
 import UnregisteredUser from './components/unregisteredUser'
+import UnregisteredUserA from './components/unregisteredUserA'
 import RegisterAdmin from './components/pages/RegisterAdmin'
 import RegisterInvestor from './components/pages/RegisterInvestor'
 import About from './components/About'
 import lawyerSearch from './components/lawyerSearch'
+import lawyerSearchA from './components/lawyerSearchA'
 import ReviewerSearch from './components/ReviewerSearch'
+import ReviewerSearchA from './components/ReviewerSearchA'
+import loginInvestor from './components/loginInvestor'
 import EditForm from './components/form/EditForm'
 import CreateForm from './components/form/CreateForm'
 import DisplayForm from './components/form/DisplayForm'
@@ -36,7 +40,6 @@ import RegisterInvestorA from './components/pages/RegisterInvestorA'
 import LoginEmployee from './components/pages/LoginEmployee';
 import DisplayAllForms from './components/form/DisplayAllForms'
 import Homepage from './components/WelcomePage/Main'
-
 
 class App extends Component {
   render() {
@@ -52,20 +55,40 @@ class App extends Component {
           <Route path="/reviewerprofile" component={reviewerprofile} />
           <Route path="/adminprofile" component={adminprofile} />
           <Route path="/unregisteredUser" component={UnregisteredUser} />
+          <Route path="/unregisteredUserA" component={UnregisteredUserA} />
+          <Route path="/Companies" component={Companies} />
+          <Route path="/registerLawyer" component={RegisterLawyer} />
+          <Route path="/registerReviewer" component={RegisterReviewer} />
+          <Route path="/cases" component={Cases} />
+          <Route path = "/Reviewer" component = {Reviewer} />
+          <Route path = "/reviewerassign" component = {reviewerassign} />
+          <Route path="/Lawyer" component = {lawyer} />
+          <Route path="/investor" component={investor} />
+          <Route path="/loginInvestor" component={loginInvestor} />
+          <Route path="/lawyerCases" component={lawyerCases} />
+          <Route path="/reviewerCases" component={reviewerCases}/>
+          <Route path="/formTemplate" component={FormTemplate} />
+          <Route path="/registerAdmin" component = {RegisterAdmin}/>
+          <Route path="/signup" component = {RegisterInvestor} />
+          <Route path="/LawyerSearch" component = {lawyerSearch} />
+          <Route path="/LawyerSearchA" component = {lawyerSearchA} />
+          <Route path="/ReviewerSearch" component={ReviewerSearch} />
+          <Route path="/ReviewerSearchA" component={ReviewerSearchA} />
+    			<Route path="/DisplayForm/:id" component={DisplayForm} />
             <Route path="/Companies" component={Companies} />
             <Route path="/createForm" component={CreateForm} />
             <Route path="/displayForm/:id" component={DisplayForm} />
             <Route path="/editForm/:id" component={EditForm} />
             <Route path="/displayAllForms/:id" component={DisplayAllForms} />
-            <Route path="/registerLawyer" component={RegisterLawyer} /> 
+            <Route path="/registerLawyer" component={RegisterLawyer} />
             <Route path="/registerReviewer" component={RegisterReviewer} />
             <Route path="/cases" component={Cases} />
             <Route path = "/Reviewer" component = {Reviewer} />
             <Route path = "/ReviewerA" component = {ReviewerA} />
             <Route path = "/reviewerassign" component = {reviewerassign} />
             <Route path="/Lawyer" component = {lawyer} />
-            <Route path="/investor" component={investor} /> 
-            <Route path="/lawyerCases" component={lawyerCases} /> 
+            <Route path="/investor" component={investor} />
+            <Route path="/lawyerCases" component={lawyerCases} />
             <Route path="/reviewerCases" component={reviewerCases}/>
             <Route path="/formTemplate" component={FormTemplate} />
             <Route path="/registerAdmin" component = {RegisterAdmin}/>

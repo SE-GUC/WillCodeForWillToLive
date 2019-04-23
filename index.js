@@ -17,11 +17,14 @@ const cases = require('./routes/api/cases')
 const adminRouter = require('./routes/api/admin')
 const companyRouter = require('./routes/api/company')
 const Lawyer = require('./routes/api/lawyer')
-const Login = require('./middleware/login')
-
+const login = require('./middleware/login')
+const uri = require('./config/keys.js').mongoURI
 /** * global constants ***/
 const app = express()
 const db = process.env.mongoURI
+
+
+
 
 mongoose.connect(db, {useNewUrlParser: true})
   .then(() => console.log('Connected to Database'))
@@ -53,13 +56,13 @@ app.use('/api/Lawyer', Lawyer)
 app.use('/api/reviewer', reviewers)
 app.use('/api/task', tasks)
 app.use('/api/investor', investors)
+app.use('/api/login', login)
 app.use('/api/company', companyRouter)
 app.use('/api/externalEntitys', externalEntitys)
 app.use('/api/form', form)
 app.use('/api/cases', cases)
 app.use('/api/admin', adminRouter)
 app.use('/api/formTemplate', formTemplate)
-app.use('/login',Login)
 
 // app.use(function(req,res,next){
 //   res.header("Access-Control-Allow-Origin","*");
