@@ -57,7 +57,6 @@ class App extends Component {
           <Route path="/unregisteredUser" component={UnregisteredUser} />
           <Route path="/unregisteredUserA" component={UnregisteredUserA} />
           <Route path="/Companies" component={Companies} />
-          <Route path="/Form" component={Form} />
           <Route path="/registerLawyer" component={RegisterLawyer} />
           <Route path="/registerReviewer" component={RegisterReviewer} />
           <Route path="/cases" component={Cases} />
