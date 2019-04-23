@@ -6,10 +6,10 @@ import tokenkey from '../../config/keys'
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-class reviewerprofile extends Component {
+class reviewerprofileA extends Component {
   state={
     details:[],
-    //id:"5cb206b069b2276fc3564814",
+    id:"5cb206b069b2276fc3564814",
     updateName:'',
     updateUsername:'',
     updatePassword:'',
@@ -46,7 +46,7 @@ class reviewerprofile extends Component {
     })
    }
    updateprofile =(id) =>{
-    axios.put('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}, {
+    axios.put('http://localhost:3002/api/reviewer/'+id, {
       username: this.state.updateUsername!==''?this.state.updateUsername:this.state.details.username,
       password: this.state.updatePassword!==''?this.state.updatePassword:this.state.details.password,
       name: this.state.updateName!==''?this.state.updateName:this.state.details.name,
@@ -64,7 +64,7 @@ class reviewerprofile extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
    deleteprofile =(id) =>{
-    axios.delete('http://localhost:3002/api/reviewer/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
+    axios.delete('http://localhost:3002/api/reviewer/'+id).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
   }
     render() {
       return (
@@ -78,11 +78,19 @@ class reviewerprofile extends Component {
           <table>
         <thead>
       <tr>
-      <td>{<h5><div> <Button variant="contained" color="secondary" onClick={this.deleteprofile.bind(this,this.state.details._id)}>
-        Delete Profile
-        <DeleteIcon/>
-      </Button></div>
-      {/* <button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div>*/}<div> Email: {this.state.details.emailAddress}</div><div> Username:  {this.state.details.username}</div><div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div><div> nationality: {this.state.details.nationality}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
+      <td>{<h5><div><button onClick={this.updateprofile.bind(this,this.state.details._id)} >تحديث الملف</button>
+      </div><div><button onClick={this.deleteprofile.bind(this,this.state.details._id)} >حذف الملف الشخصي</button></div>
+      <div> البريد الإلكتروني: {this.state.details.email}</div>
+      <div> اسم المستخدم:  {this.state.details.username}</div>
+      <div> هوية شخصية: {this.state.details.ID}</div>
+      <div>نوع الهوية: {this.state.details.type_of_ID}</div>
+      <div> اسم:  {this.state.details.name}</div>
+      <div> جنسية: {this.state.details.nationallity}</div>
+      <div> تاريخ الولادة: {this.state.details.birth_date}</div>
+      <div> رقم الهاتف المحمول:  {this.state.details.mobile_number}</div>
+      <div>رقم الفاكس:  {this.state.details.fax_number}</div>
+      <div>جنس:  {this.state.details.gender}</div>
+      <div>عنوان:  {this.state.details.address}</div></h5>}</td>
       </tr>
         </thead>
         <tbody>    
@@ -91,58 +99,58 @@ class reviewerprofile extends Component {
       </table>
           </div>
           <div>
-            <h3>Update Profile</h3>
-            <p>Name</p><input type="text" name="updateName" onChange={this.changeState}></input>
-            <p>Email</p><input type="email" name="updateEmail" onChange={this.changeState}></input>
-            <p>Username</p><input type="text" name="updateUsername" onChange={this.changeState}></input>
-            <p>Password</p><input type="password" name="updatePassword" onChange={this.changeState}></input>
-            <p>Gender</p><input list="genders" type="text" name="updateGender" onChange={this.changeState}></input>
-            <p>ID</p><input type="text" name="updateID" onChange={this.changeState}></input>
-            <p>Type Of ID</p><input type="text" name="updateTypeOfID" onChange={this.changeState}></input>
-            <p>Nationality</p><input type="text" name="updateNationality" onChange={this.changeState}></input>
-            <p>Date of birth</p><input type="date" name="updateDateOfBirth" onChange={this.changeState}></input>
-            <p>Mobile Number</p><input type="text" name="updateMobileNumber" onChange={this.changeState}></input>
-            <p>Fax number</p><input type="text" name="updateFaxNumber" onChange={this.changeState}></input>
+            <h3>تحديث الملف</h3>
+            <p>اسم</p><input type="text" name="updateName" onChange={this.changeState}></input>
+            <p>البريد الإلكتروني</p><input type="email" name="updateEmail" onChange={this.changeState}></input>
+            <p>اسم المستخدم</p><input type="text" name="updateUsername" onChange={this.changeState}></input>
+            <p>كلمه السر</p><input type="password" name="updatePassword" onChange={this.changeState}></input>
+            <p>جنس</p><input list="genders" type="text" name="updateGender" onChange={this.changeState}></input>
+            <p>هوية شخصية</p><input type="text" name="updateID" onChange={this.changeState}></input>
+            <p>نوع الهوية</p><input type="text" name="updateTypeOfID" onChange={this.changeState}></input>
+            <p>جنسية</p><input type="text" name="updateNationality" onChange={this.changeState}></input>
+            <p>تاريخ الولادة</p><input type="date" name="updateDateOfBirth" onChange={this.changeState}></input>
+            <p>رقم الهاتف المحمول</p><input type="text" name="updateMobileNumber" onChange={this.changeState}></input>
+            <p>رقم الفاكس</p><input type="text" name="updateFaxNumber" onChange={this.changeState}></input>
             <datalist id="genders">
-              <option value="Male"></option>
-              <option value="Female"></option>
+              <option value="الذكر"></option>
+              <option value="أنثى"></option>
             </datalist>
             <p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
-        Update Profile
+            تحديث الملف
        </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
 <div>
       <p>  </p><Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/reviewerCases'
+               document.location.href = '/reviewerCasesA'
             }} fullWidth>
-        view cases
+        عرض الحالات
       </Button> 
       <p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/reviewerassign'
+               document.location.href = '/reviewerassignA'
             }} fullWidth>
-        assign cases
+        احالة الحالات
       </Button> <p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/reviewersearch'
+               document.location.href = '/reviewersearchA'
             }}fullWidth>
-        search Cases
+        بحث الحالات
       </Button>
       <p> </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/reviewer'
+               document.location.href = '/reviewerA'
             }}fullWidth>
-        Review Cases
+        دفع رسوم الحالات
       </Button>
       <p> </p>
       <Button variant="contained" color="secondary" onClick ={() =>{
               localStorage.removeItem('token')
-               document.location.href = '/loginemployee'
+               document.location.href = '/loginemployeeA'
             }}fullWidth>
-        Sign Out
+        خروج
       </Button>
           </div>
       </div>
       );
     }
   }
-  export default (reviewerprofile);
+  export default (reviewerprofileA);

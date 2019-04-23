@@ -28,13 +28,13 @@ class AlertDialogReviewerRegisterA extends React.Component {
         email: this.props.lawyeradmin.email,
         address: this.props.lawyeradmin.address  
     }
-      const response =nfetch(`http://localhost:3002/api/admin/createreviewer`,{
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' }
-    }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
-    this.setState({ open: true });
-  };
+    const response =nfetch(`http://localhost:3002/api/admin/createreviewer`,{
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {'Content-Type': 'application/json','Authorization':`Bearer ${localStorage.getItem('token')}` }
+  }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
+  this.setState({ open: true });
+};
 
   handleClose = () => {
     this.setState({ open: false });

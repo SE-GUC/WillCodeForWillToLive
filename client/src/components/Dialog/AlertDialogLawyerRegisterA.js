@@ -30,7 +30,7 @@ class AlertDialogLawyerRegisterA extends React.Component {
       const response =nfetch(`http://localhost:3002/api/admin/createlawyer`,{
         method: 'POST',
         body: JSON.stringify(requestBody),
-        headers: {'Content-Type': 'application/json' }
+        headers: {'Content-Type': 'application/json' ,'Authorization':`Bearer ${localStorage.getItem('token')}`}
     }).then(res => res.json()).then(json => this.setState({msg:Object.values(json)[0]})).catch(err => this.setState({msg:'Something went wrong'}))
     this.setState({ open: true });
   };
