@@ -48,16 +48,24 @@ function SimpleCardA(props) {
         </Typography>
       </CardContent>
       <CardActions>
-      <Button variant="contained" color="primary" className={classes.button}>
+      <Button variant="contained" color="primary" className={classes.button} onClick={()=>{
+        document.location.href = '/loginemployeeA'
+      }}>
       تسجيل الدخول كموظف
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={()=>{
+        document.location.href = '/loginemployeeA'
+      }}>
       تسجيل الدخول كمستثمر
       </Button>
-      <Button variant="contained" color="primary" className={classes.button}>
+      <Button variant="contained" color="primary" className={classes.button} onClick={()=>{
+        document.location.href = '/signupA'
+      }}>
       تسجيل
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      <Button variant="contained" color="secondary" className={classes.button} onClick={()=>{
+        document.location.href = '/unregisteredUserA'
+      }}>
        اظهار جميع الشركات
       </Button>
       </CardActions>
