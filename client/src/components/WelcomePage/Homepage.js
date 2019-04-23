@@ -29,6 +29,7 @@ function SimpleCard(props) {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
+    <div>
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -47,21 +48,60 @@ function SimpleCard(props) {
           {'kindly pick your prefrences through the following buttons'}
         </Typography>
       </CardContent>
+      </Card>
+      <Card>
       <CardActions>
-      <Button variant="contained" color="primary" className={classes.button}>
-        Log in as an Employee
+      <CardContent>
+      <Typography variant="h5" component="h2">Log in as an employee </Typography>
+      <br />
+      <Button variant="contained" color="primary" className={classes.button} onClick={()=>{
+        document.location.href = '/loginemployee'
+      }}>
+        Click Here
       </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
-        Log in as investor
-      </Button>
-      <Button variant="contained" color="primary" className={classes.button}>
-      SIGN UP
-      </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
-       Show all Companies
-      </Button>
+      </CardContent>
       </CardActions>
-    </Card>
+      </Card>
+      <Card>
+      <CardActions>
+      <CardContent>
+      <Typography variant="h5" component="h2">Log in as investor </Typography>
+      <br />
+      <Button variant="contained" color="secondary" className={classes.button} onClick={()=>{
+        document.location.href = '/loginemployee'
+      }}>
+        Click Here
+      </Button>
+      </CardContent>
+      </CardActions>
+      </Card>
+      <Card>
+      <CardActions>
+      <CardContent>
+      <Typography variant="h5" component="h2">SIGN UP </Typography>
+      <br />
+      <Button variant="contained" color="primary" className={classes.button} onClick={()=>{
+        document.location.href = '/signup'
+      }}>
+      Click Here
+      </Button>
+      </CardContent>
+      </CardActions>
+      </Card>
+      <Card>
+      <CardActions>
+      <CardContent>
+      <Typography variant="h5" component="h2">Show all Companies </Typography>
+      <br />
+      <Button variant="contained" color="secondary" className={classes.button} onClick={()=>{
+        document.location.href = '/unregisteredUser'
+      }}>
+       Click Here
+      </Button>
+      </CardContent>
+      </CardActions>
+      </Card>
+      </div>
   );
 }
 
