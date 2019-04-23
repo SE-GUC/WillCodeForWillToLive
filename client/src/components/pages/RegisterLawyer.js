@@ -8,6 +8,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AlertDialogLawyerRegister from '../Dialog/AlertDialogLawyerRegister'
 import Header from '../layout/RegisterLawyerHeader'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
 
 const styles = theme => ({
   textField: {
@@ -48,6 +50,21 @@ class RegisterLawyer extends React.Component {
     email: '',
     showPassword: false
   };
+  componentWillMount(){
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+
+        alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
+      }else{
+        if(payload.type !== 'admin'){
+          alert('You shall not pass')
+          document.location.href = '/loginemployee'
+        }
+      }
+    })
+  }
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };

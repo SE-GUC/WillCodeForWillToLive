@@ -78,6 +78,7 @@ const genders = [
     password: '',
     showPassword: false
 }
+
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));
       };

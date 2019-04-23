@@ -8,7 +8,8 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AlertDialogReviewerRegisterA from '../Dialog/AlertDialogReviewerRegisterA'
 import Header from '../layout/RegisterReviewerHeader'
-
+import jwt from 'jsonwebtoken'
+import tokenkey from '../../config/keys'
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -49,6 +50,21 @@ class RegisterReviewer extends React.Component {
     address:'',
     showPassword: false
   };
+  componentWillMount(){
+    jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+      if(err){
+
+        alert('برجاء تسجيل الدخول')
+        document.location.href = '/loginemployee'
+
+      }else{
+        if(payload.type !== 'admin'){
+          alert('لا يمكنك المتابعة')
+          document.location.href = '/loginemployee'
+        }
+      }
+    })
+  }
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };

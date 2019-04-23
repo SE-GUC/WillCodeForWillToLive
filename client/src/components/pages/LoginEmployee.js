@@ -85,6 +85,8 @@ class LoginEmployee extends React.Component{
         if(payload.type === 'lawyer'){
           document.location.href = '/lawyerprofile'
         }
+        if(payload.type === 'investor'){document.location.href = '/investorprofile'}
+        
       }
       })
     }).catch(err => console.log(err))
