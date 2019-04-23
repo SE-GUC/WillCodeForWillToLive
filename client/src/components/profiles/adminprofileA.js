@@ -3,13 +3,14 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
 import jwt from 'jsonwebtoken'
 import tokenkey from '../../config/keys'
+
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-class adminprofile extends Component {
+class adminprofileA extends Component {
   state={
     details:[],
-    // id:"5cb1efd28bc37b62421b18b8",
+    id:"5cb1efd28bc37b62421b18b8",
     updateFirstName:'',
     updateMiddleName:'',
     updateLastName:'',
@@ -48,7 +49,7 @@ class adminprofile extends Component {
     })
    }
    updateprofile =(id) =>{
-    axios.put('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}, {
+    axios.put('http://localhost:3002/api/admin/'+id, {
       username: this.state.updateUsername!==''?this.state.updateUsername:this.state.details.username,
       password: this.state.updatePassword!==''?this.state.updatePassword:this.state.details.password,
       firstName: this.state.updateFirstName!==''?this.state.updateFirstName:this.state.details.firstName,
@@ -68,7 +69,7 @@ class adminprofile extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
    deleteprofile =(id) =>{
-    axios.delete('http://localhost:3002/api/admin/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
+    axios.delete('http://localhost:3002/api/admin/'+id).then(res => Object.values(res)[0]).then(element => alert('profile deleted')).catch(err => alert('something went wrong'))
   }
     render() {
       return (
@@ -82,11 +83,16 @@ class adminprofile extends Component {
           <table>
         <thead>
       <tr>
-      <td>{<h5><div> <Button variant="contained" color="secondary" onClick={this.deleteprofile.bind(this,this.state.details._id)}>
-        Delete Profile
-        <DeleteIcon/>
-      </Button></div>
-      {/* <button onClick={this.deleteprofile.bind(this,this.state.details._id)} >delete profile</button></div>*/}<div> Email: {this.state.details.emailAddress}</div><div> Username:  {this.state.details.username}</div><div> name:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div><div> nationality: {this.state.details.nationality}</div><div> date of birth: {this.state.details.DOB}</div><div> Mobile Number:  {this.state.details.mobileNumber}</div><div>address:  {this.state.details.address}</div><div>Fax Number:  {this.state.details.faxNumber}</div><div>gender:  {this.state.details.gender}</div></h5>}</td>
+      <td>{<h5><div><button onClick={this.deleteprofile.bind(this,this.state.details._id)} >حذف الملف الشخصي</button></div>
+      <div> البريد الإلكتروني: {this.state.details.emailAddress}</div>
+      <div> اسم المستخدم:  {this.state.details.username}</div>
+      <div> اسم:  {this.state.details.firstName+" "+this.state.details.middleName+" "+this.state.details.lastName}</div>
+      <div> جنسية: {this.state.details.nationality}</div>
+      <div> تاريخ الولادة: {this.state.details.DOB}</div>
+      <div> رقم الهاتف المحمول:  {this.state.details.mobileNumber}</div>
+      <div> عنوان:  {this.state.details.address}</div>
+      <div> رقم الفاكس:  {this.state.details.faxNumber}</div>
+      <div> جنس:  {this.state.details.gender}</div></h5>}</td>
       </tr>
         </thead>
         <tbody>    
@@ -95,60 +101,60 @@ class adminprofile extends Component {
       </table>
           </div>
           <div>
-            <h3>Update Profile</h3>
-            <p>First Name</p><input type="text" name="updateFirstName" onChange={this.changeState}></input>
-            <p>Middle Name</p><input type="text" name="updateMiddleName" onChange={this.changeState}></input>
-            <p>Last Name</p><input type="text" name="updateLastName" onChange={this.changeState}></input>
-            <p>Email</p><input type="email" name="updateEmail" onChange={this.changeState}></input>
-            <p>Username</p><input type="text" name="updateUsername" onChange={this.changeState}></input>
-            <p>Password</p><input type="password" name="updatePassword" onChange={this.changeState}></input>
-            <p>Gender</p><input list="genders" type="text" name="updateGender" onChange={this.changeState}></input>
-            <p>Nationality</p><input type="text" name="updateNationality" onChange={this.changeState}></input>
-            <p>Date of birth</p><input type="date" name="updateDateOfBirth" onChange={this.changeState}></input>
-            <p>Mobile Number</p><input type="number" name="updateMobileNumber" onChange={this.changeState}></input>
-            <p>Fax number</p><input type="number" name="updateFaxNumber" onChange={this.changeState}></input>
-            <p>Address</p><input type="text" name="updateAddress" onChange={this.changeState}></input>
+            <h3>تحديث الملف</h3>
+            <p>الاسم الاول</p><input type="text" name="updateFirstName" onChange={this.changeState}></input>
+            <p>الاسم الوسطى</p><input type="text" name="updateMiddleName" onChange={this.changeState}></input>
+            <p>اسم العائلة</p><input type="text" name="updateLastName" onChange={this.changeState}></input>
+            <p>البريد الإلكتروني</p><input type="email" name="updateEmail" onChange={this.changeState}></input>
+            <p>اسم المستخدم</p><input type="text" name="updateUsername" onChange={this.changeState}></input>
+            <p>كلمه السر</p><input type="password" name="updatePassword" onChange={this.changeState}></input>
+            <p>جنس</p><input list="genders" type="text" name="updateGender" onChange={this.changeState}></input>
+            <p>جنسية</p><input type="text" name="updateNationality" onChange={this.changeState}></input>
+            <p>تاريخ الولادة</p><input type="date" name="updateDateOfBirth" onChange={this.changeState}></input>
+            <p>رقم الهاتف المحمول</p><input type="number" name="updateMobileNumber" onChange={this.changeState}></input>
+            <p>رقم الفاكس</p><input type="number" name="updateFaxNumber" onChange={this.changeState}></input>
+            <p>عنوان</p><input type="text" name="updateAddress" onChange={this.changeState}></input>
             <datalist id="genders">
-              <option value="Male"></option>
-              <option value="Female"></option>
+              <option value="الذكر"></option>
+              <option value="إنثة"></option>
             </datalist>
             <div><p>  </p><Button variant="contained" onClick={this.updateprofile.bind(this,this.state.details._id)}>
-        Update Profile
+            تحديث الملف
        </Button>{/*<button onClick={this.updateprofile.bind(this,this.state.details._id)} >update profile</button>*/}</div> 
             <div> <p>  </p><Button variant="contained" color="primary"  onClick ={() =>{
-               document.location.href = '/registerLawyerA'
+               document.location.href = '/registerLawyer'
             }} fullWidth>
-        Register Lawyer
+        تسجيل المحامي
       </Button><p>  </p><Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/registerReviewerA'
+               document.location.href = '/registerReviewer'
             }} fullWidth>
-        Register Reviewer
+        تسجيل المراجع
       </Button> 
       <p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/registerAdminA'
+               document.location.href = '/registerAdmin'
             }} fullWidth>
-        Register Admin
+        تسجيل المسؤول
       </Button> <p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/casesA'
+               document.location.href = '/cases'
             }}fullWidth>
-        View Cases
+        عرض الحالات
       </Button><p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
-               document.location.href = '/formTemplateA'
+               document.location.href = '/formTemplate'
             }}fullWidth>
-        New Form Templates
+        قوالب النماذج الجديدة
       </Button> <p> </p>
       <Button variant="contained" color="secondary" onClick ={() =>{
               localStorage.removeItem('token')
-               document.location.href = '/loginemployeeA'
+               document.location.href = '/loginemployee'
             }}fullWidth>
-        Sign Out
+        خروج
       </Button></div>
           </div>
         </div>
       );
     }
   }
-  export default (adminprofile);
+  export default (adminprofileA);
