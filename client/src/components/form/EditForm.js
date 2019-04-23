@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextField, Button, withStyles, Paper, Menu, MenuItem } from '@material-ui/core'
 import axios from 'axios'
+import Dropdown from './Dropdown'
 
 const styles = theme =>  ({
   root: {
@@ -17,11 +18,10 @@ const styles = theme =>  ({
   textField: {
       margin: theme.spacing.unit*0.5,
       width: 200,
-      marginTop: '0.5vw',
   }
 })
 
-function Form ({classes}) {
+function CreateForm ({classes}) {
   const [forms, setForms] = useState([])
   const [formData, setFormData] = useState({})
   const [lawDropdownState, setLawDropdownState] = useState(null)
@@ -60,10 +60,8 @@ function Form ({classes}) {
     setFormData(newFormData)
   }
 
-  const sendForm = _ => {
-    console.log(formData)
-    axios('/api/form', {
-      method: 'POST',
+  const sendForm = _ => axios('/api/form', {
+      method: 'PUT',
       data: formData,
       headers: {'Content-Type': 'application/json'}
     })
@@ -74,7 +72,6 @@ function Form ({classes}) {
         alert('Form created!')
       }
     }).catch(e => console.log(e))
-  }
 
     return (
       <div>
@@ -124,9 +121,11 @@ function Form ({classes}) {
             </Menu>
           </div>
           <div id='form'>
-            {formFields.map(field =>
+            {formFields.map((field, i) =>
+            field.fieldType.toLowerCase() === 'dropdown'?
+            <Dropdown key={i.toString()} fieldName={field.nameEnglish} items={field.constraints.filter(e=>e.name==='item').map(e=>e.value)} handleInput={handleFieldInput} />:
             <TextField 
-              variant='outlined'
+              key={i.toString()}
               className={classes.textField}
               type={field.fieldType.toLowerCase()}
               onChange={e => handleFieldInput(field.nameEnglish, e.target.value)}
@@ -139,4 +138,4 @@ function Form ({classes}) {
     )
 }
 
-export default withStyles(styles)(Form)
+export default withStyles(styles)(CreateForm)

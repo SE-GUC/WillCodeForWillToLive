@@ -17,6 +17,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import AlertDialogInvestorRegister from '../Dialog/AlertDialogInvestorRegister'
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   main: {
@@ -77,6 +78,7 @@ const genders = [
     password: '',
     showPassword: false
 }
+
     handleClickShowPassword = () => {
         this.setState(state => ({ showPassword: !state.showPassword }));
       };
@@ -92,6 +94,7 @@ const genders = [
 
   return (
     <main className={classes.main}>
+    <Link style={linkStyle} to="/signup">English</Link> | <Link style={linkStyle} to="/signupA">عربي</Link>
       <CssBaseline />
       <Paper className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -211,5 +214,12 @@ const genders = [
 RegisterInvestor.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const linkStyle = {
+  color:'#000',
+  float: 'center',
+  align:'center',
+  textDecoration: 'none'
+}
 
 export default withStyles(styles)(RegisterInvestor);

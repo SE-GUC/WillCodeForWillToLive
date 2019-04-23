@@ -1,6 +1,6 @@
   import React, { Component } from 'react';
   import axios from 'axios';
-  import Header from './layout/ReviewerHeader'
+  import Header from './layout/LawyerHeader'
   import { Link } from 'react-router-dom';
   import LawyerDistribution from './LawyerDistribution'
 
@@ -11,8 +11,15 @@
       }
 
       componentDidMount(){
-       axios.get('http://localhost:3002/api/cases').then(res => Object.values(res)[0]).then(element => this.setState({cases :element.data}))
-       console.log('State: '+ this.state.cases)
+       axios.get('http://localhost:3002/api/lawyer/getCases/',{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(
+         element => {
+          if(element.msg===undefined){ 
+          this.setState({cases :element.data})}
+            else{
+              alert(element.msg)
+            }
+        }).catch(err => {alert('please make sure you are logged in');
+        document.location.href = '/loginemployee'})
       }
       render() {
         return (
@@ -41,7 +48,7 @@
                 axios.put(URL,{
                   fees: "0",
                   paid: true
-                })
+                },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
                 cas.fees = 0
                 cas.paid = true
               }
@@ -57,7 +64,7 @@
               let URL = `http://localhost:3002/api/cases/${id}`
               axios.put(URL,{
                 lawyer: this.state.username
-              })
+              },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
               cas.lawyer = this.state.username
             }
             return cas
@@ -74,7 +81,7 @@
             axios.put(URL, {
               reviewed_by_lawyer: true,
               assignee: "reviewer"
-            })
+            },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
             cas.reviewed_by_lawyer = true
             cas.assignee = "reviewer"
           }
@@ -89,7 +96,7 @@
             axios.put(URL, {
               reviewed_by_lawyer: false,
               assignee: "investor"
-            })
+            },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
             cas.reviewed_by_lawyer = false
             cas.assignee = "reviewer"
           }
@@ -103,7 +110,7 @@
               let URL = `http://localhost:3002/api/cases/${_id}`
               axios.put(URL, {
                 review_comment_by_lawyer:  review_comment_by_lawyer
-              })
+              },{headers:{'Authorization' : `Bearer ${localStorage.getItem('token')}`}})
               cas.review_comment_by_lawyer =  review_comment_by_lawyer
             }
             return cas

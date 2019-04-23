@@ -3,6 +3,35 @@ const router = express.Router();
 const Investor = require("../../models/Investor");
 const Company = require("../../models/Company");
 const validator = require("../../validations/investorValidation");
+const jwt = require('jsonwebtoken');
+const tokenkey = require('../../config/keys').secretkey
+
+
+// const checkTocken = (req, res, next) =>{
+//   const header = req.headers['authorzation']
+//   if (typeof header !== 'undefined') {
+//     const bearer = header.split(' ')
+//     const token = bearer[1]
+//     req.token = token
+//     next()
+//   } else {
+//     res.sendStatuss(403)
+//   }
+// }
+
+const checkTocken = (req, res, next) =>{
+  const header = req.headers['authorization']
+  if (typeof header !== 'undefined') {
+    const bearer = header.split(' ')
+    const token = bearer[1]
+    req.token = token
+    next()
+  } else {
+    res.sendStatus(403)
+  }
+}
+
+
 //create Investor profile
 router.post("/", async (req, res) => {
   try {
@@ -20,24 +49,93 @@ router.post("/", async (req, res) => {
     res.json({ msg: error.message });
   }
 });
+
+
 //view Investor profiles
-router.get("/", async (req, res) => {
-  const investors = await Investor.find();
-  res.json({ data: investors });
-});
+
+router.get('/',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'investor'){
+      Investor.find().then((investors) => {
+        res.send({ investors })
+      }, (err) => {
+        res.status(400).send(err)
+      })}else{
+        res.json({msg: 'You shall not pass'})
+      }
+    }
+  })
+})
+
+
+
+// router.get('/', async (req, res) => {
+//       Investor.find().then((investors) => {
+//         res.send({ investors })
+//       }, (err) => {
+//         res.status(400).send(err)
+//       })
+// })
+
+
+
+// router.get("/",checkTocken, async (req, res) => {
+//   const investors = await Investor.find();
+//   res.json({ data: investors });
+// });
 
 //search using /api/investor/getCases/
-router.get('/getCases', async (req, res)=>{
-  res.redirect('../../cases/')
+// router.get('/getCases', async (req, res)=>{
+//   res.redirect('../../cases/')
+// })
+
+router.get('/getCases', checkTocken, async (req, res)=>{
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'investor'){
+        res.redirect('../../cases/')
+      }else{
+        res.json({msg: 'You shall not pass'})
+      }
+    }
+  })
 })
 
-router.get('/getCases/:investor', async (req, res)=>{
-  const investor = req.params.investor
-  res.redirect('../../cases/investorCases/' + investor)
+
+router.get('/getCases:investor',checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type === 'investor'){
+        const investor = payload.investor
+        res.redirect('../../cases/investorCases/' + investor)
+      }else{
+        res.json({msg: 'You shall not pass'})
+      }
+    }
+  })
 })
+
+
+
+
+
+
+
 
 //View Investor profile by id
-router.get("/:id", async (req, res) => {
+router.get("/:id",checkTocken, async (req, res) => {
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   try {
     const investor = await Investor.findById(req.params.id);
     if (!investor)
@@ -46,11 +144,21 @@ router.get("/:id", async (req, res) => {
   } catch (err) {
     res.json({ msg: err.message });
   }
+}else{
+  res.json({msg: 'You shall not pass'})
+}
+}
+})
 });
 //Update Investor profile by id
-router.put("/:id", async (req, res) => {
+router.put("/:id", checkTocken,async (req, res) => {
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   try {
-    const investor = await Investor.findById(req.params.id);
+    const investor = await Investor.findById(payload.id);
     if (!investor)
       return res.status(404).send({ error: "This investor does not exist" });
     const isValidated = validator.updateValidation(req.body);
@@ -58,7 +166,7 @@ router.put("/:id", async (req, res) => {
       return res
         .status(400)
         .send({ error: isValidated.error.details[0].message });
-    Investor.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(
+    Investor.findByIdAndUpdate(payload.id, req.body, { new: true }, function(
       err,
       updatedInvestor
     ) {
@@ -71,10 +179,19 @@ router.put("/:id", async (req, res) => {
     });
   } catch (error) {
     res.json({ msg: error.message });
+  }}else{
+    res.json({msg: 'You shall not pass'})
   }
+}
+})
 });
 //Delete investor profile by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkTocken,async (req, res) => {
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   try {
     const deletedInvestor = await Investor.findByIdAndDelete(req.params.id);
     res.json({
@@ -83,10 +200,19 @@ router.delete("/:id", async (req, res) => {
     });
   } catch (error) {
     res.json({ msg: error.message });
+  }}else{
+    res.json({msg: 'You shall not pass'})
   }
+}
+})
 });
 //Get all companies having same investor username
-router.get("/comapny/:id", async (req, res) => {
+router.get("/comapny/:id", checkTocken,async (req, res) => {
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   try {
     Investor.findById(req.params.id, function (err, investor) {
       if (!err) {
@@ -112,19 +238,60 @@ router.get("/comapny/:id", async (req, res) => {
       msg: error.message
     });
   }
+}else{
+  res.json({msg: 'You shall not pass'})
+}
+}
+})
 });
-router.post('/createsscform', async (req, res)=>{
+router.post('/createsscform', checkTocken,async (req, res)=>{
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   res.redirect(307,'./../sscform')
+}else{
+  res.json({msg: 'You shall not pass'})
+}
+}
+})})
+router.post('/createspcform', checkTocken,async (req, res)=>{
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
+  res.redirect(307,'./../spcform')}else{
+    res.json({msg: 'You shall not pass'})
+  }
+}
 })
-router.post('/createspcform', async (req, res)=>{
-  res.redirect(307,'./../spcform')
 })
-router.put('/updatesscform/:id', async (req, res)=>{
+router.put('/updatesscform/:id', checkTocken,async (req, res)=>{
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   const formid=req.params.id
-  res.redirect(307,'./../sscform/'+formid)
+  res.redirect(307,'./../sscform/'+formid)}else{
+    res.json({msg: 'You shall not pass'})
+  }
+}
 })
-router.put('/updatespcform/:id', async (req, res)=>{
+})
+router.put('/updatespcform/:id', checkTocken,async (req, res)=>{
+  jwt.verify(req.token,tokenkey,async(err,payload) =>{
+    if(err){
+      res.status(403).send(err);
+    }else{
+      if(payload.type ==='investor'){
   const formid=req.params.id
-  res.redirect(307,'./../spcform/'+formid)
+  res.redirect(307,'./../spcform/'+formid)}else{
+    res.json({msg: 'You shall not pass'})
+  }
+}
+})
 })
 module.exports = router;

@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import nfetch from 'node-fetch'
+import jwt from 'jsonwebtoken'
+import tokenkey from '../config/keys'
 //import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 class Companies extends Component {
     state={
-      id:"5cb1c84c7a390e1a972f5a61",
+     // id:"5cb1c84c7a390e1a972f5a61",
         Companies:[]
     }
     
     componentDidMount(){
-     axios.get('http://localhost:3002/api/investor/comapny/'+this.state.id).then(res => Object.values(res)[0]).then(element => this.setState({Companies:element.data}))
+      jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
+        if(err){
+
+          alert('please make sure you are logged in')
+        document.location.href = '/loginemployee'
+
+        }
+        else{
+          const id= payload.id
+          axios.get('http://localhost:3002/api/investor/comapny/'+id, {headers:{'Authorization': `Bearer ${localStorage.getItem('token')}`}}).then(res => Object.values(res)[0]).then(element => {
+            if(element.msg===undefined){  
+          this.setState({details:element.data})
+            } else{
+              alert(element.msg)
+            }
+          }).catch(er => alert("something went wrong"))
+        }
+      })
     }
   /*  onSubmit = (e) =>{
       e.preventDefault()
