@@ -136,6 +136,12 @@ class reviewerprofileA extends Component {
         بحث الحالات
       </Button>
       <p> </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/reviewerA'
+            }}fullWidth>
+        دفع رسوم الحالات
+      </Button>
+      <p> </p>
       <Button variant="contained" color="secondary" onClick ={() =>{
               localStorage.removeItem('token')
                document.location.href = '/loginemployeeA'

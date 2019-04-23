@@ -143,6 +143,12 @@ class lawyerprofileA extends Component {
       </Button>
       <p>  </p>
       <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/lawyerA'
+            }}fullWidth>
+        تعديل الحالات
+      </Button>
+      <p>  </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
         jwt.verify(localStorage.getItem('token'),tokenkey.secretkey,(err,payload)=>{
           if(err){
             alert(err)

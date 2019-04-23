@@ -128,6 +128,12 @@ class reviewerprofile extends Component {
         search Cases
       </Button>
       <p> </p>
+      <Button variant="contained" color="primary" onClick ={() =>{
+               document.location.href = '/reviewer'
+            }}fullWidth>
+        Review Cases
+      </Button>
+      <p> </p>
       <Button variant="contained" color="secondary" onClick ={() =>{
               localStorage.removeItem('token')
                document.location.href = '/loginemployee'

@@ -4,7 +4,7 @@ import ReviewerItem from './ReviewerItem'
 import PropTypes from 'prop-types'
 import nfetch from 'node-fetch'
 import Header from './layout/ReviewerHeader'
-import writeReview from './WriteReview'
+// import writeReview from './WriteReview'
 import axios from 'axios'
 import ReviewerDistribution from './ReviewerDistribution';
 
