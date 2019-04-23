@@ -20,7 +20,7 @@ const cases = new casesTest(port,'cases')
 const lawyer = new lawyerTest(port,'lawyer')
 const investor = new investorTest(port,'investor')
 const externalEntity = new externalEntityTest(port,'externalEntitys')
-const form = new FormTest(port, 'form')
+const Company = new CompanyTest(port,'Company')
 
 Promise.all([admins.runIndependently()]).then(result => {})
 Promise.all([cases.runIndependently()]).then(result => {})
