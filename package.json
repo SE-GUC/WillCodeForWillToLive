@@ -42,7 +42,7 @@
     "make": "^0.8.1",
     "material-ui": "^0.20.2",
     "minimatch": "^3.0.4",
-    "minimist": "0.0.8",
+    "minimist": "1.2.5",
     "minipass": "^2.2.4",
     "mkdirp": "^0.5.1",
     "mocha": "^6.0.2",
